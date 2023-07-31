@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
 import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary._
-import pages.WhenReceiveShortageExcessPage
-import play.api.libs.json.{JsValue, Json}
+import pages.behaviour.PageBehaviours
 
-trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+import java.time.LocalDate
 
-  implicit lazy val arbitraryWhenReceiveShortageExcessUserAnswersEntry: Arbitrary[(WhenReceiveShortageExcessPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhenReceiveShortageExcessPage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
-      } yield (page, value)
+class WhenReceiveShortageExcessPageSpec extends PageBehaviours {
+
+  "WhenReceiveShortageExcessPage" - {
+
+    implicit lazy val arbitraryLocalDate: Arbitrary[LocalDate] = Arbitrary {
+      datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
     }
 
+    beRetrievable[LocalDate](WhenReceiveShortageExcessPage)
+
+    beSettable[LocalDate](WhenReceiveShortageExcessPage)
+
+    beRemovable[LocalDate](WhenReceiveShortageExcessPage)
+  }
 }

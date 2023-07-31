@@ -18,44 +18,62 @@ package controllers
 
 import base.SpecBase
 import mocks.services.MockUserAnswersService
+import models.{NormalMode, UserAnswers}
+import pages.WhenReceiveShortageExcessPage
 import play.api.http.Status.SEE_OTHER
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, defaultAwaitTimeout, redirectLocation, route, running, status, writeableOf_AnyContentAsEmpty}
 import services.UserAnswersService
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class IndexControllerSpec extends SpecBase with MockUserAnswersService {
 
-  "IndexController Controller" - {
+  class Fixture(val userAnswers: Option[UserAnswers] = Some(emptyUserAnswers)) {
+    val application = applicationBuilder(userAnswers).overrides(
+      bind[UserAnswersService].toInstance(mockUserAnswersService)
+    ).build()
+  }
 
-    "when calling .onPageLoad()" - {
+  "IndexController" - {
+
+    ".onPageLoad()" - {
 
       "when existing UserAnswers don't exist" - {
 
-        "must Initialise the UserAnswers and redirect to the IndexController" in {
-
-          MockUserAnswersService.set(emptyUserAnswers).returns(Future.successful(emptyUserAnswers))
-
-          val application = applicationBuilder(userAnswers = None).overrides(
-            bind[UserAnswersService].toInstance(mockUserAnswersService)
-          ).build()
-
+        "must initialise answers and redirect to when receive shortage or excess page" in new Fixture() {
           running(application) {
-            val request = FakeRequest(GET, routes.IndexController.onPageLoad(testErn, testArc).url)
 
+            MockUserAnswersService.set(emptyUserAnswers).returns(Future.successful(emptyUserAnswers))
+
+            val request = FakeRequest(GET, routes.IndexController.onPageLoad(testErn, testArc).url)
             val result = route(application, request).value
 
             status(result) mustEqual SEE_OTHER
-            redirectLocation(result) mustBe Some(routes.IndexController.onPageLoad(testErn, testArc).url)
+            redirectLocation(result) mustBe Some(routes.WhenReceiveShortageExcessController.onPageLoad(testErn, testArc, NormalMode).url)
           }
         }
       }
 
+      "when existing UserAnswers exists" - {
 
+        "must not initialise any answers and redirect to when receive shortage or excess page" in new Fixture(Some(
+          emptyUserAnswers.set(WhenReceiveShortageExcessPage, LocalDate.of(2023,7,31))
+        )) {
+          running(application) {
+
+            MockUserAnswersService.set().never()
+
+            val request = FakeRequest(GET, routes.IndexController.onPageLoad(testErn, testArc).url)
+            val result = route(application, request).value
+
+            status(result) mustEqual SEE_OTHER
+            redirectLocation(result) mustBe Some(routes.WhenReceiveShortageExcessController.onPageLoad(testErn, testArc, NormalMode).url)
+          }
+        }
+      }
     }
-
   }
-
 }

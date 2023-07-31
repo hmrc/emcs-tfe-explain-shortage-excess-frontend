@@ -40,7 +40,7 @@ sealed trait BaseMessages { _: i18n =>
 trait BaseEnglish extends BaseMessages with EN {
   override def titleHelper(heading: String) = s"$heading - Excise Movement and Control System - GOV.UK"
   override val opensInNewTab: String = "(opens in new tab)"
-  override def arcSubheading(arc: String): String = s"Explanation for delay to $arc"
+  override def arcSubheading(arc: String): String = s"Explanation for a shortage or excess for $arc"
   override val continue = "Continue"
   override val saveAndContinue = "Save and continue"
   override val savePreviousAnswersAndExit = "Save previous answers and exit"
@@ -57,7 +57,7 @@ object BaseEnglish extends BaseEnglish
 trait BaseWelsh extends BaseMessages with CY {
   override def titleHelper(heading: String) = s"$heading - Excise Movement and Control System - GOV.UK"
   override val opensInNewTab: String = "(opens in new tab)"
-  override def arcSubheading(arc: String): String = s"Explanation for delay to $arc"
+  override def arcSubheading(arc: String): String = s"Explanation for a shortage or excess for $arc"
   override val continue = "Continue"
   override val saveAndContinue = "Save and continue"
   override val savePreviousAnswersAndExit = "Save previous answers and exit"

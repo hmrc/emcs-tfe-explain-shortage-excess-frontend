@@ -36,11 +36,26 @@ class NavigatorSpec extends SpecBase {
           routes.IndexController.onPageLoad(testErn, testArc)
       }
 
+      "from WhenReceiveShortageExcessPage" - {
+
+        //TODO: Update as part of future story when page exists
+        "must go to UnderConstructionPage" in {
+          navigator.nextPage(WhenReceiveShortageExcessPage, NormalMode, emptyUserAnswers) mustBe
+            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+        }
+      }
     }
 
     "in Check mode" - {
 
+      "from WhenReceiveShortageExcessPage" - {
 
+        //TODO: Update as part of future story when page exists to go to Check Answers
+        "must go to UnderConstructionPage" in {
+          navigator.nextPage(WhenReceiveShortageExcessPage, CheckMode, emptyUserAnswers) mustBe
+            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+        }
+      }
     }
   }
 }

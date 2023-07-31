@@ -16,7 +16,13 @@
 
 package generators
 
+import org.scalacheck.Arbitrary
+import pages.WhenReceiveShortageExcessPage
+
 trait PageGenerators {
+
+  implicit lazy val arbitraryWhenReceiveShortageExcessPage: Arbitrary[WhenReceiveShortageExcessPage.type] =
+    Arbitrary(WhenReceiveShortageExcessPage)
 
 
 }

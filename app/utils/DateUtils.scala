@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package generators
+package utils
 
-import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary._
-import pages.WhenReceiveShortageExcessPage
-import play.api.libs.json.{JsValue, Json}
+import play.api.i18n.Messages
 
-trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+import java.time.LocalDate
 
-  implicit lazy val arbitraryWhenReceiveShortageExcessUserAnswersEntry: Arbitrary[(WhenReceiveShortageExcessPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhenReceiveShortageExcessPage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
-      } yield (page, value)
+trait DateUtils {
+  implicit class LocalDateExtensions(date: LocalDate) {
+    def formatDateForUIOutput()(implicit messages: Messages): String = {
+      val monthMessage = messages(s"date.month.${date.getMonthValue}")
+      s"${date.getDayOfMonth} $monthMessage ${date.getYear}"
     }
-
+  }
 }

@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary._
-import pages.WhenReceiveShortageExcessPage
-import play.api.libs.json.{JsValue, Json}
+import java.time.LocalDate
 
-trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+import play.api.libs.json.JsPath
 
-  implicit lazy val arbitraryWhenReceiveShortageExcessUserAnswersEntry: Arbitrary[(WhenReceiveShortageExcessPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhenReceiveShortageExcessPage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
-      } yield (page, value)
-    }
+case object WhenReceiveShortageExcessPage extends QuestionPage[LocalDate] {
 
+  override def path: JsPath = JsPath \ toString
+
+  override def toString: String = "whenReceiveShortageExcess"
 }
