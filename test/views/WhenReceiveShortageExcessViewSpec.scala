@@ -61,7 +61,8 @@ class WhenReceiveShortageExcessViewSpec extends ViewSpecBase with ViewBehaviours
           Selectors.legend -> messagesForLanguage.h2,
           Selectors.day -> messagesForLanguage.day,
           Selectors.month -> messagesForLanguage.month,
-          Selectors.year -> messagesForLanguage.year
+          Selectors.year -> messagesForLanguage.year,
+          Selectors.button -> messagesForLanguage.saveAndContinue
         ))
       }
     }
