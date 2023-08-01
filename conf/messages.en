@@ -132,3 +132,10 @@ howGiveInformation.whole = I want to give information about the whole movement
 howGiveInformation.choose = I want to choose which item(s) to give information about
 howGiveInformation.checkYourAnswersLabel = How do you want to give information about the shortage or excess?
 howGiveInformation.error.required = Select how you want to give information about the shortage or excess
+
+giveInformationMovement.title = Give information about the shortage or excess
+giveInformationMovement.heading = Give information about the shortage or excess
+giveInformationMovement.error.required = Enter information
+giveInformationMovement.error.length = Information must be 350 characters or less
+giveInformationMovement.error.character = Information must contain letters or numbers
+giveInformationMovement.error.invalidCharacter = Information must not include < and > and : and ;

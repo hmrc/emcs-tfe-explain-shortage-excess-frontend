@@ -17,31 +17,39 @@
 package views
 
 import base.ViewSpecBase
-import fixtures.messages.HowGiveInformationMessages
-import forms.HowGiveInformationFormProvider
+import fixtures.messages.GiveInformationMovementMessages
+import forms.CharacterCounterFormProvider
 import models.requests.DataRequest
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import pages.GiveInformationMovementPage
 import play.api.i18n.Messages
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import views.html.HowGiveInformationView
+import views.html.GiveInformationMovementView
 
-class HowGiveInformationViewSpec extends ViewSpecBase with ViewBehaviours {
+import java.time.LocalDate
 
-  object Selectors extends BaseSelectors
+class GiveInformationMovementViewSpec extends ViewSpecBase with ViewBehaviours {
 
-  "WhenReceiveShortageExcess view" - {
+  object Selectors extends BaseSelectors {
+    val day = "label[for='value.day']"
+    val month = "label[for='value.month']"
+    val year = "label[for='value.year']"
+    val legend = "legend h2"
+  }
 
-    Seq(HowGiveInformationMessages.English, HowGiveInformationMessages.Welsh).foreach { messagesForLanguage =>
+  "GiveInformationMovement view" - {
+
+    Seq(GiveInformationMovementMessages.English, GiveInformationMovementMessages.Welsh).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 
         implicit val msgs: Messages = messages(app, messagesForLanguage.lang)
         implicit val request: DataRequest[AnyContentAsEmpty.type] = dataRequest(FakeRequest())
 
-        val form = app.injector.instanceOf[HowGiveInformationFormProvider].apply()
-        val view = app.injector.instanceOf[HowGiveInformationView]
+        val form = app.injector.instanceOf[CharacterCounterFormProvider].apply(GiveInformationMovementPage)
+        val view = app.injector.instanceOf[GiveInformationMovementView]
 
         implicit val doc: Document = Jsoup.parse(view(form, testOnwardRoute).toString())
 
@@ -49,8 +57,6 @@ class HowGiveInformationViewSpec extends ViewSpecBase with ViewBehaviours {
           Selectors.title -> messagesForLanguage.title,
           Selectors.h1 -> messagesForLanguage.heading,
           Selectors.h2(1) -> messagesForLanguage.arcSubheading(testArc),
-          Selectors.radioButton(1) -> messagesForLanguage.whole,
-          Selectors.radioButton(2) -> messagesForLanguage.choose,
           Selectors.button -> messagesForLanguage.saveAndContinue,
           Selectors.link(1) -> messagesForLanguage.savePreviousAnswersAndExit
         ))

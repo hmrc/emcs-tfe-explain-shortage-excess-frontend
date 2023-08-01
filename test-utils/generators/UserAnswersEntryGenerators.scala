@@ -16,13 +16,21 @@
 
 package generators
 
-import models.HowGiveInformation
+import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary._
-import pages.{HowGiveInformationPage, WhenReceiveShortageExcessPage}
+import pages._
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryGiveInformationMovementUserAnswersEntry: Arbitrary[(GiveInformationMovementPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[GiveInformationMovementPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
 
   implicit lazy val arbitraryWhenReceiveShortageExcessUserAnswersEntry: Arbitrary[(WhenReceiveShortageExcessPage.type, JsValue)] =
     Arbitrary {

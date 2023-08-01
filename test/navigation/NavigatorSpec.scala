@@ -52,6 +52,15 @@ class NavigatorSpec extends SpecBase {
             testOnly.controllers.routes.UnderConstructionController.onPageLoad()
         }
       }
+
+      "from GiveInformationMovementPage" - {
+
+        //TODO: Update as part of future story when page exists
+        "must go to UnderConstructionPage" in {
+          navigator.nextPage(GiveInformationMovementPage, NormalMode, emptyUserAnswers) mustBe
+            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+        }
+      }
     }
 
     "in Check mode" - {

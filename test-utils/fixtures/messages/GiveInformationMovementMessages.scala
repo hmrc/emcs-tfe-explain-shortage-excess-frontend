@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
-package forms
+package fixtures.messages
 
-import pages.QuestionPage
-import play.api.data.Form
+import fixtures.i18n
 
-trait BaseFormProvider[PageType] {
-  def apply(page: Option[QuestionPage[PageType]]): Form[PageType]
+object GiveInformationMovementMessages {
+
+  sealed trait ViewMessages { _: i18n =>
+    val heading: String
+    val title: String
+    val requiredError: String
+  }
+
+  object English extends ViewMessages with BaseEnglish {
+    override val title: String = titleHelper("")
+    override val heading = ""
+    override val requiredError = ""
+  }
+
+  object Welsh extends ViewMessages with BaseWelsh {
+    override val title: String = titleHelper("")
+    override val heading = ""
+    override val requiredError = ""
+  }
 }
