@@ -18,18 +18,17 @@ package controllers
 
 import controllers.actions._
 import forms.HowGiveInformationFormProvider
-
-import javax.inject.Inject
 import models.Mode
 import models.requests.DataRequest
 import navigation.Navigator
 import pages.HowGiveInformationPage
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import services.UserAnswersService
 import views.html.HowGiveInformationView
 
+import javax.inject.Inject
 import scala.concurrent.Future
 
 class HowGiveInformationController @Inject()(
