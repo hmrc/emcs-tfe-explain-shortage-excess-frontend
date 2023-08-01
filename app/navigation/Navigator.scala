@@ -26,8 +26,10 @@ import javax.inject.Inject
 class Navigator @Inject()() extends BaseNavigator {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case WhenReceiveShortageExcessPage => (_: UserAnswers) =>
-      //TODO: Update as part of future story when Next page exists
+    case WhenReceiveShortageExcessPage => (userAnswers: UserAnswers) =>
+      controllers.routes.HowGiveInformationController.onPageLoad(userAnswers.ern, userAnswers.arc, NormalMode)
+    case HowGiveInformationPage => (userAnswers: UserAnswers) =>
+      //TODO: update as part of the routing for the next page in the flow
       testOnly.controllers.routes.UnderConstructionController.onPageLoad()
     case _ => (userAnswers: UserAnswers) =>
       routes.IndexController.onPageLoad(userAnswers.ern, userAnswers.arc)

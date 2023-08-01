@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages.{HowGiveInformationPage, WhenReceiveShortageExcessPage}
+import models.HowGiveInformation
+import pages.behaviour.PageBehaviours
 
-trait PageGenerators {
+class HowGiveInformationSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryWhenReceiveShortageExcessPage: Arbitrary[WhenReceiveShortageExcessPage.type] =
-    Arbitrary(WhenReceiveShortageExcessPage)
+  "HowGiveInformationPage" - {
 
-  implicit lazy val arbitraryHowGiveInformationPage: Arbitrary[HowGiveInformationPage.type] =
-    Arbitrary(HowGiveInformationPage)
+    beRetrievable[HowGiveInformation](HowGiveInformationPage)
 
+    beSettable[HowGiveInformation](HowGiveInformationPage)
 
+    beRemovable[HowGiveInformation](HowGiveInformationPage)
+  }
 }

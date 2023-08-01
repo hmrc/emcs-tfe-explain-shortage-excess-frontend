@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
-import org.scalacheck.Arbitrary
-import pages.{HowGiveInformationPage, WhenReceiveShortageExcessPage}
+import javax.inject.Inject
 
-trait PageGenerators {
+import forms.mappings.Mappings
+import play.api.data.Form
+import models.HowGiveInformation
 
-  implicit lazy val arbitraryWhenReceiveShortageExcessPage: Arbitrary[WhenReceiveShortageExcessPage.type] =
-    Arbitrary(WhenReceiveShortageExcessPage)
+class HowGiveInformationFormProvider @Inject() extends Mappings {
 
-  implicit lazy val arbitraryHowGiveInformationPage: Arbitrary[HowGiveInformationPage.type] =
-    Arbitrary(HowGiveInformationPage)
-
-
+  def apply(): Form[HowGiveInformation] =
+    Form(
+      "value" -> enumerable[HowGiveInformation]("howGiveInformation.error.required")
+    )
 }

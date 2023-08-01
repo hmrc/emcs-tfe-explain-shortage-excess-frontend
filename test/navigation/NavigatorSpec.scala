@@ -38,9 +38,17 @@ class NavigatorSpec extends SpecBase {
 
       "from WhenReceiveShortageExcessPage" - {
 
-        //TODO: Update as part of future story when page exists
         "must go to UnderConstructionPage" in {
           navigator.nextPage(WhenReceiveShortageExcessPage, NormalMode, emptyUserAnswers) mustBe
+            controllers.routes.HowGiveInformationController.onPageLoad(testErn, testArc, NormalMode)
+        }
+      }
+
+      "from HowGiveInformationPage" - {
+
+        //TODO: Update as part of future story when page exists
+        "must go to UnderConstructionPage" in {
+          navigator.nextPage(HowGiveInformationPage, NormalMode, emptyUserAnswers) mustBe
             testOnly.controllers.routes.UnderConstructionController.onPageLoad()
         }
       }
@@ -53,6 +61,15 @@ class NavigatorSpec extends SpecBase {
         //TODO: Update as part of future story when page exists to go to Check Answers
         "must go to UnderConstructionPage" in {
           navigator.nextPage(WhenReceiveShortageExcessPage, CheckMode, emptyUserAnswers) mustBe
+            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+        }
+      }
+
+      "from HowGiveInformationPage" - {
+
+        //TODO: Update as part of future story when page exists to go to Check Answers
+        "must go to UnderConstructionPage" in {
+          navigator.nextPage(HowGiveInformationPage, NormalMode, emptyUserAnswers) mustBe
             testOnly.controllers.routes.UnderConstructionController.onPageLoad()
         }
       }
