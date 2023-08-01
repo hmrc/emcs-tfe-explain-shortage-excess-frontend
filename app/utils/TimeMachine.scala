@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package generators
+package utils
 
-import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary._
-import pages.WhenReceiveShortageExcessPage
-import play.api.libs.json.{JsValue, Json}
+import java.time.{LocalDateTime, ZoneId}
+import javax.inject.Inject
 
-trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+trait TimeMachine {
+  def now(): LocalDateTime
+}
 
-  implicit lazy val arbitraryWhenReceiveShortageExcessUserAnswersEntry: Arbitrary[(WhenReceiveShortageExcessPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WhenReceiveShortageExcessPage.type]
-        value <- arbitrary[Int].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
+class TimeMachineImpl @Inject()() extends TimeMachine {
+  override def now(): LocalDateTime = LocalDateTime.now(ZoneId.of("UTC"))
 }

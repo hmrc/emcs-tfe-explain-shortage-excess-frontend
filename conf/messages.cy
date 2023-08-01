@@ -15,6 +15,22 @@ site.signBackIn = Sign back in to EMCS
 site.govuk = GOV.UK
 site.opensInNewTab = (opens in new tab)
 
+date.day = Day
+date.month = Month
+date.year = Year
+date.month.1 = January
+date.month.2 = February
+date.month.3 = March
+date.month.4 = April
+date.month.5 = May
+date.month.6 = June
+date.month.7 = July
+date.month.8 = August
+date.month.9 = September
+date.month.10 = October
+date.month.11 = November
+date.month.12 = December
+
 notPermittedPage.title = There is a problem
 notPermittedPage.heading = There is a problem
 notPermittedPage.p1 = You do not have permission to view this page.
@@ -79,7 +95,7 @@ timeout.timedOut.title = For your security we signed you out
 timeout.timedOut.heading = For your security we signed you out
 timeout.timedOut.p1 = We did not save your answers.
 
-arc.subHeading = Explanation for delay to {0}
+arc.subHeading = Explanation for a shortage or excess for {0}
 
 error.browser.title.prefix = Error:
 
@@ -96,3 +112,16 @@ journeyRecovery.p3 = You can also choose to
 journeyRecovery.p3.viewAccountLink = view all your account information
 journeyRecovery.p3.or = or
 journeyRecovery.p3.signOutLink = sign out
+
+whenReceiveShortageExcess.title = Tell HMRC about a shortage or excess
+whenReceiveShortageExcess.heading = Tell HMRC about a shortage or excess
+whenReceiveShortageExcess.p1 = Unlike with a report of receipt, the information you give here will only be visible to you and to HMRC.
+whenReceiveShortageExcess.p2 = If you are a Northern Ireland warehousekeeper receiving goods from an EU member state, this information will also be visible to the state of dispatch.
+whenReceiveShortageExcess.h2 = When did you receive the shortage or excess?
+whenReceiveShortageExcess.hint = For example, 31 8 2022.
+whenReceiveShortageExcess.error.required.all = Enter the date you received the shortage or excess
+whenReceiveShortageExcess.error.required.two = The date you received the shortage or excess must include a {0} and {1}
+whenReceiveShortageExcess.error.required = The date you received the shortage or excess must include a {0}
+whenReceiveShortageExcess.error.invalid = The date you received the shortage or excess must be a real date
+whenReceiveShortageExcess.error.notInFuture = The date you received the shortage or excess must be today or in the past
+whenReceiveShortageExcess.error.notBeforeDateOfDispatch = The date you received the shortage or excess must be the same as or after {0} when the movement started
