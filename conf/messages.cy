@@ -92,7 +92,7 @@ timeout.signOut = Sign out
 
 timeout.timedOut.title = For your security we signed you out
 timeout.timedOut.heading = For your security we signed you out
-timeout.timedOut.p1 = We did not save your answers.
+timeout.timedOut.p1 = We have not saved your answers.
 
 arc.subHeading = Explanation for a shortage or excess for {0}
 
