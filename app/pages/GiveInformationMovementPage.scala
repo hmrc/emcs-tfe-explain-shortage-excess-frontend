@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package forms
+package pages
 
-import pages.QuestionPage
-import play.api.data.Form
+import play.api.libs.json.JsPath
 
-trait BaseFormProvider[PageType] {
-  def apply(page: Option[QuestionPage[PageType]]): Form[PageType]
+case object GiveInformationMovementPage extends QuestionPage[String] {
+
+  override def path: JsPath = JsPath \ toString
+
+  override def toString: String = "giveInformationMovement"
 }

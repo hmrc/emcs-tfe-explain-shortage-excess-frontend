@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
-import org.scalacheck.Arbitrary
-import pages._
+import pages.QuestionPage
+import play.api.data.Form
 
-trait PageGenerators {
+trait BaseTextAreaFormProvider[PageType] {
 
-  implicit lazy val arbitraryGiveInformationMovementPage: Arbitrary[GiveInformationMovementPage.type] =
-    Arbitrary(GiveInformationMovementPage)
-
-  implicit lazy val arbitraryWhenReceiveShortageExcessPage: Arbitrary[WhenReceiveShortageExcessPage.type] =
-    Arbitrary(WhenReceiveShortageExcessPage)
-
-  implicit lazy val arbitraryHowGiveInformationPage: Arbitrary[HowGiveInformationPage.type] =
-    Arbitrary(HowGiveInformationPage)
-
-
+  val textAreaName: String
+  def apply(page: QuestionPage[PageType]): Form[PageType]
 }

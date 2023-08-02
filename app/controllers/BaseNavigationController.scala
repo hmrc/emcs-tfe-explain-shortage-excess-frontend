@@ -16,17 +16,20 @@
 
 package controllers
 
+import forms.BaseTextAreaFormProvider
 import models.requests.DataRequest
 import models.{Mode, UserAnswers}
 import navigation.BaseNavigator
 import pages.QuestionPage
+import play.api.data.{Form, FormError}
 import play.api.libs.json.{Format, Reads}
-import play.api.mvc.Result
+import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
 import services.UserAnswersService
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Logging
 
 import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
 
 trait BaseNavigationController extends BaseController with Logging {
 
@@ -66,4 +69,30 @@ trait BaseNavigationController extends BaseController with Logging {
   private def save[A](page: QuestionPage[A], answer: A)
                      (implicit request: DataRequest[_], format: Format[A]): Future[UserAnswers] =
     save(page, answer, request.userAnswers)
+
+  def submitAndTrimWhitespaceFromTextarea[PageType](
+                                                     page: QuestionPage[PageType],
+                                                     formProvider: BaseTextAreaFormProvider[PageType]
+                                                   )(
+                                                     formWithErrorsView: Form[PageType] => Future[Result],
+                                                     successFunction: PageType => Future[Result]
+                                                   )(implicit request: DataRequest[_]): Future[Result] = {
+    Try {
+      val trimmedFormValues: Map[String, Seq[String]] = request.body.asInstanceOf[AnyContentAsFormUrlEncoded].data.map {
+        case (k, v) => (k, v.map(_.trim))
+      }
+
+      formProvider(page).bindFromRequest(trimmedFormValues).fold(
+        formWithErrors =>
+          formWithErrorsView(formWithErrors),
+        value =>
+          successFunction(value)
+      )
+    } match {
+      case Failure(exception) =>
+        logger.warn(exception.getMessage)
+        formWithErrorsView(formProvider(page).withError(FormError(formProvider.textAreaName, s"$page.error.required")))
+      case Success(value) => value
+    }
+  }
 }

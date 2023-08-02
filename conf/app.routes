@@ -29,3 +29,8 @@ GET        /trader/:ern/movement/:arc/how-give-information                      
 POST       /trader/:ern/movement/:arc/how-give-information                            controllers.HowGiveInformationController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
 GET        /trader/:ern/movement/:arc/how-give-information/change                     controllers.HowGiveInformationController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
 POST       /trader/:ern/movement/:arc/how-give-information/change                     controllers.HowGiveInformationController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)
+
+GET        /trader/:ern/movement/:arc/give-information-movement                     controllers.GiveInformationMovementController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
+POST       /trader/:ern/movement/:arc/give-information-movement                     controllers.GiveInformationMovementController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
+GET        /trader/:ern/movement/:arc/give-information-movement/change              controllers.GiveInformationMovementController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
+POST       /trader/:ern/movement/:arc/give-information-movement/change              controllers.GiveInformationMovementController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)

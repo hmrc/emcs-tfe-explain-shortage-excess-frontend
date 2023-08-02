@@ -18,6 +18,7 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
+import models.HowGiveInformation.{Choose, Whole}
 import models._
 import pages._
 
@@ -46,9 +47,29 @@ class NavigatorSpec extends SpecBase {
 
       "from HowGiveInformationPage" - {
 
+        "when selected Whole" - {
+
+          "must go to GiveInformationMovement" in {
+            navigator.nextPage(HowGiveInformationPage, NormalMode, emptyUserAnswers.set(HowGiveInformationPage, Whole)) mustBe
+              routes.GiveInformationMovementController.onPageLoad(testErn, testArc, NormalMode)
+          }
+        }
+
+        "when selected Choose" - {
+
+          //TODO: Update as part of future story
+          "must go to UnderConstruction" in {
+            navigator.nextPage(HowGiveInformationPage, NormalMode, emptyUserAnswers.set(HowGiveInformationPage, Choose)) mustBe
+              testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+          }
+        }
+      }
+
+      "from GiveInformationMovementPage" - {
+
         //TODO: Update as part of future story when page exists
         "must go to UnderConstructionPage" in {
-          navigator.nextPage(HowGiveInformationPage, NormalMode, emptyUserAnswers) mustBe
+          navigator.nextPage(GiveInformationMovementPage, NormalMode, emptyUserAnswers) mustBe
             testOnly.controllers.routes.UnderConstructionController.onPageLoad()
         }
       }
