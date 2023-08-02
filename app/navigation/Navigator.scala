@@ -32,8 +32,8 @@ class Navigator @Inject()() extends BaseNavigator {
     case HowGiveInformationPage => (userAnswers: UserAnswers) =>
       userAnswers.get(HowGiveInformationPage) match {
         case Some(Whole) =>
-          routes.GiveInformationMovementController.onSubmit(userAnswers.ern, userAnswers.arc, NormalMode)
-        case None =>
+          routes.GiveInformationMovementController.onPageLoad(userAnswers.ern, userAnswers.arc, NormalMode)
+        case _ =>
           //TODO: update as part of the routing for the next page in the flow
           testOnly.controllers.routes.UnderConstructionController.onPageLoad()
       }
