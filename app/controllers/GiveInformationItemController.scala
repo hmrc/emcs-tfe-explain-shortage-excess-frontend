@@ -21,8 +21,7 @@ import forms.CharacterCounterFormProvider
 import models.Mode
 import models.requests.DataRequest
 import navigation.Navigator
-import pages.ChooseShortageExcessItemPage
-import pages.individualItems.GiveInformationItemPage
+import pages.individualItems._
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}

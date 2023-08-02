@@ -23,8 +23,7 @@ import models.ChooseShortageExcessItem.Excess
 import models.ChooseShortageExcessItem.Shortage
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
-import pages.ChooseShortageExcessItemPage
-import pages.individualItems.GiveInformationItemPage
+import pages.individualItems._
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest

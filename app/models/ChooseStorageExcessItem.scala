@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package models
 
-import models.ChooseShortageExcessItem
-import play.api.libs.json.{JsPath, __}
+sealed trait ChooseStorageExcessItem
 
-case class ChooseShortageExcessItemPage(idx: Int) extends QuestionPage[ChooseShortageExcessItem] {
+object ChooseStorageExcessItem extends Enumerable.Implicits {
 
-  override def path: JsPath = __ \ "items" \ s"item-$idx" \ toString
+  case object Shortage extends WithName("Shortage") with ChooseStorageExcessItem
+  case object Excess extends WithName("Excess") with ChooseStorageExcessItem
 
-  override def toString: String = "chooseShortageExcessItem"
+  val values: Seq[ChooseStorageExcessItem] = Seq(Shortage, Excess)
+
+  implicit val enumerable: Enumerable[ChooseStorageExcessItem] =
+    Enumerable(values.map(v => v.toString -> v): _*)
 }
