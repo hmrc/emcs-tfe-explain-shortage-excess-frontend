@@ -50,12 +50,11 @@ notAnOrganisation.bullet2.link = register for a business tax account and enrol f
 
 noEnrolment.title = There is a problem
 noEnrolment.heading = There is a problem
-noEnrolment.p1 = You are not enrolled for the Excise Movement and Control System (EMCS).
-noEnrolment.p2 = To use this service you or the account administrator must either:
+noEnrolment.p1 = To use this service you or the account administrator must either:
 noEnrolment.bullet1.link = enrol for EMCS
 noEnrolment.bullet2.link = sign in to a business tax account that has an EMCS enrolment
 noEnrolment.bullet2.afterLink = if you have one of those
-noEnrolment.p3 = If you think you have signed in with the wrong details, sign out and check the details you have are correct.
+noEnrolment.p2 = If you think you have signed in with the wrong details, sign out and check the details you have are correct.
 
 inactive.title = There is a problem
 inactive.heading = There is a problem
