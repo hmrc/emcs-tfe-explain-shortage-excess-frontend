@@ -19,8 +19,10 @@ package forms.mappings
 import models.Enumerable
 import play.api.data.FieldMapping
 import play.api.data.Forms.of
+import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import java.time.LocalDate
+import scala.util.Try
 
 trait Mappings extends Formatters with Constraints {
 
@@ -51,4 +53,26 @@ trait Mappings extends Formatters with Constraints {
                            requiredKey: String,
                            args: Seq[String] = Seq.empty): FieldMapping[LocalDate] =
     of(new LocalDateFormatter(invalidKey, allRequiredKey, twoRequiredKey, requiredKey, args))
+
+  protected def greaterThanValue[A](value: A, errorKey: String, args: Any*)(implicit ev: Ordering[A]): Constraint[A] =
+    Constraint { input =>
+      import ev._
+      if (input > value) Valid else Invalid(errorKey, args:_*)
+    }
+
+  protected def lessThanEqualValue[A](value: A, errorKey: String, args: Any*)(implicit ev: Ordering[A]): Constraint[A] =
+    Constraint { input =>
+      import ev._
+      if (input <= value) Valid else Invalid(errorKey, args:_*)
+    }
+
+  protected def isNumeric[A](errorKey: String, args: Any*): Constraint[A] =
+    Constraint { input =>
+      if (Try(BigDecimal(input.toString)).isSuccess) Valid else Invalid(errorKey, args: _*)
+    }
+
+  protected def maxScale(max: Int, errorKey: String, args: Any*): Constraint[BigDecimal] =
+    Constraint { input =>
+      if (input.scale <= max) Valid else Invalid(errorKey, args: _*)
+    }
 }

@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package object forms {
-  private[forms] val MAX_LENGTH_15 = 15
-  private[forms] val MIN_VALUE_0 = 0
-  private[forms] val TEXTAREA_MAX_LENGTH = 350
-  private[forms] val ALPHANUMERIC_REGEX = "^(?s)(?=.*[A-Za-z0-9]).{1,}$"
-  private[forms] val XSS_REGEX = "^(?s)(?!.*javascript)(?!.*[<>;:]).{1,}$"
+package pages
+
+import play.api.libs.json.JsPath
+
+case object ItemAmountPage extends QuestionPage[BigDecimal] {
+
+  override def path: JsPath = JsPath \ toString
+
+  override def toString: String = "itemAmount"
 }

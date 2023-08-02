@@ -16,9 +16,9 @@
 
 package fixtures
 
-import models.CategoryOfWine
 import models.DestinationType.TaxWarehouse
-import models.response.emcsTfe.{AddressModel, ConsignorTraderModel, GetMovementResponse, MovementItem, Packaging, WineProduct}
+import models.{CategoryOfWine, ReferenceDataCategoryOfWine}
+import models.response.emcsTfe._
 import play.api.libs.json.{JsValue, Json}
 
 import java.time.LocalDate
@@ -167,7 +167,7 @@ trait GetMovementResponseFixtures { _: BaseFixtures =>
           )
         ),
         "wineProduct" -> Json.obj(fields =
-          "wineProductCategory" -> "1",
+          "wineProductCategory" -> ReferenceDataCategoryOfWine.`1`.toString,
           "wineGrowingZoneCode" -> "2",
           "thirdCountryOfOrigin" -> "FR",
           "otherInformation" -> "Other info",
@@ -200,7 +200,7 @@ trait GetMovementResponseFixtures { _: BaseFixtures =>
           )
         ),
         "wineProduct" -> Json.obj(fields =
-          "wineProductCategory" -> "1",
+          "wineProductCategory" -> ReferenceDataCategoryOfWine.`1`.toString,
           "wineGrowingZoneCode" -> "2",
           "thirdCountryOfOrigin" -> "FR",
           "otherInformation" -> "Other info",

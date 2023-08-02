@@ -27,7 +27,7 @@ object CnCodeInformation {
     (JsPath \ "cnCodeDescription").read[String] and
       (JsPath \ "exciseProductCodeDescription").read[String] and
       (JsPath \ "unitOfMeasureCode").read[Int].map(value => ReferenceDataUnitOfMeasure.enumerable.withName(value.toString).get)
-    )(CnCodeInformation.apply _)
+  )(CnCodeInformation.apply _)
 
   implicit val writes: OWrites[CnCodeInformation] = Json.writes
 }

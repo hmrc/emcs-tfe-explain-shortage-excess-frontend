@@ -17,9 +17,9 @@
 package connectors.packagingTypes
 
 import connectors.BaseConnectorUtils
-import models.{ErrorResponse, JsonValidationError, UnexpectedDownstreamResponseError}
 import models.requests.PackagingTypesRequest
 import models.response.referenceData.PackagingTypesResponse
+import models.{ErrorResponse, JsonValidationError, UnexpectedDownstreamResponseError}
 import play.api.http.Status.OK
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpReads, HttpResponse}

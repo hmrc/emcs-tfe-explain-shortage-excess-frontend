@@ -17,9 +17,9 @@
 package connectors.referenceData
 
 import connectors.BaseConnectorUtils
-import models.{ErrorResponse, JsonValidationError, UnexpectedDownstreamResponseError}
 import models.requests.CnCodeInformationRequest
 import models.response.referenceData.CnCodeInformationResponse
+import models.{ErrorResponse, JsonValidationError, UnexpectedDownstreamResponseError}
 import play.api.http.Status.OK
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpReads, HttpResponse}

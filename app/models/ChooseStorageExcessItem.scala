@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-package object forms {
-  private[forms] val MAX_LENGTH_15 = 15
-  private[forms] val MIN_VALUE_0 = 0
-  private[forms] val TEXTAREA_MAX_LENGTH = 350
-  private[forms] val ALPHANUMERIC_REGEX = "^(?s)(?=.*[A-Za-z0-9]).{1,}$"
-  private[forms] val XSS_REGEX = "^(?s)(?!.*javascript)(?!.*[<>;:]).{1,}$"
+package models
+
+sealed trait ChooseStorageExcessItem
+
+object ChooseStorageExcessItem extends Enumerable.Implicits {
+
+  case object Shortage extends WithName("Shortage") with ChooseStorageExcessItem
+  case object Excess extends WithName("Excess") with ChooseStorageExcessItem
+
+  val values: Seq[ChooseStorageExcessItem] = Seq(Shortage, Excess)
+
+  implicit val enumerable: Enumerable[ChooseStorageExcessItem] =
+    Enumerable(values.map(v => v.toString -> v): _*)
 }

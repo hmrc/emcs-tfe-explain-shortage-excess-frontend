@@ -46,6 +46,22 @@ date.month.10 = October
 date.month.11 = November
 date.month.12 = December
 
+detailsSelectItem.key.productCategory = Product category
+detailsSelectItem.key.commodityCode = CN code
+detailsSelectItem.key.brandNameOfProduct = Brand name
+detailsSelectItem.key.commercialDescription = Commercial description
+detailsSelectItem.key.quantity = Quantity
+detailsSelectItem.value.quantity = {0} {1}
+detailsSelectItem.key.alcoholicStrength = Alcohol strength (ABV)
+detailsSelectItem.value.alcoholicStrength = {0}%
+detailsSelectItem.key.density = Density
+detailsSelectItem.value.density = {0}kg/m<sup>3</sup> {1}
+detailsSelectItem.value.density.kilograms = kilograms
+detailsSelectItem.value.density.litres15 = (temperature of 15&deg;C)
+detailsSelectItem.value.density.litres20 = (temperature of 20&deg;C)
+detailsSelectItem.key.packaging = Packaging
+detailsSelectItem.value.packaging = {0} {1}
+
 notPermittedPage.title = There is a problem
 notPermittedPage.heading = There is a problem
 notPermittedPage.p1 = You do not have permission to view this page.
@@ -213,3 +229,14 @@ itemDetails.packaging.key.quantity = Quantity
 itemDetails.packaging.key.identityOfCommercialSeal = Identity of commercial seal
 itemDetails.packaging.key.sealInformation = Seal information
 itemDetails.packaging.key.shippingMarks = Shipping marks
+
+itemAmount.title = How many {0} of item {1} did you receive? (optional)
+itemAmount.heading = How many {0} of item {1} did you receive? (optional)
+itemAmount.hint = For example, 150 or 12.694.
+itemAmount.itemDetails = View item {0} details
+itemAmount.error.required = Enter the amount you received
+itemAmount.error.maxLength = The amount you received must be 15 numbers or less
+itemAmount.error.isNotNumeric = The amount you received must be a number, like 150 or 12.694
+itemAmount.error.notGreaterThanZero = The amount you received must be more than 0
+itemAmount.error.threeDecimalPlaces = The amount you received must have 3 decimals or less
+itemAmount.error.exceedsMaxAmount = The amount you received must be {0} {1} or fewer
