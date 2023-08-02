@@ -24,3 +24,8 @@ GET        /trader/:ern/movement/:arc/when-receive-shortage-excess              
 POST       /trader/:ern/movement/:arc/when-receive-shortage-excess                  controllers.WhenReceiveShortageExcessController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
 GET        /trader/:ern/movement/:arc/when-receive-shortage-excess/change           controllers.WhenReceiveShortageExcessController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
 POST       /trader/:ern/movement/:arc/when-receive-shortage-excess/change           controllers.WhenReceiveShortageExcessController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)
+
+GET        /trader/:ern/movement/:arc/how-give-information                            controllers.HowGiveInformationController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
+POST       /trader/:ern/movement/:arc/how-give-information                            controllers.HowGiveInformationController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
+GET        /trader/:ern/movement/:arc/how-give-information/change                     controllers.HowGiveInformationController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
+POST       /trader/:ern/movement/:arc/how-give-information/change                     controllers.HowGiveInformationController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)

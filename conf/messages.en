@@ -125,3 +125,10 @@ whenReceiveShortageExcess.error.required = The date you received the shortage or
 whenReceiveShortageExcess.error.invalid = The date you received the shortage or excess must be a real date
 whenReceiveShortageExcess.error.notInFuture = The date you received the shortage or excess must be today or in the past
 whenReceiveShortageExcess.error.notBeforeDateOfDispatch = The date you received the shortage or excess must be the same as or after {0} when the movement started
+
+howGiveInformation.title = How do you want to give information about the shortage or excess?
+howGiveInformation.heading = How do you want to give information about the shortage or excess?
+howGiveInformation.whole = I want to give information about the whole movement
+howGiveInformation.choose = I want to choose which item(s) to give information about
+howGiveInformation.checkYourAnswersLabel = How do you want to give information about the shortage or excess?
+howGiveInformation.error.required = Select how you want to give information about the shortage or excess

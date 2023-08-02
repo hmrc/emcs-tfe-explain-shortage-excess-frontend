@@ -14,19 +14,32 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
+import forms.behaviours.OptionFieldBehaviours
 import models.HowGiveInformation
-import org.scalacheck.{Arbitrary, Gen}
+import play.api.data.FormError
 
-trait ModelGenerators {
+class HowGiveInformationFormProviderSpec extends OptionFieldBehaviours {
 
-  implicit lazy val arbitraryHowGiveInformation: Arbitrary[HowGiveInformation] =
-    Arbitrary {
-      Gen.oneOf(HowGiveInformation.values)
-    }
+  val form = new HowGiveInformationFormProvider()()
 
+  ".value" - {
 
+    val fieldName = "value"
+    val requiredKey = "howGiveInformation.error.required"
 
+    behave like optionsField[HowGiveInformation](
+      form,
+      fieldName,
+      validValues  = HowGiveInformation.values,
+      invalidError = FormError(fieldName, "error.invalid")
+    )
 
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
 }
