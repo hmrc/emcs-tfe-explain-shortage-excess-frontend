@@ -46,22 +46,6 @@ date.month.10 = October
 date.month.11 = November
 date.month.12 = December
 
-detailsSelectItem.key.productCategory = Product category
-detailsSelectItem.key.commodityCode = CN code
-detailsSelectItem.key.brandNameOfProduct = Brand name
-detailsSelectItem.key.commercialDescription = Commercial description
-detailsSelectItem.key.quantity = Quantity
-detailsSelectItem.value.quantity = {0} {1}
-detailsSelectItem.key.alcoholicStrength = Alcohol strength (ABV)
-detailsSelectItem.value.alcoholicStrength = {0}%
-detailsSelectItem.key.density = Density
-detailsSelectItem.value.density = {0}kg/m<sup>3</sup> {1}
-detailsSelectItem.value.density.kilograms = kilograms
-detailsSelectItem.value.density.litres15 = (temperature of 15&deg;C)
-detailsSelectItem.value.density.litres20 = (temperature of 20&deg;C)
-detailsSelectItem.key.packaging = Packaging
-detailsSelectItem.value.packaging = {0} {1}
-
 notPermittedPage.title = There is a problem
 notPermittedPage.heading = There is a problem
 notPermittedPage.p1 = You do not have permission to view this page.
