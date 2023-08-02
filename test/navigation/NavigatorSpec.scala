@@ -57,10 +57,9 @@ class NavigatorSpec extends SpecBase {
 
         "when selected Choose" - {
 
-          //TODO: Update as part of future story
-          "must go to UnderConstruction" in {
+          "must go to SelectItem" in {
             navigator.nextPage(HowGiveInformationPage, NormalMode, emptyUserAnswers.set(HowGiveInformationPage, Choose)) mustBe
-              testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+              routes.SelectItemController.onPageLoad(testErn, testArc)
           }
         }
       }
@@ -82,15 +81,6 @@ class NavigatorSpec extends SpecBase {
         //TODO: Update as part of future story when page exists to go to Check Answers
         "must go to UnderConstructionPage" in {
           navigator.nextPage(WhenReceiveShortageExcessPage, CheckMode, emptyUserAnswers) mustBe
-            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
-        }
-      }
-
-      "from HowGiveInformationPage" - {
-
-        //TODO: Update as part of future story when page exists to go to Check Answers
-        "must go to UnderConstructionPage" in {
-          navigator.nextPage(HowGiveInformationPage, NormalMode, emptyUserAnswers) mustBe
             testOnly.controllers.routes.UnderConstructionController.onPageLoad()
         }
       }
