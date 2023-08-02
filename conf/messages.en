@@ -94,6 +94,14 @@ timeout.timedOut.title = For your security we signed you out
 timeout.timedOut.heading = For your security we signed you out
 timeout.timedOut.p1 = We have not saved your answers.
 
+global.error.InternalServerError500.title=Sorry, there is a problem with the service
+global.error.InternalServerError500.heading=Sorry, there is a problem with the service
+global.error.InternalServerError500.message=Try again later.
+global.error.InternalServerError500.p1.href.text=Use fallback procedures for the Excise Movement and Control System (EMCS)
+global.error.InternalServerError500.p1.href.suffix=if you need to create a movement and the digital service is unavailable.
+global.error.InternalServerError500.p2.href.text=Contact the EMCS helpdesk
+global.error.InternalServerError500.p2.href.suffix=if you need to speak to someone about your account.
+
 arc.subHeading = Explanation for a shortage or excess for {0}
 
 error.browser.title.prefix = Error:
