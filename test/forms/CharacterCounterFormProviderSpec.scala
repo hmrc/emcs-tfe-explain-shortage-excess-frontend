@@ -16,11 +16,14 @@
 
 package forms
 
+import fixtures.messages.GiveInformationMovementMessages
 import forms.behaviours.StringFieldBehaviours
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import pages.GiveInformationMovementPage
 import play.api.data.FormError
+import play.api.i18n.{Messages, MessagesApi}
 
-class CharacterCounterFormProviderSpec extends StringFieldBehaviours {
+class CharacterCounterFormProviderSpec extends StringFieldBehaviours with GuiceOneAppPerSuite {
 
   val maxLength = 350
   val aboveMaxLength = 351
@@ -124,6 +127,37 @@ class CharacterCounterFormProviderSpec extends StringFieldBehaviours {
         val result = form.bind(data)
 
         result.errors must contain only FormError("value", "giveInformationMovement.error.required")
+      }
+    }
+  }
+
+  "have the correct error messages for the GiveInformationMovementPage" - {
+
+    Seq(GiveInformationMovementMessages.English, GiveInformationMovementMessages.Welsh) foreach { messagesForLanguage =>
+
+      implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(Seq(messagesForLanguage.lang))
+
+      s"when output for language code '${messagesForLanguage.lang.code}'" - {
+
+        "have the correct error message for no value" in {
+          messages(s"$GiveInformationMovementPage.error.required") mustBe
+            messagesForLanguage.requiredError
+        }
+
+        "have the correct error message for when value exceeds max length" in {
+          messages(s"$GiveInformationMovementPage.error.length") mustBe
+            messagesForLanguage.lengthError
+        }
+
+        "have the correct error message for when needs alphanumerics" in {
+          messages(s"$GiveInformationMovementPage.error.character") mustBe
+            messagesForLanguage.characterError
+        }
+
+        "have the correct error message for when invalid characters are included" in {
+          messages(s"$GiveInformationMovementPage.error.invalidCharacter") mustBe
+            messagesForLanguage.invalidCharacterError
+        }
       }
     }
   }

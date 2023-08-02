@@ -24,17 +24,26 @@ object GiveInformationMovementMessages {
     val heading: String
     val title: String
     val requiredError: String
+    val lengthError: String
+    val characterError: String
+    val invalidCharacterError: String
   }
 
   object English extends ViewMessages with BaseEnglish {
-    override val title: String = titleHelper("")
-    override val heading = ""
-    override val requiredError = ""
+    override val heading = "Give information about the shortage or excess"
+    override val title: String = titleHelper(heading)
+    override val requiredError = "Enter information"
+    override val lengthError = "Information must be 350 characters or less"
+    override val characterError = "Information must contain letters or numbers"
+    override val invalidCharacterError = "Information must not include < and > and : and ;"
   }
 
   object Welsh extends ViewMessages with BaseWelsh {
-    override val title: String = titleHelper("")
-    override val heading = ""
-    override val requiredError = ""
+    override val heading = "Give information about the shortage or excess"
+    override val title: String = titleHelper(heading)
+    override val requiredError = "Enter information"
+    override val lengthError = "Information must be 350 characters or less"
+    override val characterError = "Information must contain letters or numbers"
+    override val invalidCharacterError = "Information must not include < and > and : and ;"
   }
 }
