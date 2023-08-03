@@ -16,7 +16,9 @@
 
 package fixtures
 
+import models.ReferenceDataUnitOfMeasure.`1`
 import models.UserAnswers
+import models.response.referenceData.CnCodeInformation
 import play.api.mvc.Call
 
 import java.time.Instant
@@ -31,6 +33,7 @@ trait BaseFixtures {
   val testConfirmationReference = "UYVQBLMXCYK6HAEBZI7TSWAQ6XDTXFYU"
   val testReceiptDate = "2023-06-07T10:11:12.000"
   val testOnwardRoute = Call("GET", "/foo")
+  val cnCodeInfo = CnCodeInformation("", "", `1`)
 
   val emptyUserAnswers: UserAnswers = UserAnswers(
     internalId = testInternalId,

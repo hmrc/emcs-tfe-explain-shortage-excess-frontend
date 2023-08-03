@@ -19,6 +19,7 @@ package models
 import play.api.libs.json._
 import queries.{Gettable, Settable}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
+import pages.individualItems.CheckAnswersItemPage
 
 import java.time.Instant
 
@@ -27,6 +28,40 @@ final case class UserAnswers(internalId: String,
                              arc: String,
                              data: JsObject = Json.obj(),
                              lastUpdated: Instant = Instant.now) {
+
+
+  /**
+   * @return all item unique references which have answers against them
+   */
+  private[models] def itemKeys: Seq[String] = (data \\ "items").flatMap {
+    case JsObject(underlying) => underlying.keys.toSeq
+    case _ => Seq()
+  }.toSeq
+
+  /**
+   * @param key an item's unique reference
+   * @param reads
+   * @tparam A
+   * @return a Seq[A] when an A is present in data, and a Seq.empty when it isn't
+   */
+  private[models] def getItemWithReads[A](key: String)(reads: Reads[A]): Seq[A] = {
+    data \ "items" \ key match {
+      case JsDefined(value) =>
+        value.validate(reads) match {
+          case JsSuccess(value, _) => Seq(value)
+          case JsError(_) => Seq.empty
+        }
+      case _: JsUndefined => Seq.empty
+    }
+  }
+
+  def allItemsIncludingIncomplete: Seq[ItemModel] =
+    itemKeys.flatMap {
+      getItemWithReads(_)(ItemModel.reads)
+    }.sortBy(_.itemUniqueReference)
+
+  def completedItems: Seq[ItemModel] =
+    allItemsIncludingIncomplete.filter(item => get(CheckAnswersItemPage(item.itemUniqueReference)).contains(true))
 
   private[models] def handleResult: JsResult[JsObject] => UserAnswers = {
     case JsSuccess(updatedAnswers, _) =>

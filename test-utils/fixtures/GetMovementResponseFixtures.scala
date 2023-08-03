@@ -16,13 +16,88 @@
 
 package fixtures
 
+import models.CategoryOfWine
 import models.DestinationType.TaxWarehouse
-import models.response.emcsTfe.{AddressModel, ConsignorTraderModel, GetMovementResponse}
+import models.response.emcsTfe.{AddressModel, ConsignorTraderModel, GetMovementResponse, MovementItem, Packaging, WineProduct}
 import play.api.libs.json.{JsValue, Json}
 
 import java.time.LocalDate
 
 trait GetMovementResponseFixtures { _: BaseFixtures =>
+
+  val boxPackage = Packaging(
+    typeOfPackage = "BX",
+    quantity = Some(165),
+    shippingMarks = Some("marks"),
+    identityOfCommercialSeal = Some("identity"),
+    sealInformation = Some("seal info")
+  )
+
+  val cratePackage = Packaging(
+    typeOfPackage = "CR",
+    quantity = Some(12),
+    shippingMarks = None,
+    identityOfCommercialSeal = None,
+    sealInformation = None
+  )
+
+  val wineProduct = WineProduct(
+    wineProductCategory = CategoryOfWine.WineWithoutPDOPGI.toString,
+    wineGrowingZoneCode = Some("2"),
+    thirdCountryOfOrigin = Some("FR"),
+    otherInformation = Some("Other info"),
+    wineOperations = Some(Seq("4", "11", "9"))
+  )
+
+  val item1 = MovementItem(
+    itemUniqueReference = 1,
+    productCode = "W200",
+    cnCode = "22041011",
+    quantity = BigDecimal(500),
+    grossMass = BigDecimal(900),
+    netMass = BigDecimal(375),
+    alcoholicStrength = Some(BigDecimal(12.7)),
+    degreePlato = Some(1.2),
+    fiscalMark = Some("Mark 1"),
+    designationOfOrigin = Some("FR"),
+    sizeOfProducer = Some("Huge"),
+    density = Some(9000),
+    commercialDescription = Some("description"),
+    brandNameOfProduct = Some("Big fancy brand name"),
+    maturationAge = Some("Lots"),
+    packaging = Seq(boxPackage),
+    wineProduct = Some(wineProduct)
+  )
+
+  val item1WithReferenceData = item1.copy(
+    packaging = Seq(boxPackage.copy(typeOfPackage = "Box")),
+    wineProduct = Some(wineProduct.copy(wineOperations = Some(Seq("Acidification"))))
+  )
+
+  val item2 = MovementItem(
+    itemUniqueReference = 2,
+    productCode = "W300",
+    cnCode = "22041011",
+    quantity = BigDecimal(550),
+    grossMass = BigDecimal(910),
+    netMass = BigDecimal(315),
+    alcoholicStrength = None,
+    degreePlato = None,
+    fiscalMark = Some("Mark 2"),
+    designationOfOrigin = Some("FR"),
+    sizeOfProducer = Some("Huge"),
+    density = None,
+    commercialDescription = Some("description"),
+    brandNameOfProduct = Some("Big fancy brand name"),
+    maturationAge = None,
+    packaging = Seq(boxPackage, cratePackage),
+    wineProduct = Some(wineProduct)
+  )
+
+  val item2WithReferenceData = item1.copy(
+    packaging = Seq(boxPackage.copy(typeOfPackage = "Box"), cratePackage.copy(typeOfPackage = "Crate")),
+    wineProduct = Some(wineProduct.copy(wineOperations = Some(Seq("Acidification"))))
+  )
 
   val getMovementResponseModel: GetMovementResponse = GetMovementResponse(
     arc = testArc,
@@ -44,6 +119,7 @@ trait GetMovementResponseFixtures { _: BaseFixtures =>
     ),
     dateOfDispatch = LocalDate.parse("2010-03-04"),
     journeyTime = "MyJourneyTime",
+    items = Seq(item1, item2),
     numberOfItems = 2
   )
 

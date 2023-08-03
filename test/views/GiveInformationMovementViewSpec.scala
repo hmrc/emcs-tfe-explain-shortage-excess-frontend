@@ -28,8 +28,6 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import views.html.GiveInformationMovementView
 
-import java.time.LocalDate
-
 class GiveInformationMovementViewSpec extends ViewSpecBase with ViewBehaviours {
 
   object Selectors extends BaseSelectors {

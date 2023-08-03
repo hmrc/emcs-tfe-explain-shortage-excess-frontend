@@ -103,6 +103,10 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
   private def userAllowListService: String = servicesConfig.baseUrl("user-allow-list")
 
   def userAllowListBaseUrl: String = s"$userAllowListService/user-allow-list"
+
+  private def referenceDataService: String = servicesConfig.baseUrl("reference-data")
+
+  def referenceDataBaseUrl: String = s"$referenceDataService/emcs-tfe-reference-data"
 }
 
 

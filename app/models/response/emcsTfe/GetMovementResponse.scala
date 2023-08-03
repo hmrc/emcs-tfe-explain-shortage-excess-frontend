@@ -32,6 +32,7 @@ case class GetMovementResponse(arc: String,
                                consignorTrader: ConsignorTraderModel,
                                dateOfDispatch: LocalDate,
                                journeyTime: String,
+                               items: Seq[MovementItem],
                                numberOfItems: Int) {
 }
 

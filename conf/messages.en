@@ -15,6 +15,21 @@ site.signBackIn = Sign back in to EMCS
 site.govuk = GOV.UK
 site.opensInNewTab = (opens in new tab)
 
+unitOfMeasure.kilograms.short = kg
+unitOfMeasure.kilograms.long = kilograms
+unitOfMeasure.litres15.short = litres
+unitOfMeasure.litres15.long = litres (temperature of 15°C)
+unitOfMeasure.litres20.short = litres
+unitOfMeasure.litres20.long = litres (temperature of 20°C)
+unitOfMeasure.thousands.short = x1000
+unitOfMeasure.thousands.long = x1000 items
+
+wineProductCategory.wineWithoutPDOPGI = Wine without PDO/PGI
+wineProductCategory.varietalWineWithoutPDOPGI = Varietal wine without PDO/PGI
+wineProductCategory.wineWithPDOOrPGI = Wine with PDO or PGI
+wineProductCategory.importedWine = Imported wine
+wineProductCategory.other = Other
+
 date.day = Day
 date.month = Month
 date.year = Year
@@ -139,3 +154,16 @@ giveInformationMovement.error.required = Enter information
 giveInformationMovement.error.length = Information must be 350 characters or less
 giveInformationMovement.error.character = Information must contain letters or numbers
 giveInformationMovement.error.invalidCharacter = Information must not include < and > and : and ;
+
+selectItem.title = Select an item to give information about
+selectItem.heading = Select an item to give information about
+selectItem.alreadyAddedItems.paragraph.singular = You have given information for 1 item.
+selectItem.alreadyAddedItems.paragraph.plural = You have given information for {0} items.
+selectItem.alreadyAddedItems.paragraph.link.text = View and manage the items you''ve already given information about.
+selectItem.table.heading.item = Item
+selectItem.table.heading.description = Commercial description
+selectItem.table.heading.quantity = Quantity
+selectItem.table.heading.packaging = Packaging
+selectItem.table.row.item = Item {0}
+selectItem.table.row.quantity = {0} {1}
+selectItem.table.row.packaging = {0} {1}
