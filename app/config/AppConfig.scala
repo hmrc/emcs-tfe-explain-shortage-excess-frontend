@@ -62,6 +62,10 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
 
   lazy val contactEMCSHelpdeskUrl: String = configuration.get[String]("urls.contactEmcsHelpdesk")
 
+  private lazy val tradeTariffCommoditiesUrl: String = configuration.get[String]("urls.tradeTariffCommodities")
+
+  def getUrlForCommodityCode(code: String): String = s"$tradeTariffCommoditiesUrl/${code}00"
+
   def loginContinueUrl(ern: String, arc: String): String = configuration.get[String]("urls.loginContinue") + s"/trader/$ern/movement/$arc"
 
   def languageTranslationEnabled: Boolean = isEnabled(WelshLanguage)

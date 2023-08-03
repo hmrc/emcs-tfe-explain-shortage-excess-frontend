@@ -20,7 +20,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class GetMovementConnectorISpec  extends AnyFreeSpec
+class GetMovementConnectorISpec extends AnyFreeSpec
   with WireMockHelper
   with ScalaFutures
   with Matchers
