@@ -18,13 +18,15 @@ package controllers
 
 import models.Enumerable
 import models.requests.DataRequest
+import models.response.emcsTfe.MovementItem
 import pages.QuestionPage
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.libs.json.Format
+import play.api.mvc.Result
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 trait BaseController extends FrontendBaseController with I18nSupport with Enumerable.Implicits {
 
@@ -33,5 +35,11 @@ trait BaseController extends FrontendBaseController with I18nSupport with Enumer
   def fillForm[A](page: QuestionPage[A], form: Form[A])
                  (implicit request: DataRequest[_], format: Format[A]): Form[A] =
     request.userAnswers.get(page).fold(form)(form.fill)
+
+  def withMovementItemAsync(idx: Int)(f: MovementItem => Future[Result])(implicit request: DataRequest[_]): Future[Result] =
+    request.movementDetails.item(idx) match {
+      case Some(item) => f(item)
+      case None => Future.successful(Redirect(routes.SelectItemController.onPageLoad(request.ern, request.arc).url))
+    }
 
 }

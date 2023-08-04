@@ -34,6 +34,7 @@ case class GetMovementResponse(arc: String,
                                journeyTime: String,
                                items: Seq[MovementItem],
                                numberOfItems: Int) {
+  def item(reference: Int): Option[MovementItem] = items.find(_.itemUniqueReference == reference)
 }
 
 object GetMovementResponse {

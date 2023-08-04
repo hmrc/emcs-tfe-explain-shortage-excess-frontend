@@ -1,0 +1,53 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.requests.DataRequest
+@import viewmodels.ItemDetailsCardHelper
+@import views.html.components.{h1, summaryCard, table}
+@import models.response.emcsTfe.MovementItem
+@import models.response.referenceData.CnCodeInformation
+
+@this(
+        layout: templates.Layout,
+        govukButton: GovukButton,
+        h1: h1,
+        table: table,
+        helper: ItemDetailsCardHelper,
+        summaryCard: summaryCard
+)
+
+@(item: MovementItem, cnCodeInformation: CnCodeInformation)(implicit request: DataRequest[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("itemDetails.title", item.itemUniqueReference))) {
+
+    @h1(messages("itemDetails.heading", item.itemUniqueReference), Some(messages("arc.subHeading", request.arc)), "govuk-heading-l")
+
+    @summaryCard(
+        Card(Some(CardTitle(Text(messages("itemDetails.itemDetailsCardTitle"))))),
+        helper.constructItemDetailsCard(item, cnCodeInformation)
+    )
+
+    @item.packaging.zipWithIndex.map { case (packaging, i) =>
+        @summaryCard(
+            Card(Some(CardTitle(Text(messages("itemDetails.packagingTypeCardTitle", i + 1))))),
+            helper.constructPackagingTypeCard(packaging)
+        )
+    }
+}
+
+@{
+    //$COVERAGE-OFF$
+}
