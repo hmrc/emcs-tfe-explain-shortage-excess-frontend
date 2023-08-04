@@ -16,10 +16,10 @@
 
 package pages
 
-import models.ChooseStorageExcessItem
+import models.ChooseShortageExcessItem
 import play.api.libs.json.{JsPath, __}
 
-case class ChooseShortageExcessItemPage(idx: Int) extends QuestionPage[ChooseStorageExcessItem] {
+case class ChooseShortageExcessItemPage(idx: Int) extends QuestionPage[ChooseShortageExcessItem] {
 
   override def path: JsPath = __ \ "items" \ s"item-$idx" \ toString
 

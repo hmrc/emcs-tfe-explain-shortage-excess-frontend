@@ -16,15 +16,15 @@
 
 package models
 
-sealed trait ChooseStorageExcessItem
+sealed trait ChooseShortageExcessItem
 
-object ChooseStorageExcessItem extends Enumerable.Implicits {
+object ChooseShortageExcessItem extends Enumerable.Implicits {
 
-  case object Shortage extends WithName("Shortage") with ChooseStorageExcessItem
-  case object Excess extends WithName("Excess") with ChooseStorageExcessItem
+  case object Shortage extends WithName("Shortage") with ChooseShortageExcessItem
+  case object Excess extends WithName("Excess") with ChooseShortageExcessItem
 
-  val values: Seq[ChooseStorageExcessItem] = Seq(Shortage, Excess)
+  val values: Seq[ChooseShortageExcessItem] = Seq(Shortage, Excess)
 
-  implicit val enumerable: Enumerable[ChooseStorageExcessItem] =
+  implicit val enumerable: Enumerable[ChooseShortageExcessItem] =
     Enumerable(values.map(v => v.toString -> v): _*)
 }

@@ -19,7 +19,7 @@ package controllers
 import controllers.actions._
 import forms.ItemAmountFormProvider
 import models.Mode
-import models.ChooseStorageExcessItem.Shortage
+import models.ChooseShortageExcessItem.Shortage
 import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
 import models.response.referenceData.CnCodeInformation
