@@ -17,16 +17,17 @@
 package controllers
 
 import base.SpecBase
+import forms.ContinueDraftFormProvider
 import mocks.services.MockUserAnswersService
 import models.{NormalMode, UserAnswers}
 import pages.WhenReceiveShortageExcessPage
 import play.api.http.Status.SEE_OTHER
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, defaultAwaitTimeout, redirectLocation, route, running, status, writeableOf_AnyContentAsEmpty}
+import play.api.test.Helpers._
 import services.UserAnswersService
+import views.html.ContinueDraftView
 
-import java.time.LocalDate
 import scala.concurrent.Future
 
 class IndexControllerSpec extends SpecBase with MockUserAnswersService {
@@ -35,13 +36,19 @@ class IndexControllerSpec extends SpecBase with MockUserAnswersService {
     val application = applicationBuilder(userAnswers).overrides(
       bind[UserAnswersService].toInstance(mockUserAnswersService)
     ).build()
+
+    lazy val view = application.injector.instanceOf[ContinueDraftView]
+
+    lazy val form = application.injector.instanceOf[ContinueDraftFormProvider].apply()
+
+    implicit val msgs = messages(application)
   }
 
   "IndexController" - {
 
     ".onPageLoad()" - {
 
-      "when existing UserAnswers don't exist" - {
+      "when existing UserAnswers do not exist" - {
 
         "must initialise answers and redirect to when receive shortage or excess page" in new Fixture() {
           running(application) {
@@ -57,23 +64,23 @@ class IndexControllerSpec extends SpecBase with MockUserAnswersService {
         }
       }
 
-      "when existing UserAnswers exists" - {
+      "when existing UserAnswers exist" - {
 
-        "must not initialise any answers and redirect to when receive shortage or excess page" in new Fixture(Some(
-          emptyUserAnswers.set(WhenReceiveShortageExcessPage, LocalDate.of(2023,7,31))
-        )) {
-          running(application) {
+        "must redirect to the DraftController" in
+          new Fixture(Some(emptyUserAnswers.set(WhenReceiveShortageExcessPage, testDateOfWhenReceiveShortageOrExcess))) {
 
-            MockUserAnswersService.set().never()
+            running(application) {
 
-            val request = FakeRequest(GET, routes.IndexController.onPageLoad(testErn, testArc).url)
-            val result = route(application, request).value
+              val request = FakeRequest(GET, routes.IndexController.onPageLoad(testErn, testArc).url)
+              val result = route(application, request).value
 
-            status(result) mustEqual SEE_OTHER
-            redirectLocation(result) mustBe Some(routes.WhenReceiveShortageExcessController.onPageLoad(testErn, testArc, NormalMode).url)
+              status(result) mustEqual SEE_OTHER
+              redirectLocation(result) mustBe Some(routes.DraftController.onPageLoad(testErn, testArc).url)
+            }
           }
-        }
       }
+
     }
+
   }
 }
