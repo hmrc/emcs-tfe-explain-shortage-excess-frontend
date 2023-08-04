@@ -16,12 +16,18 @@
 
 package pages
 
-import models.ChooseShortageExcessItem
-import play.api.libs.json.{JsPath, __}
+import pages.behaviour.PageBehaviours
+import pages.individualItems.GiveInformationItemPage
 
-case class ChooseShortageExcessItemPage(idx: Int) extends QuestionPage[ChooseShortageExcessItem] {
 
-  override def path: JsPath = __ \ "items" \ s"item-$idx" \ toString
+class GiveInformationItemPageSpec extends PageBehaviours {
 
-  override def toString: String = "chooseShortageExcessItem"
+  "GiveInformationItemPage(1)" - {
+
+    beRetrievable[String](GiveInformationItemPage(1))
+
+    beSettable[String](GiveInformationItemPage(1))
+
+    beRemovable[String](GiveInformationItemPage(1))
+  }
 }

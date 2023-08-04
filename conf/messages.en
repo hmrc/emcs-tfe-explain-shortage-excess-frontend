@@ -253,3 +253,13 @@ detailsSelectItem.value.density.litres20 = (temperature of 20&deg;C)
 detailsSelectItem.key.packaging = Packaging
 detailsSelectItem.value.packaging = {0} {1}
 detailsSelectItem.viewAllDetails = View all details for item {0}
+
+giveInformationItem.title.Shortage = Give more information about receiving a shortage of item {0}
+giveInformationItem.title.Excess = Give more information about receiving an excess of item {0}
+giveInformationItem.heading.Shortage = Give more information about receiving a shortage of item {0}
+giveInformationItem.heading.Excess = Give more information about receiving an excess of item {0}
+giveInformationItem.itemDetails = View item {0} details
+giveInformationItem.error.required = Enter information
+giveInformationItem.error.length = Information must be 350 characters or less
+giveInformationItem.error.character = Information must contain letters or numbers
+giveInformationItem.error.invalidCharacter = Information must not include < and > and : and ;
