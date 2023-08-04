@@ -21,8 +21,8 @@ import models.UserAnswers
 import models.response.referenceData.CnCodeInformation
 import play.api.mvc.Call
 
-import java.time.Instant
 import java.time.temporal.ChronoUnit
+import java.time.{Instant, LocalDate}
 
 trait BaseFixtures {
 
@@ -30,6 +30,7 @@ trait BaseFixtures {
   val testInternalId: String = "internalId"
   val testErn: String = "ern"
   val testArc: String = "arc"
+  val testDateOfWhenReceiveShortageOrExcess: LocalDate = LocalDate.now()
   val testConfirmationReference = "UYVQBLMXCYK6HAEBZI7TSWAQ6XDTXFYU"
   val testReceiptDate = "2023-06-07T10:11:12.000"
   val testOnwardRoute = Call("GET", "/foo")

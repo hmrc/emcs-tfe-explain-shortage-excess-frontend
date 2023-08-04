@@ -135,6 +135,14 @@ journeyRecovery.p3.viewAccountLink = view all your account information
 journeyRecovery.p3.or = or
 journeyRecovery.p3.signOutLink = sign out
 
+continueDraft.title=Do you want to continue this draft explanation for a shortage or excess?
+continueDraft.heading=Do you want to continue this draft explanation for a shortage or excess?
+continueDraft.error.required=Select if you want to continue this draft explanation for a shortage or excess
+continueDraft.p1=An explanation for a shortage or excess is already in progress for this movement. You can continue with this draft, or start a new one.
+continueDraft.indent=If you choose to start a new explanation for a shortage or excess this draft will be deleted.
+continueDraft.continue=Continue with this draft
+continueDraft.startAgain=Start a new explanation for a shortage or excess
+
 whenReceiveShortageExcess.title = Tell HMRC about a shortage or excess
 whenReceiveShortageExcess.heading = Tell HMRC about a shortage or excess
 whenReceiveShortageExcess.p1 = Unlike with a report of receipt, the information you give here will only be visible to you and to HMRC.

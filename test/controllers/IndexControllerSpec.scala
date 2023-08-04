@@ -17,16 +17,18 @@
 package controllers
 
 import base.SpecBase
+import forms.ContinueDraftFormProvider
 import mocks.services.MockUserAnswersService
+import models.requests.OptionalDataRequest
 import models.{NormalMode, UserAnswers}
 import pages.WhenReceiveShortageExcessPage
-import play.api.http.Status.SEE_OTHER
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, defaultAwaitTimeout, redirectLocation, route, running, status, writeableOf_AnyContentAsEmpty}
+import play.api.test.Helpers._
 import services.UserAnswersService
+import views.html.ContinueDraftView
 
-import java.time.LocalDate
 import scala.concurrent.Future
 
 class IndexControllerSpec extends SpecBase with MockUserAnswersService {
@@ -35,6 +37,12 @@ class IndexControllerSpec extends SpecBase with MockUserAnswersService {
     val application = applicationBuilder(userAnswers).overrides(
       bind[UserAnswersService].toInstance(mockUserAnswersService)
     ).build()
+
+    lazy val view = application.injector.instanceOf[ContinueDraftView]
+
+    lazy val form = application.injector.instanceOf[ContinueDraftFormProvider].apply()
+
+    implicit val msgs = messages(application)
   }
 
   "IndexController" - {
@@ -57,22 +65,84 @@ class IndexControllerSpec extends SpecBase with MockUserAnswersService {
         }
       }
 
-      "when existing UserAnswers exists" - {
+      "when existing UserAnswers exist" - {
 
-        "must not initialise any answers and redirect to when receive shortage or excess page" in new Fixture(Some(
-          emptyUserAnswers.set(WhenReceiveShortageExcessPage, LocalDate.of(2023,7,31))
-        )) {
+        "must render the Continue Draft view" in new Fixture(Some(emptyUserAnswers.set(WhenReceiveShortageExcessPage, testDateOfWhenReceiveShortageOrExcess))) {
+
           running(application) {
 
-            MockUserAnswersService.set().never()
-
             val request = FakeRequest(GET, routes.IndexController.onPageLoad(testErn, testArc).url)
+            implicit val optDataRequest: OptionalDataRequest[_] = optionalDataRequest(request, Some(userAnswers.get))
             val result = route(application, request).value
 
-            status(result) mustEqual SEE_OTHER
-            redirectLocation(result) mustBe Some(routes.WhenReceiveShortageExcessController.onPageLoad(testErn, testArc, NormalMode).url)
+            status(result) mustEqual OK
+            contentAsString(result) mustBe view(form, routes.IndexController.onSubmit(testErn, testArc)).toString()
           }
         }
+      }
+
+    }
+
+    ".onSubmit()" - {
+
+      "when user has NOT selected an option" - {
+
+        "must render the page with Errors" in
+          new Fixture(Some(emptyUserAnswers.set(WhenReceiveShortageExcessPage, testDateOfWhenReceiveShortageOrExcess))) {
+
+            running(application) {
+
+              val request = FakeRequest(POST, routes.IndexController.onPageLoad(testErn, testArc).url)
+                .withFormUrlEncodedBody(("value", ""))
+
+              implicit val optDataRequest: OptionalDataRequest[_] = optionalDataRequest(request, Some(userAnswers.get))
+              val boundForm = form.bind(Map("value" -> ""))
+              val result = route(application, request).value
+
+              status(result) mustEqual BAD_REQUEST
+              contentAsString(result) mustBe view(boundForm, routes.IndexController.onSubmit(testErn, testArc)).toString()
+            }
+          }
+      }
+
+      "when user has selected to continueDraft" - {
+
+        "must re-use the UserAnswers and redirect to WhenReceiveShortageExcessController" in
+          new Fixture(Some(emptyUserAnswers.set(WhenReceiveShortageExcessPage, testDateOfWhenReceiveShortageOrExcess))) {
+
+            running(application) {
+
+              MockUserAnswersService.set(userAnswers.get).returns(Future.successful(userAnswers.get))
+
+              val request = FakeRequest(POST, routes.IndexController.onPageLoad(testErn, testArc).url)
+                .withFormUrlEncodedBody(("value", "true"))
+
+              val result = route(application, request).value
+
+              status(result) mustEqual SEE_OTHER
+              redirectLocation(result) mustBe Some(routes.WhenReceiveShortageExcessController.onPageLoad(testErn, testArc, NormalMode).url)
+            }
+          }
+      }
+
+      "when user has selected to startAgain" - {
+
+        "must re-initialise the UserAnswers and redirect to WhenReceiveShortageExcessController" in
+          new Fixture(Some(emptyUserAnswers.set(WhenReceiveShortageExcessPage, testDateOfWhenReceiveShortageOrExcess))) {
+
+            running(application) {
+
+              MockUserAnswersService.set(emptyUserAnswers).returns(Future.successful(emptyUserAnswers))
+
+              val request = FakeRequest(POST, routes.IndexController.onPageLoad(testErn, testArc).url)
+                .withFormUrlEncodedBody(("value", "false"))
+
+              val result = route(application, request).value
+
+              status(result) mustEqual SEE_OTHER
+              redirectLocation(result) mustBe Some(routes.WhenReceiveShortageExcessController.onPageLoad(testErn, testArc, NormalMode).url)
+            }
+          }
       }
     }
   }

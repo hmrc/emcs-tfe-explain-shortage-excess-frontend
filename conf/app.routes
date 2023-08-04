@@ -16,6 +16,7 @@ GET         /account/signed-out                                                 
 GET         /account/timeout                                                      controllers.TimeoutController.onPageLoad()
 
 GET         /trader/:ern/movement/:arc                                            controllers.IndexController.onPageLoad(ern: String, arc: String)
+POST        /trader/:ern/movement/:arc                                            controllers.IndexController.onSubmit(ern: String, arc: String)
 
 GET         /trader/:ern/movement/:arc/no-information-delay                       controllers.JourneyRecoveryController.onPageLoad(ern: String, arc: String)
 
