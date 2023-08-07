@@ -59,4 +59,6 @@ POST        /trader/:ern/movement/:arc/item/:idx/give-information-item          
 GET         /trader/:ern/movement/:arc/item/:idx/give-information-item/change         controllers.GiveInformationItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
 POST        /trader/:ern/movement/:arc/item/:idx/give-information-item/change         controllers.GiveInformationItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
 
+GET         /trader/:ern/movement/:arc/item/:idx/check-answers-item               controllers.ItemCheckAnswersController.onPageLoad(ern: String, arc: String, idx: Int)
+
 GET         /trader/:ern/movement/:arc/confirmation                                   controllers.ConfirmationController.onPageLoad(ern: String, arc: String)
