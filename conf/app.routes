@@ -45,3 +45,6 @@ GET         /trader/:ern/movement/:arc/item/:idx/item-amount                    
 POST        /trader/:ern/movement/:arc/item/:idx/item-amount                      controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
 GET         /trader/:ern/movement/:arc/item/:idx/item-amount/change               controllers.ItemAmountController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
 POST        /trader/:ern/movement/:arc/item/:idx/item-amount/change               controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+
+GET        /trader/:ern/movement/:arc/item/:idx/details-select-item                           controllers.DetailsSelectItemController.onPageLoad(ern: String, arc: String, idx: Int)
+POST       /trader/:ern/movement/:arc/item/:idx/details-select-item                           controllers.DetailsSelectItemController.onSubmit(ern: String, arc: String, idx: Int)

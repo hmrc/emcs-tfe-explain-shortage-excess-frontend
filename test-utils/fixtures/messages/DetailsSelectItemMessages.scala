@@ -20,7 +20,11 @@ import fixtures.i18n
 
 object DetailsSelectItemMessages {
 
+
   sealed trait ViewMessages { _: i18n =>
+    val heading: String
+    val title: String
+    val h1: Int => String
     val tableProductCategoryKey: String
     val tableCNCodeKey: String
     val tableBrandNameKey: String
@@ -34,9 +38,14 @@ object DetailsSelectItemMessages {
     val alcoholStrength: Option[BigDecimal] => String
     val density: Option[BigDecimal] => String
     val tablePackaging: String
+    val viewAllDetails: Int => String
+
   }
 
   object English extends ViewMessages with BaseEnglish {
+    override val heading = "Do you want to give information about this item?"
+    override val title: String = titleHelper(heading)
+    override val h1: Int => String = i => s"Item $i"
     override val tableProductCategoryKey = "Product category"
     override val tableCNCodeKey = "CN code"
     override val tableBrandNameKey = "Brand name"
@@ -56,9 +65,13 @@ object DetailsSelectItemMessages {
       case None => "N/A"
     }
     override val tablePackaging: String = "Packaging"
+    override val viewAllDetails: Int => String = i => s"View all details for item $i"
   }
 
   object Welsh extends ViewMessages with BaseWelsh {
+    override val heading = "Do you want to give information about this item?"
+    override val title: String = titleHelper(heading)
+    override val h1: Int => String = i => s"Item $i"
     override val tableProductCategoryKey = "Product category"
     override val tableCNCodeKey = "CN code"
     override val tableBrandNameKey = "Brand name"
@@ -78,5 +91,6 @@ object DetailsSelectItemMessages {
       case None => "N/A"
     }
     override val tablePackaging: String = "Packaging"
+    override val viewAllDetails: Int => String = i => s"View all details for item $i"
   }
 }
