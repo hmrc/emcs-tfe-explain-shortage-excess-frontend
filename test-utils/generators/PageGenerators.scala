@@ -28,6 +28,9 @@ trait PageGenerators {
   implicit lazy val arbitraryGiveInformationMovementPage: Arbitrary[GiveInformationMovementPage.type] =
     Arbitrary(GiveInformationMovementPage)
 
+  implicit lazy val arbitraryDetailsSelectItemPage: Arbitrary[DetailsSelectItemPage.type] =
+    Arbitrary(DetailsSelectItemPage)
+
   implicit lazy val arbitraryWhenReceiveShortageExcessPage: Arbitrary[WhenReceiveShortageExcessPage.type] =
     Arbitrary(WhenReceiveShortageExcessPage)
 

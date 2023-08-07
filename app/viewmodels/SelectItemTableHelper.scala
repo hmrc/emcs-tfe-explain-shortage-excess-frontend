@@ -42,8 +42,7 @@ class SelectItemTableHelper @Inject()(link: link, list: list) {
         Seq(
           TableRow(
             content = HtmlContent(link(
-              // TODO: change when /details-select-item is created
-              link = testOnly.controllers.routes.UnderConstructionController.onPageLoad().url,
+              link = controllers.routes.DetailsSelectItemController.onPageLoad(ern, arc, item.itemUniqueReference).url,
               messageKey = messages("selectItem.table.row.item", item.itemUniqueReference)
             )),
             classes = "white-space-nowrap"

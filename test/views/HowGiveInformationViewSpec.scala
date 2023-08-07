@@ -31,7 +31,7 @@ class HowGiveInformationViewSpec extends ViewSpecBase with ViewBehaviours {
 
   object Selectors extends BaseSelectors
 
-  "WhenReceiveShortageExcess view" - {
+  "HowGiveInformation view" - {
 
     Seq(HowGiveInformationMessages.English, HowGiveInformationMessages.Welsh).foreach { messagesForLanguage =>
 

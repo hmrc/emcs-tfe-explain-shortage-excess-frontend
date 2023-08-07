@@ -82,6 +82,11 @@ final case class UserAnswers(internalId: String,
     handleResult {
       data.removeObject(page.path)
     }
+
+  def removeItem(idx: Int): UserAnswers =
+    handleResult {
+      data.removeObject(__ \ "items" \ s"item-$idx")
+    }
 }
 
 object UserAnswers {
