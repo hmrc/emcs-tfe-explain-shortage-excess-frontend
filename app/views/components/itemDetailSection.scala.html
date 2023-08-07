@@ -19,18 +19,16 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import viewmodels.ItemDetailsHelper
 
-@this(
-    govukDetails : GovukDetails,
-    govukSummaryList: GovukSummaryList,
-    helper: ItemDetailsHelper
-)
+@this(govukDetails: GovukDetails,
+        govukSummaryList: GovukSummaryList,
+        helper: ItemDetailsHelper)
 
 @(summary: String, item: MovementItem, cnCodeInformation: CnCodeInformation)(implicit messages: Messages)
 
 @govukDetails(Details(
-  summary = Text(messages(summary, item.itemUniqueReference)),
-  content = HtmlContent(
-      govukSummaryList(SummaryList(helper.constructItemSummaryRows(item, cnCodeInformation)))
+    summary = Text(messages(summary, item.itemUniqueReference)),
+    content = HtmlContent(
+        govukSummaryList(SummaryList(helper.constructItemSummaryRows(item, cnCodeInformation)))
     )
 ))
 

@@ -35,7 +35,7 @@
 
 @layout(pageTitle = title(form, messages("itemAmount.title", messages(s"unitOfMeasure.${cnCodeInfo.unitOfMeasureCode.toUnitOfMeasure}.long"), item.itemUniqueReference))) {
 
-    @formHelper(action, 'autoComplete -> "off") {
+    @formHelper(action, Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))

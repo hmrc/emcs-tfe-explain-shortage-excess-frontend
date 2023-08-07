@@ -31,7 +31,7 @@
 
 @layout(pageTitle = title(form, messages("whenReceiveShortageExcess.title"))) {
 
-    @formHelper(action, 'autoComplete -> "off") {
+    @formHelper(action, Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value.day")))

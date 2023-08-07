@@ -31,6 +31,7 @@ trait BaseFixtures {
   val testErn: String = "ern"
   val testArc: String = "arc"
   val testDateOfWhenReceiveShortageOrExcess: LocalDate = LocalDate.now()
+  val testIdx: Int = 1
   val testConfirmationReference = "UYVQBLMXCYK6HAEBZI7TSWAQ6XDTXFYU"
   val testSubmissionDate = LocalDate.now()
   val testConfirmationDetails = ConfirmationDetails(testConfirmationReference, testSubmissionDate)

@@ -1,57 +1,62 @@
 # microservice specific routes
 
-->          /hmrc-frontend                                                           hmrcfrontend.Routes
+->          /hmrc-frontend                                                                 hmrcfrontend.Routes
 
-->          /error                                                                   error.Routes
+->          /error                                                                         error.Routes
 
-GET         /refresh-session                                                         controllers.KeepAliveController.keepAlive()
+GET         /refresh-session                                                               controllers.KeepAliveController.keepAlive()
 
-GET         /language/:lang                                                          controllers.LanguageSwitchController.switchToLanguage(lang: String)
+GET         /language/:lang                                                                controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET         /assets/*file                                                            controllers.Assets.versioned(path = "/public", file: Asset)
+GET         /assets/*file                                                                  controllers.Assets.versioned(path = "/public", file: Asset)
 
-GET         /account/sign-out-survey                                                 controllers.auth.AuthController.signOut()
-GET         /account/sign-out                                                        controllers.auth.AuthController.signOutNoSurvey()
-GET         /account/signed-out                                                      controllers.auth.SignedOutController.onPageLoad()
-GET         /account/timeout                                                         controllers.TimeoutController.onPageLoad()
+GET         /account/sign-out-survey                                                       controllers.auth.AuthController.signOut()
+GET         /account/sign-out                                                              controllers.auth.AuthController.signOutNoSurvey()
+GET         /account/signed-out                                                            controllers.auth.SignedOutController.onPageLoad()
+GET         /account/timeout                                                               controllers.TimeoutController.onPageLoad()
 
-GET         /trader/:ern/movement/:arc                                               controllers.IndexController.onPageLoad(ern: String, arc: String)
+GET         /trader/:ern/movement/:arc                                                     controllers.IndexController.onPageLoad(ern: String, arc: String)
 
-GET         /trader/:ern/movement/:arc/draft                                         controllers.DraftController.onPageLoad(ern: String, arc: String)
-POST        /trader/:ern/movement/:arc/draft                                         controllers.DraftController.onSubmit(ern: String, arc: String)
+GET         /trader/:ern/movement/:arc/draft                                               controllers.DraftController.onPageLoad(ern: String, arc: String)
+POST        /trader/:ern/movement/:arc/draft                                               controllers.DraftController.onSubmit(ern: String, arc: String)
 
-GET         /trader/:ern/movement/:arc/no-information-delay                          controllers.JourneyRecoveryController.onPageLoad(ern: String, arc: String)
+GET         /trader/:ern/movement/:arc/no-information-delay                                controllers.JourneyRecoveryController.onPageLoad(ern: String, arc: String)
 
-GET         /trader/:ern/movement/:arc/when-receive-shortage-excess                  controllers.WhenReceiveShortageExcessController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
-POST        /trader/:ern/movement/:arc/when-receive-shortage-excess                  controllers.WhenReceiveShortageExcessController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
-GET         /trader/:ern/movement/:arc/when-receive-shortage-excess/change           controllers.WhenReceiveShortageExcessController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
-POST        /trader/:ern/movement/:arc/when-receive-shortage-excess/change           controllers.WhenReceiveShortageExcessController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)
+GET         /trader/:ern/movement/:arc/when-receive-shortage-excess                        controllers.WhenReceiveShortageExcessController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
+POST        /trader/:ern/movement/:arc/when-receive-shortage-excess                        controllers.WhenReceiveShortageExcessController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
+GET         /trader/:ern/movement/:arc/when-receive-shortage-excess/change                 controllers.WhenReceiveShortageExcessController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
+POST        /trader/:ern/movement/:arc/when-receive-shortage-excess/change                 controllers.WhenReceiveShortageExcessController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)
 
-GET         /trader/:ern/movement/:arc/how-give-information                          controllers.HowGiveInformationController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
-POST        /trader/:ern/movement/:arc/how-give-information                          controllers.HowGiveInformationController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
-GET         /trader/:ern/movement/:arc/how-give-information/change                   controllers.HowGiveInformationController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
-POST        /trader/:ern/movement/:arc/how-give-information/change                   controllers.HowGiveInformationController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)
+GET         /trader/:ern/movement/:arc/how-give-information                                controllers.HowGiveInformationController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
+POST        /trader/:ern/movement/:arc/how-give-information                                controllers.HowGiveInformationController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
+GET         /trader/:ern/movement/:arc/how-give-information/change                         controllers.HowGiveInformationController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
+POST        /trader/:ern/movement/:arc/how-give-information/change                         controllers.HowGiveInformationController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)
 
-GET         /trader/:ern/movement/:arc/give-information-movement                     controllers.GiveInformationMovementController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
-POST        /trader/:ern/movement/:arc/give-information-movement                     controllers.GiveInformationMovementController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
-GET         /trader/:ern/movement/:arc/give-information-movement/change              controllers.GiveInformationMovementController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
-POST        /trader/:ern/movement/:arc/give-information-movement/change              controllers.GiveInformationMovementController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)
+GET         /trader/:ern/movement/:arc/give-information-movement                           controllers.GiveInformationMovementController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
+POST        /trader/:ern/movement/:arc/give-information-movement                           controllers.GiveInformationMovementController.onSubmit(ern: String, arc: String, mode: Mode = NormalMode)
+GET         /trader/:ern/movement/:arc/give-information-movement/change                    controllers.GiveInformationMovementController.onPageLoad(ern: String, arc: String, mode: Mode = CheckMode)
+POST        /trader/:ern/movement/:arc/give-information-movement/change                    controllers.GiveInformationMovementController.onSubmit(ern: String, arc: String, mode: Mode = CheckMode)
 
-GET         /trader/:ern/movement/:arc/select-item                                   controllers.SelectItemController.onPageLoad(ern: String, arc: String)
+GET         /trader/:ern/movement/:arc/select-item                                         controllers.SelectItemController.onPageLoad(ern: String, arc: String)
 
-GET         /trader/:ern/movement/:arc/item/:idx/item-details                        controllers.ItemDetailsController.onPageLoad(ern: String, arc: String, idx: Int)
+GET         /trader/:ern/movement/:arc/item/:idx/item-details                              controllers.ItemDetailsController.onPageLoad(ern: String, arc: String, idx: Int)
 
-GET         /trader/:ern/movement/:arc/item/:idx/details-select-item                 controllers.DetailsSelectItemController.onPageLoad(ern: String, arc: String, idx: Int)
-POST        /trader/:ern/movement/:arc/item/:idx/details-select-item                 controllers.DetailsSelectItemController.onSubmit(ern: String, arc: String, idx: Int)
+GET         /trader/:ern/movement/:arc/item/:idx/details-select-item                       controllers.DetailsSelectItemController.onPageLoad(ern: String, arc: String, idx: Int)
+POST        /trader/:ern/movement/:arc/item/:idx/details-select-item                       controllers.DetailsSelectItemController.onSubmit(ern: String, arc: String, idx: Int)
 
-GET         /trader/:ern/movement/:arc/item/:idx/item-amount                         controllers.ItemAmountController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
-POST        /trader/:ern/movement/:arc/item/:idx/item-amount                         controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
-GET         /trader/:ern/movement/:arc/item/:idx/item-amount/change                  controllers.ItemAmountController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
-POST        /trader/:ern/movement/:arc/item/:idx/item-amount/change                  controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+GET         /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess-item               controllers.ChooseShortageExcessItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
+POST        /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess-item               controllers.ChooseShortageExcessItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
+GET         /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess-item/change        controllers.ChooseShortageExcessItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+POST        /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess-item/change        controllers.ChooseShortageExcessItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
 
-GET         /trader/:ern/movement/:arc/item/:idx/give-information-item               controllers.GiveInformationItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
-POST        /trader/:ern/movement/:arc/item/:idx/give-information-item               controllers.GiveInformationItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
-GET         /trader/:ern/movement/:arc/item/:idx/give-information-item/change        controllers.GiveInformationItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
-POST        /trader/:ern/movement/:arc/item/:idx/give-information-item/change        controllers.GiveInformationItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+GET         /trader/:ern/movement/:arc/item/:idx/item-amount                               controllers.ItemAmountController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
+POST        /trader/:ern/movement/:arc/item/:idx/item-amount                               controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
+GET         /trader/:ern/movement/:arc/item/:idx/item-amount/change                        controllers.ItemAmountController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+POST        /trader/:ern/movement/:arc/item/:idx/item-amount/change                        controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
 
-GET         /trader/:ern/movement/:arc/confirmation                                  controllers.ConfirmationController.onPageLoad(ern: String, arc: String)
+GET         /trader/:ern/movement/:arc/item/:idx/give-information-item                     controllers.GiveInformationItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
+POST        /trader/:ern/movement/:arc/item/:idx/give-information-item                     controllers.GiveInformationItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
+GET         /trader/:ern/movement/:arc/item/:idx/give-information-item/change              controllers.GiveInformationItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+POST        /trader/:ern/movement/:arc/item/:idx/give-information-item/change              controllers.GiveInformationItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+
+GET         /trader/:ern/movement/:arc/confirmation                                        controllers.ConfirmationController.onPageLoad(ern: String, arc: String)
