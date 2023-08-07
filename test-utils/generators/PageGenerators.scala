@@ -18,11 +18,12 @@ package generators
 
 import org.scalacheck.Arbitrary
 import pages._
+import pages.individualItems.ItemAmountPage
 
 trait PageGenerators {
 
-  implicit lazy val arbitraryItemAmountPage: Arbitrary[ItemAmountPage.type] =
-    Arbitrary(ItemAmountPage)
+  implicit lazy val arbitraryItemAmountPage: Arbitrary[ItemAmountPage] =
+    Arbitrary(ItemAmountPage(1))
 
   implicit lazy val arbitraryGiveInformationMovementPage: Arbitrary[GiveInformationMovementPage.type] =
     Arbitrary(GiveInformationMovementPage)

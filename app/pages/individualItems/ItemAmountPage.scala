@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package pages
+package pages.individualItems
 
-import pages.behaviour.PageBehaviours
+import pages.QuestionPage
+import play.api.libs.json.{JsPath, __}
 
-class ItemAmountPageSpec extends PageBehaviours {
+case class ItemAmountPage(idx: Int) extends QuestionPage[BigDecimal] {
 
-  "ItemAmountPage" - {
+  override def path: JsPath = __ \ "items" \ s"item-$idx" \ toString
 
-    beRetrievable[BigDecimal](ItemAmountPage)
-
-    beSettable[BigDecimal](ItemAmountPage)
-
-    beRemovable[BigDecimal](ItemAmountPage)
-  }
+  override def toString: String = "itemAmount"
 }

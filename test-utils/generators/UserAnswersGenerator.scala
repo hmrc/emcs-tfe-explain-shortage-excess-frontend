@@ -22,13 +22,14 @@ import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalatest.TryValues
 import pages._
+import pages.individualItems.ItemAmountPage
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersGenerator extends TryValues with BaseFixtures {
   self: Generators =>
 
   val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
-    arbitrary[(ItemAmountPage.type, JsValue)] ::
+    arbitrary[(ItemAmountPage, JsValue)] ::
     arbitrary[(GiveInformationMovementPage.type, JsValue)] ::
     arbitrary[(WhenReceiveShortageExcessPage.type, JsValue)] ::
     arbitrary[(HowGiveInformationPage.type, JsValue)] ::

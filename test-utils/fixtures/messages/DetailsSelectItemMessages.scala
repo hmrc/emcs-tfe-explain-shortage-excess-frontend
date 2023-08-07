@@ -17,7 +17,6 @@
 package fixtures.messages
 
 import fixtures.i18n
-import fixtures.messages.DetailsSelectItemMessages.English.titleHelper
 
 object DetailsSelectItemMessages {
 

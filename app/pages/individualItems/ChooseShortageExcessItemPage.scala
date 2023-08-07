@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package pages
+package pages.individualItems
 
 import models.ChooseShortageExcessItem
+import pages.QuestionPage
 import play.api.libs.json.{JsPath, __}
 
 case class ChooseShortageExcessItemPage(idx: Int) extends QuestionPage[ChooseShortageExcessItem] {
