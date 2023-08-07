@@ -361,3 +361,9 @@ checkYourAnswers.add.item.link = Add another item
 
 checkYourAnswersItem.title = Check your answers for {0}
 checkYourAnswersItem.heading = Check your answers for {0}
+
+removeItem.title = Are you sure you want to remove item {0}?
+removeItem.heading = Are you sure you want to remove item {0}?
+removeItem.checkYourAnswersLabel = removeItem
+removeItem.error.required = Select if you want to remove item {0}
+removeItem.change.hidden = RemoveItem

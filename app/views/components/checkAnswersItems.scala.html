@@ -35,9 +35,8 @@
                         visuallyHiddenText = Some(messages("checkYourAnswers.item.details.hidden", itemReference)),
                         attributes = Map("id" -> s"itemDetails$itemReference")
                     ),
-                    //TODO: Update with Remove Item URL when page is built
                     ActionItem(
-                        href = testOnly.controllers.routes.UnderConstructionController.onPageLoad().url,
+                        href = controllers.routes.RemoveItemController.onPageLoad(request.ern, request.arc, itemReference, removeMode).url,
                         content = Text(messages("checkYourAnswers.item.remove")),
                         visuallyHiddenText = Some(messages("checkYourAnswers.item.remove.hidden", itemReference)),
                         attributes = Map("id" -> s"removeItem$itemReference")
