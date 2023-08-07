@@ -17,31 +17,50 @@
 package controllers
 
 import controllers.actions.{AuthAction, DataRetrievalAction, MovementAction}
+import forms.ContinueDraftFormProvider
 import models.{NormalMode, UserAnswers}
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import services.UserAnswersService
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Logging
+import views.html.ContinueDraftView
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class IndexController @Inject()(override val messagesApi: MessagesApi,
+class DraftController @Inject()(override val messagesApi: MessagesApi,
                                 val userAnswersService: UserAnswersService,
                                 val controllerComponents: MessagesControllerComponents,
                                 authAction: AuthAction,
                                 withMovement: MovementAction,
-                                getData: DataRetrievalAction) extends BaseController with Logging {
+                                getData: DataRetrievalAction,
+                                continueDraftFormProvider: ContinueDraftFormProvider,
+                                view: ContinueDraftView) extends BaseController with Logging {
 
   def onPageLoad(ern: String, arc: String): Action[AnyContent] =
     (authAction(ern, arc) andThen withMovement.fromCache(arc) andThen getData).async { implicit request =>
       request.userAnswers match {
         case Some(answers) if answers.data.fields.nonEmpty =>
-          Future.successful(Redirect(routes.DraftController.onPageLoad(request.ern, request.arc)))
+          Future.successful(Ok(view(continueDraftFormProvider(), routes.DraftController.onSubmit(ern, arc))))
         case _ =>
           initialiseAndRedirect(UserAnswers(request.internalId, request.ern, request.arc))
       }
+    }
+
+  def onSubmit(ern: String, arc: String): Action[AnyContent] =
+    (authAction(ern, arc) andThen withMovement.fromCache(arc) andThen getData).async { implicit request =>
+      continueDraftFormProvider().bindFromRequest().fold(
+        formWithErrors =>
+          Future.successful(BadRequest(view(formWithErrors, routes.DraftController.onSubmit(ern, arc)))),
+        continueDraft => {
+          val userAnswers = request.userAnswers match {
+            case Some(answers) if continueDraft => answers
+            case _ => UserAnswers(request.internalId, request.ern, request.arc)
+          }
+          initialiseAndRedirect(userAnswers)
+        }
+      )
     }
 
   private def initialiseAndRedirect(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Result] =
@@ -49,5 +68,4 @@ class IndexController @Inject()(override val messagesApi: MessagesApi,
 
   private def redirect(answers: UserAnswers): Result =
     Redirect(routes.WhenReceiveShortageExcessController.onPageLoad(answers.ern, answers.arc, NormalMode))
-
 }

@@ -17,6 +17,9 @@ GET         /account/timeout                                                    
 
 GET         /trader/:ern/movement/:arc                                            controllers.IndexController.onPageLoad(ern: String, arc: String)
 
+GET         /trader/:ern/movement/:arc/draft                                      controllers.DraftController.onPageLoad(ern: String, arc: String)
+POST        /trader/:ern/movement/:arc/draft                                      controllers.DraftController.onSubmit(ern: String, arc: String)
+
 GET         /trader/:ern/movement/:arc/no-information-delay                       controllers.JourneyRecoveryController.onPageLoad(ern: String, arc: String)
 
 GET         /trader/:ern/movement/:arc/when-receive-shortage-excess               controllers.WhenReceiveShortageExcessController.onPageLoad(ern: String, arc: String, mode: Mode = NormalMode)
