@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package object forms {
-  private[forms] val MAX_LENGTH_15 = 15
-  private[forms] val MIN_VALUE_0 = 0
-  private[forms] val TEXTAREA_MAX_LENGTH = 350
-  private[forms] val ALPHANUMERIC_REGEX = "^(?s)(?=.*[A-Za-z0-9]).{1,}$"
-  private[forms] val XSS_REGEX = "^(?s)(?!.*javascript)(?!.*[<>;:]).{1,}$"
+package pages
+
+import models.ChooseShortageExcessItem
+import play.api.libs.json.{JsPath, __}
+
+case class ChooseShortageExcessItemPage(idx: Int) extends QuestionPage[ChooseShortageExcessItem] {
+
+  override def path: JsPath = __ \ "items" \ s"item-$idx" \ toString
+
+  override def toString: String = "chooseShortageExcessItem"
 }

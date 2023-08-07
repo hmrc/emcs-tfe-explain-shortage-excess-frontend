@@ -41,5 +41,4 @@ trait BaseController extends FrontendBaseController with I18nSupport with Enumer
       case Some(item) => f(item)
       case None => Future.successful(Redirect(routes.SelectItemController.onPageLoad(request.ern, request.arc).url))
     }
-
 }

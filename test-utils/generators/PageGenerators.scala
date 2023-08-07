@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryItemAmountPage: Arbitrary[ItemAmountPage.type] =
+    Arbitrary(ItemAmountPage)
+
   implicit lazy val arbitraryGiveInformationMovementPage: Arbitrary[GiveInformationMovementPage.type] =
     Arbitrary(GiveInformationMovementPage)
 
