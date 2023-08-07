@@ -20,14 +20,15 @@ import models._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary._
 import pages._
+import pages.individualItems.ItemAmountPage
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
-  implicit lazy val arbitraryItemAmountUserAnswersEntry: Arbitrary[(ItemAmountPage.type, JsValue)] =
+  implicit lazy val arbitraryItemAmountUserAnswersEntry: Arbitrary[(ItemAmountPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[ItemAmountPage.type]
+        page  <- arbitrary[ItemAmountPage]
         value <- arbitrary[Int].map(Json.toJson(_))
       } yield (page, value)
     }

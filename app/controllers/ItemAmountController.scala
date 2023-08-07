@@ -24,7 +24,7 @@ import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
 import models.response.referenceData.CnCodeInformation
 import navigation.Navigator
-import pages.{ItemAmountPage, ChooseShortageExcessItemPage}
+import pages.individualItems.{ChooseShortageExcessItemPage, ItemAmountPage}
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -52,7 +52,7 @@ class ItemAmountController @Inject()(
   def onPageLoad(ern: String, arc: String, idx: Int, mode: Mode): Action[AnyContent] =
     authorisedDataRequestWithCachedMovementAsync(ern, arc) { implicit request =>
       withItemCnCodeAndFormProvider(idx) { (item, cnCode, form) =>
-        renderView(Ok, fillForm(ItemAmountPage, form), item, cnCode, mode)
+        renderView(Ok, fillForm(ItemAmountPage(idx), form), item, cnCode, mode)
       }
     }
 
@@ -61,7 +61,7 @@ class ItemAmountController @Inject()(
       withItemCnCodeAndFormProvider(idx) { (item, cnCode, form) =>
         form.bindFromRequest().fold(
           renderView(BadRequest, _, item, cnCode, mode),
-          saveAndRedirect(ItemAmountPage, _, mode)
+          saveAndRedirect(ItemAmountPage(idx), _, mode)
         )
       }
     }

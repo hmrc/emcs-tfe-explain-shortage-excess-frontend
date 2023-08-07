@@ -23,7 +23,7 @@ import models.ChooseShortageExcessItem.{Excess, Shortage}
 import models.UnitOfMeasure.Kilograms
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
-import pages.{ItemAmountPage, ChooseShortageExcessItemPage}
+import pages.individualItems.{ChooseShortageExcessItemPage, ItemAmountPage}
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -95,7 +95,7 @@ class ItemAmountControllerSpec extends SpecBase with MockUserAnswersService with
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in new Fixture(
-      Some(defaultUserAnswers.set(ItemAmountPage, validAnswer))
+      Some(defaultUserAnswers.set(ItemAmountPage(1), validAnswer))
     ) {
       running(application) {
 
