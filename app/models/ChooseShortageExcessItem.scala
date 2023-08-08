@@ -25,18 +25,19 @@ sealed trait ChooseShortageExcessItem
 object ChooseShortageExcessItem extends Enumerable.Implicits {
 
   case object Shortage extends WithName("shortage") with ChooseShortageExcessItem
+
   case object Excess extends WithName("excess") with ChooseShortageExcessItem
 
   val values: Seq[ChooseShortageExcessItem] = Seq(
     Shortage, Excess
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
+  def options(implicit messages: Messages): Seq[RadioItem] = values.map {
+    value =>
       RadioItem(
         content = Text(messages(s"chooseShortageExcessItem.$value")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
+        value = Some(value.toString),
+        id = Some(value.toString)
       )
   }
 
