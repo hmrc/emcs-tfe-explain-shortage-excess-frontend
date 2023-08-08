@@ -17,15 +17,16 @@
 package pages.individualItems
 
 import pages.behaviour.PageBehaviours
+import utils.JsonOptionFormatter._
 
 class ItemAmountPageSpec extends PageBehaviours {
 
   "ItemAmountPage" - {
 
-    beRetrievable[BigDecimal](ItemAmountPage(1))
+    beRetrievable[Option[BigDecimal]](ItemAmountPage(1))
 
-    beSettable[BigDecimal](ItemAmountPage(1))
+    beSettable[Option[BigDecimal]](ItemAmountPage(1))
 
-    beRemovable[BigDecimal](ItemAmountPage(1))
+    beRemovable[Option[BigDecimal]](ItemAmountPage(1))
   }
 }

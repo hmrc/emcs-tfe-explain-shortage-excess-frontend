@@ -19,7 +19,7 @@ package pages.individualItems
 import pages.QuestionPage
 import play.api.libs.json.{JsPath, __}
 
-case class ItemAmountPage(idx: Int) extends QuestionPage[BigDecimal] {
+case class ItemAmountPage(idx: Int) extends QuestionPage[Option[BigDecimal]] {
 
   override def path: JsPath = __ \ "items" \ s"item-$idx" \ toString
 

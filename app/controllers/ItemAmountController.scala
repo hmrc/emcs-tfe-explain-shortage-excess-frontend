@@ -18,8 +18,8 @@ package controllers
 
 import controllers.actions._
 import forms.ItemAmountFormProvider
-import models.Mode
 import models.ChooseShortageExcessItem.Shortage
+import models.Mode
 import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
 import models.response.referenceData.CnCodeInformation
@@ -29,6 +29,7 @@ import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import services.{ReferenceDataService, UserAnswersService}
+import utils.JsonOptionFormatter._
 import views.html.ItemAmountView
 
 import javax.inject.Inject
@@ -67,7 +68,7 @@ class ItemAmountController @Inject()(
     }
 
   private def withItemCnCodeAndFormProvider(idx: Int)
-                                           (f: (MovementItem, CnCodeInformation, Form[BigDecimal]) => Future[Result])
+                                           (f: (MovementItem, CnCodeInformation, Form[Option[BigDecimal]]) => Future[Result])
                                            (implicit request: DataRequest[_]): Future[Result] =
     withMovementItemAsync(idx) { item =>
       referenceDataService.itemWithReferenceData(item) { (itemWithRefData, cnCode) =>
@@ -79,7 +80,7 @@ class ItemAmountController @Inject()(
     }
 
   private def renderView(status: Status,
-                         form: Form[BigDecimal],
+                         form: Form[Option[BigDecimal]],
                          item: MovementItem,
                          cnCode: CnCodeInformation,
                          mode: Mode)(implicit request: DataRequest[_]): Future[Result] =
