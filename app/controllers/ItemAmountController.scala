@@ -29,7 +29,7 @@ import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import services.{ReferenceDataService, UserAnswersService}
-import utils.JsonOptionFormatter._
+import utils.JsonOptionFormatter
 import views.html.ItemAmountView
 
 import javax.inject.Inject
@@ -48,7 +48,8 @@ class ItemAmountController @Inject()(
                                       val controllerComponents: MessagesControllerComponents,
                                       referenceDataService: ReferenceDataService,
                                       view: ItemAmountView
-                                    ) extends BaseNavigationController with AuthActionHelper {
+                                    ) extends BaseNavigationController with AuthActionHelper with JsonOptionFormatter {
+
 
   def onPageLoad(ern: String, arc: String, idx: Int, mode: Mode): Action[AnyContent] =
     authorisedDataRequestWithCachedMovementAsync(ern, arc) { implicit request =>

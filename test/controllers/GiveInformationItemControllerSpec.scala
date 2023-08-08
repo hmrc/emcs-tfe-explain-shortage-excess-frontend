@@ -19,8 +19,7 @@ package controllers
 import base.SpecBase
 import forms.CharacterCounterFormProvider
 import mocks.services.{MockReferenceDataService, MockUserAnswersService}
-import models.ChooseShortageExcessItem.Excess
-import models.ChooseShortageExcessItem.Shortage
+import models.ChooseShortageExcessItem.{Excess, Shortage}
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import pages.individualItems._

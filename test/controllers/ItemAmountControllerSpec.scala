@@ -54,7 +54,7 @@ class ItemAmountControllerSpec extends SpecBase with MockUserAnswersService with
       }
   }
 
-  val validAnswer: Option[BigDecimal] = Some(BigDecimal(5.145))
+  val validAnswer = Some(BigDecimal(5.145))
   val defaultUserAnswers = emptyUserAnswers.set(ChooseShortageExcessItemPage(1), Shortage)
 
   lazy val itemAmountRoute = routes.ItemAmountController.onPageLoad(testErn, testArc, 1, NormalMode).url

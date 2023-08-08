@@ -35,4 +35,10 @@ case class DataRequest[A](request: MovementRequest[A],
         request.movementDetails.item(reference)
     }
 
+  def getAllCompletedItemDetails: Seq[MovementItem] =
+    userAnswers.completedItems.flatMap {
+      itemModel =>
+        request.movementDetails.item(itemModel.itemUniqueReference)
+    }
+
 }

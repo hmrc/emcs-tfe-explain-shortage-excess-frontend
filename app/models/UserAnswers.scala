@@ -16,6 +16,7 @@
 
 package models
 
+import models.response.emcsTfe.MovementItem
 import play.api.libs.json._
 import queries.{Gettable, Settable}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
@@ -53,6 +54,12 @@ final case class UserAnswers(internalId: String,
         }
       case _: JsUndefined => Seq.empty
     }
+  }
+
+  def itemReferences: Seq[Int] = {
+    itemKeys.flatMap {
+      getItemWithReads(_)(MovementItem.readItemUniqueReference)
+    }.sorted
   }
 
   def allItemsIncludingIncomplete: Seq[ItemModel] =
