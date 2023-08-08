@@ -17,7 +17,7 @@
 package fixtures
 
 import models.ReferenceDataUnitOfMeasure.`1`
-import models.UserAnswers
+import models.{ConfirmationDetails, UserAnswers}
 import models.response.referenceData.CnCodeInformation
 import play.api.mvc.Call
 
@@ -32,7 +32,8 @@ trait BaseFixtures {
   val testArc: String = "arc"
   val testDateOfWhenReceiveShortageOrExcess: LocalDate = LocalDate.now()
   val testConfirmationReference = "UYVQBLMXCYK6HAEBZI7TSWAQ6XDTXFYU"
-  val testReceiptDate = "2023-06-07T10:11:12.000"
+  val testSubmissionDate = LocalDate.now()
+  val testConfirmationDetails = ConfirmationDetails(testConfirmationReference, testSubmissionDate)
   val testOnwardRoute = Call("GET", "/foo")
   val cnCodeInfo = CnCodeInformation("", "", `1`)
 
