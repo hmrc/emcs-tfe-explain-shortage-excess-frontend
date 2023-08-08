@@ -46,22 +46,22 @@ class ChooseShortageExcessItemController @Inject()(override val messagesApi: Mes
                                                    referenceDataService: ReferenceDataService,
                                                    val controllerComponents: MessagesControllerComponents,
                                                    view: ChooseShortageExcessItemView
-                                                 ) extends BaseNavigationController with AuthActionHelper {
+                                                  ) extends BaseNavigationController with AuthActionHelper {
 
   def onPageLoad(ern: String, arc: String, idx: Int, mode: Mode): Action[AnyContent] =
     authorisedDataRequestWithCachedMovementAsync(ern, arc) {
       implicit request =>
-          request.movementDetails.item(idx) match {
-            case Some(movementItem) =>
-              referenceDataService.itemWithReferenceData(movementItem) {
-                (item, cnCode) =>
-                  renderView(Ok, item, cnCode, fillForm(ChooseShortageExcessItemPage(idx), formProvider()), idx, mode)
-              }
-            case None =>
-              Future.successful(
-                Redirect(routes.SelectItemController.onPageLoad(request.ern, request.arc))
-              )
-          }
+        request.movementDetails.item(idx) match {
+          case Some(movementItem) =>
+            referenceDataService.itemWithReferenceData(movementItem) {
+              (item, cnCode) =>
+                renderView(Ok, item, cnCode, fillForm(ChooseShortageExcessItemPage(idx), formProvider()), idx, mode)
+            }
+          case None =>
+            Future.successful(
+              Redirect(routes.SelectItemController.onPageLoad(request.ern, request.arc))
+            )
+        }
     }
 
 
@@ -92,16 +92,12 @@ class ChooseShortageExcessItemController @Inject()(override val messagesApi: Mes
                          idx: Int,
                          mode: Mode
                         )(implicit request: DataRequest[_]): Future[Result] =
-    Future.successful(
-      status(
-        view(
-          idx = idx,
-          movementItem = movementItem,
-          cnCodeInformation = cnCodeInformation,
-          form = form,
-          call = routes.ChooseShortageExcessItemController.onSubmit(request.ern, request.arc, idx, mode)
-        )
-      )
-    )
+    Future.successful(status(view(
+      idx = idx,
+      movementItem = movementItem,
+      cnCodeInformation = cnCodeInformation,
+      form = form,
+      call = routes.ChooseShortageExcessItemController.onSubmit(request.ern, request.arc, idx, mode)
+    )))
 
 }

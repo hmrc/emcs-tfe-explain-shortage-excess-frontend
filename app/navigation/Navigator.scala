@@ -37,16 +37,14 @@ class Navigator @Inject()() extends BaseNavigator {
         case _ =>
           routes.SelectItemController.onPageLoad(userAnswers.ern, userAnswers.arc)
       }
-    case ChooseShortageExcessItemPage(idx) => (_: UserAnswers) =>
-      //TODO: Update as part of future story when Next page exists
-      testOnly.controllers.routes.UnderConstructionController.onPageLoad()
 
     case GiveInformationMovementPage => (_: UserAnswers) =>
       //TODO: Update as part of future story when Next page exists
       testOnly.controllers.routes.UnderConstructionController.onPageLoad()
-    case SelectItemPage(_) => (_: UserAnswers) =>
-      //TODO: Update as part of future story when Next page exists
-      testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+    case SelectItemPage(idx) => (userAnswers: UserAnswers) =>
+      routes.ChooseShortageExcessItemController.onPageLoad(userAnswers.ern, userAnswers.arc, idx, NormalMode)
+    case ChooseShortageExcessItemPage(idx) => (userAnswers: UserAnswers) =>
+      routes.ItemAmountController.onPageLoad(userAnswers.ern, userAnswers.arc, idx, NormalMode)
     case ItemAmountPage(idx) => (userAnswers: UserAnswers) =>
       routes.GiveInformationItemController.onPageLoad(userAnswers.ern, userAnswers.arc, idx, NormalMode)
     case GiveInformationItemPage(_) => (_: UserAnswers) =>

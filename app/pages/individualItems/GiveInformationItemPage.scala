@@ -23,5 +23,5 @@ case class GiveInformationItemPage(idx: Int) extends QuestionPage[String] {
 
   override def path: JsPath = __ \ "items" \ s"item-$idx" \ toString
 
-  override def toString: String = "giveInformationMovement"
+  override def toString: String = "giveInformationItem"
 }

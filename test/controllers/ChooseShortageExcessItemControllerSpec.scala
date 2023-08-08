@@ -19,35 +19,44 @@ package controllers
 import base.SpecBase
 import forms.ChooseShortageExcessItemFormProvider
 import mocks.services.{MockReferenceDataService, MockUserAnswersService}
-import models.{ChooseShortageExcessItem, NormalMode}
+import models.{ChooseShortageExcessItem, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import pages.individualItems.ChooseShortageExcessItemPage
+import play.api.Application
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.UserAnswersService
+import services.{ReferenceDataService, UserAnswersService}
 import views.html.ChooseShortageExcessItemView
 
 import scala.concurrent.Future
 
+
 class ChooseShortageExcessItemControllerSpec extends SpecBase with MockUserAnswersService with MockReferenceDataService {
 
-  def onwardRoute = Call("GET", "/foo")
+  class Fixture(val userAnswers: Option[UserAnswers] = Some(emptyUserAnswers)) {
+    val application: Application = applicationBuilder(userAnswers)
+      .overrides(
+        bind[Navigator].toInstance(new FakeNavigator(testOnwardRoute)),
+        bind[ReferenceDataService].toInstance(mockReferenceDataService),
+        bind[UserAnswersService].toInstance(mockUserAnswersService)
+      ).build()
 
-  lazy val chooseShortageExcessItemControllerRoute = routes.ChooseShortageExcessItemController.onPageLoad(testErn, testArc, testIdx, NormalMode).url
+    lazy val view: ChooseShortageExcessItemView = application.injector.instanceOf[ChooseShortageExcessItemView]
 
-  val formProvider = new ChooseShortageExcessItemFormProvider()
-  val form = formProvider()
+    lazy val chooseShortageExcessItemControllerRoute: String = routes.ChooseShortageExcessItemController.onPageLoad(testErn, testArc, testIdx, NormalMode).url
+    lazy val submitCall: Call = routes.ChooseShortageExcessItemController.onSubmit(testErn, testArc, testIdx, NormalMode)
 
-  val submitCall = routes.HowGiveInformationController.onSubmit(testErn, testArc, NormalMode)
+    val formProvider: ChooseShortageExcessItemFormProvider = new ChooseShortageExcessItemFormProvider()
+    val form: Form[ChooseShortageExcessItem] = formProvider()
+  }
+
 
   "ChooseShortageExcessItemController" - {
 
-    "must return OK and the correct view for a GET" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
-
+    "must return OK and the correct view for a GET" in new Fixture() {
       running(application) {
 
         MockReferenceDataService.itemWithReferenceData(item1).onCall(
@@ -58,19 +67,21 @@ class ChooseShortageExcessItemControllerSpec extends SpecBase with MockUserAnswe
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[ChooseShortageExcessItemView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(testIdx, item1, cnCodeInfo, form, submitCall)(dataRequest(request), messages(application)).toString
+
+        contentAsString(result) mustEqual view(
+          idx = testIdx,
+          movementItem = item1WithReferenceData,
+          cnCodeInformation = cnCodeInfo,
+          form = form,
+          call = submitCall)(dataRequest(request), messages(application)).toString
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = emptyUserAnswers.set(ChooseShortageExcessItemPage(1), ChooseShortageExcessItem.values.head)
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
+    "must populate the view correctly on a GET when the question has previously been answered" in new Fixture(Some(
+      emptyUserAnswers.set(ChooseShortageExcessItemPage(1), ChooseShortageExcessItem.values.head)
+    )) {
       running(application) {
 
         MockReferenceDataService.itemWithReferenceData(item1).onCall(
@@ -79,28 +90,25 @@ class ChooseShortageExcessItemControllerSpec extends SpecBase with MockUserAnswe
 
         val request = FakeRequest(GET, chooseShortageExcessItemControllerRoute)
 
-        val view = application.injector.instanceOf[ChooseShortageExcessItemView]
+        lazy val view = application.injector.instanceOf[ChooseShortageExcessItemView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(testIdx, item1, cnCodeInfo, form.fill(ChooseShortageExcessItem.values.head), submitCall)(dataRequest(request), messages(application)).toString
+        contentAsString(result) mustEqual view(
+          idx = testIdx,
+          movementItem = item1WithReferenceData,
+          cnCodeInformation = cnCodeInfo,
+          form = form.fill(ChooseShortageExcessItem.values.head),
+          call = submitCall)(dataRequest(request), messages(application)).toString
       }
     }
 
-    "must redirect to the next page when valid data is submitted" in {
-
-      MockUserAnswersService.set().returns(Future.successful(emptyUserAnswers))
-
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
-            bind[UserAnswersService].toInstance(mockUserAnswersService)
-          )
-          .build()
-
+    "must redirect to the next page when valid data is submitted" in new Fixture() {
       running(application) {
+
+        MockUserAnswersService.set().returns(Future.successful(emptyUserAnswers))
+
         MockReferenceDataService.itemWithReferenceData(item1).onCall(
           MockReferenceDataService.itemWithReferenceDataSuccessHandler(item1WithReferenceData, cnCodeInfo)
         )
@@ -112,15 +120,13 @@ class ChooseShortageExcessItemControllerSpec extends SpecBase with MockUserAnswe
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual onwardRoute.url
+        redirectLocation(result).value mustEqual testOnwardRoute.url
       }
     }
 
-    "must return a Bad Request and errors when invalid data is submitted" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
-
+    "must return a Bad Request and errors when invalid data is submitted" in new Fixture() {
       running(application) {
+
         MockReferenceDataService.itemWithReferenceData(item1).onCall(
           MockReferenceDataService.itemWithReferenceDataSuccessHandler(item1WithReferenceData, cnCodeInfo)
         )
@@ -131,43 +137,75 @@ class ChooseShortageExcessItemControllerSpec extends SpecBase with MockUserAnswe
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[ChooseShortageExcessItemView]
+        lazy val view = application.injector.instanceOf[ChooseShortageExcessItemView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(testIdx, item1, cnCodeInfo, boundForm, submitCall)(dataRequest(request), messages(application)).toString
+        contentAsString(result) mustEqual view(
+          idx = testIdx,
+          movementItem = item1WithReferenceData,
+          cnCodeInformation = cnCodeInfo,
+          form = boundForm,
+          call = submitCall)(dataRequest(request), messages(application)).toString
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to Journey Recovery for a GET" - {
+      "if no existing data is found" in new Fixture(None) {
+        running(application) {
 
-      val application = applicationBuilder(userAnswers = None).build()
+          val request = FakeRequest(GET, chooseShortageExcessItemControllerRoute)
 
-      running(application) {
-        val request = FakeRequest(GET, chooseShortageExcessItemControllerRoute)
+          val result = route(application, request).value
 
-        val result = route(application, request).value
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad(testErn, testArc).url
+        }
+      }
+      "if no item is found" in new Fixture() {
+        running(application) {
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad(testErn, testArc).url
+          // there isn't an item 3
+          val request = FakeRequest(GET, routes.ChooseShortageExcessItemController.onPageLoad(testErn, testArc, 3, NormalMode).url)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual routes.SelectItemController.onPageLoad(testErn, testArc).url
+        }
       }
     }
 
-    "redirect to Journey Recovery for a POST if no existing data is found" in {
+    "redirect to Journey Recovery for a POST" - {
+      "if no existing data is found" in new Fixture(None) {
+        running(application) {
 
-      val application = applicationBuilder(userAnswers = None).build()
+          val request =
+            FakeRequest(POST, chooseShortageExcessItemControllerRoute)
+              .withFormUrlEncodedBody(("value", ChooseShortageExcessItem.values.head.toString))
 
-      running(application) {
-        val request =
-          FakeRequest(POST, chooseShortageExcessItemControllerRoute)
-            .withFormUrlEncodedBody(("value", ChooseShortageExcessItem.values.head.toString))
+          val result = route(application, request).value
 
-        val result = route(application, request).value
+          status(result) mustEqual SEE_OTHER
 
-        status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad(testErn, testArc).url
+        }
+      }
+      "if no item is found" in new Fixture() {
+        running(application) {
 
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad(testErn, testArc).url
+          // there isn't an item 3
+          val request =
+            FakeRequest(POST, routes.ChooseShortageExcessItemController.onPageLoad(testErn, testArc, 3, NormalMode).url)
+              .withFormUrlEncodedBody(("value", ChooseShortageExcessItem.values.head.toString))
+
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+
+          redirectLocation(result).value mustEqual routes.SelectItemController.onPageLoad(testErn, testArc).url
+        }
       }
     }
   }

@@ -30,11 +30,11 @@ trait UserAnswersGenerator extends TryValues with BaseFixtures {
 
   val generators: Seq[Gen[(QuestionPage[_], JsValue)]] =
     arbitrary[(ItemAmountPage, JsValue)] ::
-    arbitrary[(GiveInformationMovementPage.type, JsValue)] ::
-    arbitrary[(DetailsSelectItemPage.type, JsValue)] ::
-    arbitrary[(WhenReceiveShortageExcessPage.type, JsValue)] ::
-    arbitrary[(HowGiveInformationPage.type, JsValue)] ::
-    Nil
+      arbitrary[(GiveInformationMovementPage.type, JsValue)] ::
+      arbitrary[(DetailsSelectItemPage.type, JsValue)] ::
+      arbitrary[(WhenReceiveShortageExcessPage.type, JsValue)] ::
+      arbitrary[(HowGiveInformationPage.type, JsValue)] ::
+      Nil
 
   implicit lazy val arbitraryUserData: Arbitrary[UserAnswers] = {
 
@@ -44,9 +44,9 @@ trait UserAnswersGenerator extends TryValues with BaseFixtures {
       for {
         data <- generators match {
           case Nil => Gen.const(Map[QuestionPage[_], JsValue]())
-          case _   => Gen.mapOf(oneOf(generators))
+          case _ => Gen.mapOf(oneOf(generators))
         }
-      } yield UserAnswers (
+      } yield UserAnswers(
         testInternalId,
         testErn,
         testArc,
