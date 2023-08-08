@@ -242,7 +242,6 @@ itemAmount.title = How many {0} of item {1} did you receive? (optional)
 itemAmount.heading = How many {0} of item {1} did you receive? (optional)
 itemAmount.hint = For example, 150 or 12.694.
 itemAmount.itemDetails = View item {0} details
-itemAmount.error.required = Enter the amount you received
 itemAmount.error.maxLength = The amount you received must be 15 numbers or less
 itemAmount.error.isNotNumeric = The amount you received must be a number, like 150 or 12.694
 itemAmount.error.notGreaterThanZero = The amount you received must be more than 0

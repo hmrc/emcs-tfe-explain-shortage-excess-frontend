@@ -42,13 +42,6 @@ class ItemAmountFormProviderSpec extends IntFieldBehaviours with GuiceOneAppPerS
 
         "must return expected error" - {
 
-          "when no value entered" in {
-
-            val result = form.bind(Map(fieldName -> ""))
-            result.errors.headOption mustBe Some(FormError(fieldName, "itemAmount.error.required"))
-            messages("itemAmount.error.required") mustBe messagesForLanguage.requiredError
-          }
-
           "when more than 15 characters are entered" in {
 
             val result = form.bind(Map(fieldName -> "1234567890123456"))
@@ -89,28 +82,34 @@ class ItemAmountFormProviderSpec extends IntFieldBehaviours with GuiceOneAppPerS
 
         "must return the bound form" - {
 
+          "when no value entered" in {
+
+            val result = form.bind(Map(fieldName -> ""))
+            result.get mustBe None
+          }
+
           "when 0dp" in {
 
             val result = form.bind(Map(fieldName -> "1"))
-            result.value mustBe Some(1)
+            result.get mustBe Some(1)
           }
 
           "when 1dp" in {
 
             val result = form.bind(Map(fieldName -> "1.1"))
-            result.value mustBe Some(1.1)
+            result.get mustBe Some(1.1)
           }
 
           "when 2dp" in {
 
             val result = form.bind(Map(fieldName -> "1.12"))
-            result.value mustBe Some(1.12)
+            result.get mustBe Some(1.12)
           }
 
           "when 3dp" in {
 
             val result = form.bind(Map(fieldName -> "1.123"))
-            result.value mustBe Some(1.123)
+            result.get mustBe Some(1.123)
           }
         }
       }

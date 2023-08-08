@@ -19,15 +19,17 @@ package forms
 import forms.mappings.Mappings
 import models.UnitOfMeasure
 import play.api.data.Form
+import play.api.data.Forms.{text => playText}
+import play.api.data.Forms.optional
 import play.api.i18n.Messages
 
 import javax.inject.Inject
 
 class ItemAmountFormProvider @Inject() extends Mappings {
 
-  def apply(maxAmount: Option[BigDecimal], unit: UnitOfMeasure)(implicit messages: Messages): Form[BigDecimal] =
+  def apply(maxAmount: Option[BigDecimal], unit: UnitOfMeasure)(implicit messages: Messages): Form[Option[BigDecimal]] =
     Form(
-      "value" -> text("itemAmount.error.required")
+      "value" -> optional(playText
         .verifying(
           firstError(
             decimalMaxLength(MAX_LENGTH_15, "itemAmount.error.maxLength"),
@@ -43,6 +45,6 @@ class ItemAmountFormProvider @Inject() extends Mappings {
               maxAmount.map(max => lessThanEqualValue(max, "itemAmount.error.exceedsMaxAmount", max, messages(s"unitOfMeasure.$unit.short")))
             ).flatten:_*
           )
-        )
+        ))
     )
 }
