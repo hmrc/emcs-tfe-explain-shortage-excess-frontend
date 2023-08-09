@@ -21,7 +21,7 @@ import controllers.routes
 import models.HowGiveInformation.{Choose, Whole}
 import models._
 import pages._
-import pages.individualItems.{ItemAmountPage, SelectItemPage}
+import pages.individualItems.{GiveInformationItemPage, ItemAmountPage, SelectItemPage}
 
 class NavigatorSpec extends SpecBase {
 
@@ -85,9 +85,17 @@ class NavigatorSpec extends SpecBase {
 
       "from ItemAmountPage" - {
 
+        "must go to GiveInformationItemPage" in {
+          navigator.nextPage(ItemAmountPage(1), NormalMode, emptyUserAnswers) mustBe
+            routes.GiveInformationItemController.onPageLoad(testErn, testArc, 1, NormalMode)
+        }
+      }
+
+      "from GiveInformationItemPage" - {
+
         //TODO: Update as part of future story when page exists
         "must go to UnderConstructionPage" in {
-          navigator.nextPage(ItemAmountPage(1), NormalMode, emptyUserAnswers) mustBe
+          navigator.nextPage(GiveInformationItemPage(1), NormalMode, emptyUserAnswers) mustBe
             testOnly.controllers.routes.UnderConstructionController.onPageLoad()
         }
       }
