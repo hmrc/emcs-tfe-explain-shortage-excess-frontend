@@ -21,7 +21,6 @@ import forms.ChooseShortageExcessItemFormProvider
 import models.Mode
 import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
-import models.response.referenceData.CnCodeInformation
 import navigation.Navigator
 import pages.individualItems.ChooseShortageExcessItemPage
 import play.api.data.Form
@@ -51,16 +50,8 @@ class ChooseShortageExcessItemController @Inject()(override val messagesApi: Mes
   def onPageLoad(ern: String, arc: String, idx: Int, mode: Mode): Action[AnyContent] =
     authorisedDataRequestWithCachedMovementAsync(ern, arc) {
       implicit request =>
-        request.movementDetails.item(idx) match {
-          case Some(movementItem) =>
-            referenceDataService.itemWithReferenceData(movementItem) {
-              (item, cnCode) =>
-                renderView(Ok, item, cnCode, fillForm(ChooseShortageExcessItemPage(idx), formProvider()), idx, mode)
-            }
-          case None =>
-            Future.successful(
-              Redirect(routes.SelectItemController.onPageLoad(request.ern, request.arc))
-            )
+        withMovementItemAsync(idx) {
+          renderView(Ok, _, fillForm(ChooseShortageExcessItemPage(idx), formProvider()), idx, mode)
         }
     }
 
@@ -68,36 +59,26 @@ class ChooseShortageExcessItemController @Inject()(override val messagesApi: Mes
   def onSubmit(ern: String, arc: String, idx: Int, mode: Mode): Action[AnyContent] =
     authorisedDataRequestWithCachedMovementAsync(ern, arc) {
       implicit request =>
-        request.movementDetails.item(idx) match {
-          case Some(movementItem) =>
-            referenceDataService.itemWithReferenceData(movementItem) {
-              (item, cnCode) =>
-                formProvider().bindFromRequest().fold(
-                  renderView(BadRequest, item, cnCode, _, idx, mode),
-                  saveAndRedirect(ChooseShortageExcessItemPage(idx), _, mode)
-                )
-            }
-          case None =>
-            Future.successful(
-              Redirect(routes.SelectItemController.onPageLoad(request.ern, request.arc))
+        withMovementItemAsync(idx) {
+          movementItem =>
+            formProvider().bindFromRequest().fold(
+              renderView(BadRequest, movementItem, _, idx, mode),
+              saveAndRedirect(ChooseShortageExcessItemPage(idx), _, mode)
             )
         }
 
     }
 
-  private def renderView(status: Status,
-                         movementItem: MovementItem,
-                         cnCodeInformation: CnCodeInformation,
-                         form: Form[_],
-                         idx: Int,
-                         mode: Mode
-                        )(implicit request: DataRequest[_]): Future[Result] =
-    Future.successful(status(view(
-      idx = idx,
-      movementItem = movementItem,
-      cnCodeInformation = cnCodeInformation,
-      form = form,
-      call = routes.ChooseShortageExcessItemController.onSubmit(request.ern, request.arc, idx, mode)
-    )))
+  private def renderView(status: Status, movementItem: MovementItem, form: Form[_], idx: Int, mode: Mode)(implicit request: DataRequest[_]): Future[Result] =
+    referenceDataService.itemWithReferenceData(movementItem) {
+      (item, cnCode) =>
+        Future.successful(status(view(
+          idx = idx,
+          movementItem = item,
+          cnCodeInformation = cnCode,
+          form = form,
+          call = routes.ChooseShortageExcessItemController.onSubmit(request.ern, request.arc, idx, mode)
+        )))
+    }
 
 }

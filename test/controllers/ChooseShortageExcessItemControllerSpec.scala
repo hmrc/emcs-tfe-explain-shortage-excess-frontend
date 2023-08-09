@@ -109,10 +109,6 @@ class ChooseShortageExcessItemControllerSpec extends SpecBase with MockUserAnswe
 
         MockUserAnswersService.set().returns(Future.successful(emptyUserAnswers))
 
-        MockReferenceDataService.itemWithReferenceData(item1).onCall(
-          MockReferenceDataService.itemWithReferenceDataSuccessHandler(item1WithReferenceData, cnCodeInfo)
-        )
-
         val request =
           FakeRequest(POST, chooseShortageExcessItemControllerRoute)
             .withFormUrlEncodedBody(("value", ChooseShortageExcessItem.values.head.toString))

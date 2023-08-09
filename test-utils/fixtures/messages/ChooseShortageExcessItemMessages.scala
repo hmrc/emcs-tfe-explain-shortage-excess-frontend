@@ -30,8 +30,8 @@ object ChooseShortageExcessItemMessages {
   }
 
   object English extends ViewMessages with BaseEnglish {
-    override def title(idx: Int): String = titleHelper(s"What's wrong with item $idx?")
-    override def heading(idx: Int) = s"What's wrong with item $idx?"
+    override def title(idx: Int): String = titleHelper(s"What’s wrong with item $idx?")
+    override def heading(idx: Int) = s"What’s wrong with item $idx?"
     override def hint(idx: Int) = s"View item $idx details"
     override val shortage = "Shortage"
     override val excess = "Excess"
@@ -39,9 +39,9 @@ object ChooseShortageExcessItemMessages {
   }
 
   object Welsh extends ViewMessages with BaseWelsh {
-    override def title(idx: Int): String = titleHelper(s"What's wrong with item $idx?")
+    override def title(idx: Int): String = titleHelper(s"What’s wrong with item $idx?")
 
-    override def heading(idx: Int) = s"What's wrong with item $idx?"
+    override def heading(idx: Int) = s"What’s wrong with item $idx?"
 
     override def hint(idx: Int) = s"View item $idx details"
 
