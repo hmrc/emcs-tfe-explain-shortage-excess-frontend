@@ -40,7 +40,7 @@ object SelectItemMessages {
       case n@1 => s"You have given information for $n item."
       case n => s"You have given information for $n items."
     }
-    override val viewAlreadyAddedItems: String = "View and manage the items you've already given information about."
+    override val viewAlreadyAddedItems: String = "View and manage the items you’ve already given information about."
     override val tableHeadItem = "Item"
     override val tableHeadDescription = "Commercial description"
     override val tableHeadQuantity = "Quantity"
@@ -56,7 +56,7 @@ object SelectItemMessages {
       case n@1 => s"You have given information for $n item."
       case n => s"You have given information for $n items."
     }
-    override val viewAlreadyAddedItems: String = "View and manage the items you've already given information about."
+    override val viewAlreadyAddedItems: String = "View and manage the items you’ve already given information about."
     override val tableHeadItem = "Item"
     override val tableHeadDescription = "Commercial description"
     override val tableHeadQuantity = "Quantity"

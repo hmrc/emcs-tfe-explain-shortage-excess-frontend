@@ -18,8 +18,9 @@ package views
 
 import play.api.data.Form
 import play.api.i18n.Messages
+import utils.DateUtils
 
-object ViewUtils {
+object ViewUtils extends DateUtils {
 
   def title(form: Form[_], title: String, section: Option[String] = None)(implicit messages: Messages): String =
     titleNoForm(
