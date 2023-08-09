@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import handlers.ErrorHandler
-import models.{ConfirmationDetails, UserAnswers}
+import models.UserAnswers
 import pages.ConfirmationPage
 import play.api.test.FakeRequest
 import play.api.test.Helpers._

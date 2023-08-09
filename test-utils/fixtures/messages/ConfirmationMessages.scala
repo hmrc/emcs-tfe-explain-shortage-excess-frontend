@@ -17,7 +17,6 @@
 package fixtures.messages
 
 import fixtures.i18n
-import fixtures.messages.ConfirmationMessages.English.{heading, titleHelper}
 
 object ConfirmationMessages {
 

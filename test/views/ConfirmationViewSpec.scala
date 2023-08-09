@@ -18,7 +18,6 @@ package views
 
 import base.ViewSpecBase
 import fixtures.messages.ConfirmationMessages
-import models.ConfirmationDetails
 import models.requests.DataRequest
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
