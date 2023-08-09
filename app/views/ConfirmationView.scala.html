@@ -33,7 +33,7 @@
 
 @(confirmationDetails: ConfirmationDetails)(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("confirmation.title"))) {
+@layout(pageTitle = titleNoForm(messages("confirmation.title")), showBackLink = false) {
 
     @confirmationPanel("confirmation.heading")
 
