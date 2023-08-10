@@ -48,15 +48,18 @@ class AddToListController @Inject()(
                                      getCnCodeInformationService: GetCnCodeInformationService,
                                      addToListHelper: AddToListHelper,
                                      override val userAnswersService: UserAnswersService,
-                                     override val navigator: Navigator,
-                                   ) extends BaseNavigationController with AuthActionHelper with JsonOptionFormatter {
+                                     override val navigator: Navigator) extends BaseNavigationController with AuthActionHelper with JsonOptionFormatter {
 
   def onPageLoad(ern: String, arc: String): Action[AnyContent] =
     authorisedDataRequestWithCachedMovementAsync(ern, arc) { implicit request =>
       withCompletedItems { items =>
         formattedItems(items).map { formattedItems =>
-          val allItemsAdded = formattedItems.size == request.movementDetails.items.size
-          Ok(view(Some(formProvider()), formattedItems, allItemsAdded, routes.AddToListController.onSubmit(ern, arc)))
+          if(formattedItems.flatMap(_._2.rows).isEmpty) {
+            Redirect(routes.SelectItemController.onPageLoad(ern, arc))
+          } else {
+            val allItemsAdded = formattedItems.size == request.movementDetails.items.size
+            Ok(view(Some(formProvider()), formattedItems, allItemsAdded, routes.AddToListController.onSubmit(ern, arc)))
+          }
         }
       }
     }
@@ -84,14 +87,15 @@ class AddToListController @Inject()(
     }
 
   private def formattedItems(items: Seq[MovementItem])(implicit request: DataRequest[_]): Future[Seq[(Int, SummaryList)]] =
-    getCnCodeInformationService.getCnCodeInformationWithMovementItems(items).map { serviceResult =>
-      serviceResult.map {
-        case (item, cnCodeInformation) =>
-          item.itemUniqueReference -> addToListHelper.summaryList(
-            item = item,
-            unitOfMeasure = cnCodeInformation.unitOfMeasureCode.toUnitOfMeasure
-          )
-      }
+    getCnCodeInformationService.getCnCodeInformationWithMovementItems(items).flatMap { serviceResult =>
+      Future.sequence(serviceResult.map {
+        case (item, cnCodeInformation) => item.itemUniqueReference -> addToListHelper.summaryList(
+          item = item,
+          unitOfMeasure = cnCodeInformation.unitOfMeasureCode.toUnitOfMeasure
+        )
+      }.map {
+        case (idx, futureSummaryList) => futureSummaryList.map { summaryList => (idx, summaryList) }
+      })
     }
 
   private def withCompletedItems(f: Seq[MovementItem] => Future[Result])(implicit request: DataRequest[_]): Future[Result] =
@@ -123,29 +127,20 @@ class AddToListController @Inject()(
   }
 
   private[controllers] def onwardRedirect(serviceResult: Seq[(Int, SummaryList)],
-                             allItemsAdded: Boolean)
-                            (implicit request: DataRequest[_]): Result = {
-
-    if (hasAmountForAtLeastOneItem() && hasMoreInfoForAllItems()) {
+                                          allItemsAdded: Boolean)
+                                         (implicit request: DataRequest[_]): Result = {
+    val hasAmount: Boolean = hasAmountForAtLeastOneItem()
+    val hasInfo: Boolean = hasMoreInfoForAllItems()
+    if (hasAmount && hasInfo) {
       Redirect(navigator.nextPage(AddToListPage, NormalMode, request.userAnswers))
     } else {
-      val formWithError: Form[Boolean] = {
-        (hasAmountForAtLeastOneItem(), hasMoreInfoForAllItems()) match {
-          case (true, false) =>
-            formProvider()
-              .withGlobalError("addToList.error.atLeastOneItem.information")
-              .fill(false)
-          case (false, true) =>
-            formProvider()
-              .withGlobalError("addToList.error.atLeastOneItem.amount")
-              .fill(false)
-          case _ =>
-            formProvider()
-              .withGlobalError("addToList.error.atLeastOneItem.amount")
-              .withGlobalError("addToList.error.atLeastOneItem.information")
-              .fill(false)
-        }
-      }
+      val formWithError: Form[Boolean] =
+        Some(formProvider())
+          .map(fp => if (!hasAmount) fp.withGlobalError("addToList.error.atLeastOneItem.amount") else fp)
+          .map(fp => if (!hasInfo) fp.withGlobalError("addToList.error.atLeastOneItem.information") else fp)
+          .get
+          .fill(false)
+
       BadRequest(
         view(Some(formWithError), serviceResult, allItemsAdded, routes.AddToListController.onSubmit(request.ern, request.arc))
       )

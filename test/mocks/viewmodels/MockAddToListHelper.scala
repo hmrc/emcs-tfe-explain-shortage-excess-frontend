@@ -19,11 +19,14 @@ package mocks.viewmodels
 import models.UnitOfMeasure
 import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
-import org.scalamock.handlers.CallHandler5
+import org.scalamock.handlers.CallHandler7
 import org.scalamock.scalatest.MockFactory
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
+import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.AddToListHelper
+
+import scala.concurrent.{ExecutionContext, Future}
 
 trait MockAddToListHelper extends MockFactory {
 
@@ -31,8 +34,8 @@ trait MockAddToListHelper extends MockFactory {
 
   object MockAddToListHelper {
 
-    def summaryList(): CallHandler5[MovementItem, UnitOfMeasure, Boolean, DataRequest[_], Messages, SummaryList] =
-      (mockAddToListHelper.summaryList(_: MovementItem, _: UnitOfMeasure, _: Boolean)(_: DataRequest[_], _: Messages))
-        .expects(*, *, *, *, *)
+    def summaryList(): CallHandler7[MovementItem, UnitOfMeasure, Boolean, DataRequest[_], HeaderCarrier, ExecutionContext, Messages, Future[SummaryList]] =
+      (mockAddToListHelper.summaryList(_: MovementItem, _: UnitOfMeasure, _: Boolean)(_: DataRequest[_], _: HeaderCarrier, _: ExecutionContext, _: Messages))
+        .expects(*, *, *, *, *, *, *)
   }
 }

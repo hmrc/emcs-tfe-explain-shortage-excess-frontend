@@ -26,13 +26,18 @@ import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
 import models.response.referenceData.CnCodeInformation
 import pages.individualItems._
+import play.api.Application
+import play.api.i18n.Messages
 import play.api.inject.bind
-import play.api.mvc.Result
+import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.GetCnCodeInformationService
-import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{SummaryList, SummaryListRow}
 import viewmodels.AddToListHelper
+import viewmodels.govuk.summarylist._
+import viewmodels.implicits._
 import views.html.AddToListView
 
 import scala.concurrent.Future
@@ -44,16 +49,21 @@ class AddToListControllerSpec extends SpecBase
   lazy val form = new AddAnotherItemFormProvider()()
 
   lazy val url = "testurl"
+  
 
   class Fixture(val userAnswers: Option[UserAnswers] = Some(emptyUserAnswers)) {
-    val application = applicationBuilder(userAnswers)
+    val application: Application = applicationBuilder(userAnswers)
       .overrides(
         bind[AddToListHelper].toInstance(mockAddToListHelper),
         bind[GetCnCodeInformationService].toInstance(mockGetCnCodeInformationService)
       )
       .build()
 
-    lazy val view = application.injector.instanceOf[AddToListView]
+    implicit lazy val msgs: Messages = messages(application)
+    
+    lazy val summaryList: SummaryList = SummaryList(rows = Seq(SummaryListRow("", value = ValueViewModel(Text("")))))
+
+    lazy val view: AddToListView = application.injector.instanceOf[AddToListView]
   }
 
   "AddedItems Controller" - {
@@ -64,8 +74,8 @@ class AddToListControllerSpec extends SpecBase
 
         "when no items have been added" in new Fixture() {
 
-          val request = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
-          val result = route(application, request).value
+          val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
+          val result: Future[Result] = route(application, request).value
 
           status(result) mustEqual SEE_OTHER
           redirectLocation(result) mustBe Some(routes.SelectItemController.onPageLoad(testErn, testArc).url)
@@ -76,8 +86,27 @@ class AddToListControllerSpec extends SpecBase
             .set(SelectItemPage(1), item1.itemUniqueReference)
         )) {
 
-          val request = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
-          val result = route(application, request).value
+          val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
+          val result: Future[Result] = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result) mustBe Some(routes.SelectItemController.onPageLoad(testErn, testArc).url)
+        }
+
+        "when AddToListHelper returns no rows" in new Fixture(Some(
+          emptyUserAnswers
+            .set(SelectItemPage(1), item1.itemUniqueReference)
+            .set(CheckAnswersItemPage(1), true)
+        )) {
+
+          MockGetCnCodeInformationService.getCnCodeInformationWithMovementItems(Seq(item1))
+            .returns(Future.successful(Seq(
+              item1 -> CnCodeInformation("", "", `1`)
+            )))
+          MockAddToListHelper.summaryList().returns(Future.successful(SummaryList())).anyNumberOfTimes()
+
+          val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
+          val result: Future[Result] = route(application, request).value
 
           status(result) mustEqual SEE_OTHER
           redirectLocation(result) mustBe Some(routes.SelectItemController.onPageLoad(testErn, testArc).url)
@@ -95,18 +124,18 @@ class AddToListControllerSpec extends SpecBase
           val serviceResponse: Seq[(MovementItem, CnCodeInformation)] = Seq(item1 -> CnCodeInformation("", "", `1`))
 
           MockGetCnCodeInformationService.getCnCodeInformationWithMovementItems(Seq(item1)).returns(Future.successful(serviceResponse))
-          MockAddToListHelper.summaryList().returns(SummaryList())
+          MockAddToListHelper.summaryList().returns(Future.successful(summaryList))
 
-          val request = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
+          val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
 
           implicit val req: DataRequest[_] = dataRequest(request, userAnswers.get)
 
-          val result = route(application, request).value
+          val result: Future[Result] = route(application, request).value
 
           status(result) mustEqual OK
           contentAsString(result) mustEqual view(
             form = Some(form),
-            itemList = Seq[(Int, SummaryList)](1 -> SummaryList()),
+            itemList = Seq[(Int, SummaryList)](1 -> summaryList),
             allItemsAdded = false,
             action = routes.AddToListController.onSubmit(testErn, testArc))(req, messages(application)
           ).toString
@@ -128,18 +157,18 @@ class AddToListControllerSpec extends SpecBase
               item1 -> CnCodeInformation("", "", `1`),
               item2 -> CnCodeInformation("", "", `1`)
             )))
-          MockAddToListHelper.summaryList().returns(SummaryList()).anyNumberOfTimes()
+          MockAddToListHelper.summaryList().returns(Future.successful(summaryList)).anyNumberOfTimes()
 
-          val request = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
+          val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, routes.AddToListController.onPageLoad(testErn, testArc).url)
           implicit val req: DataRequest[_] = dataRequest(request, userAnswers.get)
 
-          val result = route(application, request).value
+          val result: Future[Result] = route(application, request).value
 
           status(result) mustEqual OK
 
           contentAsString(result) mustEqual view(
             form = Some(form),
-            itemList = Seq[(Int, SummaryList)](1 -> SummaryList(), 2 -> SummaryList()),
+            itemList = Seq[(Int, SummaryList)](1 -> summaryList, 2 -> summaryList),
             allItemsAdded = true,
             action = routes.AddToListController.onSubmit(testErn, testArc))(req, messages(application)
           ).toString
@@ -153,8 +182,8 @@ class AddToListControllerSpec extends SpecBase
 
         "must redirect to the SelectItems page" in new Fixture(Some(emptyUserAnswers)) {
 
-          val request = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url)
-          val result = route(application, request).value
+          val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url)
+          val result: Future[Result] = route(application, request).value
 
           status(result) mustEqual SEE_OTHER
           redirectLocation(result) mustBe Some(routes.SelectItemController.onPageLoad(testErn, testArc).url)
@@ -174,10 +203,10 @@ class AddToListControllerSpec extends SpecBase
             MockGetCnCodeInformationService.getCnCodeInformationWithMovementItems(Seq(item1)).returns(Future.successful(
               Seq(item1 -> CnCodeInformation("", "", `1`))
             ))
-            MockAddToListHelper.summaryList().returns(SummaryList()).anyNumberOfTimes()
+            MockAddToListHelper.summaryList().returns(Future.successful(summaryList)).anyNumberOfTimes()
 
-            val request = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url)
-            val result = route(application, request).value
+            val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url)
+            val result: Future[Result] = route(application, request).value
 
             val boundForm = form.bind(Map("value" -> ""))
 
@@ -186,7 +215,7 @@ class AddToListControllerSpec extends SpecBase
             status(result) mustEqual BAD_REQUEST
             contentAsString(result) mustEqual view(
               form = Some(boundForm),
-              itemList = Seq(1 -> SummaryList()),
+              itemList = Seq(1 -> summaryList),
               allItemsAdded = false,
               action = routes.AddToListController.onSubmit(testErn, testArc))(req, messages(application)
             ).toString
@@ -204,12 +233,12 @@ class AddToListControllerSpec extends SpecBase
             MockGetCnCodeInformationService.getCnCodeInformationWithMovementItems(Seq(item1)).returns(Future.successful(
               Seq(item1 -> CnCodeInformation("", "", `1`))
             ))
-            MockAddToListHelper.summaryList().returns(SummaryList()).anyNumberOfTimes()
+            MockAddToListHelper.summaryList().returns(Future.successful(summaryList)).anyNumberOfTimes()
 
-            val request = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url)
+            val request: FakeRequest[AnyContentAsFormUrlEncoded] = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url)
               .withFormUrlEncodedBody("value" -> "true")
 
-            val result = route(application, request).value
+            val result: Future[Result] = route(application, request).value
 
             status(result) mustEqual SEE_OTHER
             redirectLocation(result) mustBe Some(routes.SelectItemController.onPageLoad(testErn, testArc).url)
@@ -229,12 +258,12 @@ class AddToListControllerSpec extends SpecBase
             MockGetCnCodeInformationService.getCnCodeInformationWithMovementItems(Seq(item1)).returns(Future.successful(
               Seq(item1 -> CnCodeInformation("", "", `1`))
             ))
-            MockAddToListHelper.summaryList().returns(SummaryList()).anyNumberOfTimes()
+            MockAddToListHelper.summaryList().returns(Future.successful(summaryList)).anyNumberOfTimes()
 
-            val request = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url)
+            val request: FakeRequest[AnyContentAsFormUrlEncoded] = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url)
               .withFormUrlEncodedBody("value" -> "false")
 
-            val result = route(application, request).value
+            val result: Future[Result] = route(application, request).value
 
             status(result) mustEqual SEE_OTHER
             redirectLocation(result) mustBe Some(testOnly.controllers.routes.UnderConstructionController.onPageLoad().url)
@@ -261,11 +290,12 @@ class AddToListControllerSpec extends SpecBase
               item2 -> CnCodeInformation("", "", `1`)
             )
           ))
-          MockAddToListHelper.summaryList().returns(SummaryList()).anyNumberOfTimes()
+          MockAddToListHelper.summaryList().returns(Future.successful(summaryList)).anyNumberOfTimes()
 
-          val request = FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url).withFormUrlEncodedBody("value" -> "false")
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] =
+            FakeRequest(POST, routes.AddToListController.onSubmit(testErn, testArc).url).withFormUrlEncodedBody("value" -> "false")
 
-          val result = route(application, request).value
+          val result: Future[Result] = route(application, request).value
 
           status(result) mustEqual SEE_OTHER
           redirectLocation(result) mustBe Some(testOnly.controllers.routes.UnderConstructionController.onPageLoad().url)
