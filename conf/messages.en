@@ -260,8 +260,8 @@ itemDetails.packaging.key.identityOfCommercialSeal = Identity of commercial seal
 itemDetails.packaging.key.sealInformation = Seal information
 itemDetails.packaging.key.shippingMarks = Shipping marks
 
-chooseShortageExcessItem.title = What’s wrong with item {0}?
-chooseShortageExcessItem.heading = What’s wrong with item {0}?
+chooseShortageExcessItem.title = Did you receive a shortage or excess of item {0}?
+chooseShortageExcessItem.heading = Did you receive a shortage or excess of item {0}?
 chooseShortageExcessItem.itemDetailsHint = View item {0} details
 chooseShortageExcessItem.error.required = Select if you received a shortage or excess of this item
 chooseShortageExcessItem.shortage = Shortage
@@ -311,10 +311,3 @@ confirmation.mayNeedToDo.excess.bullet4 = the person or organisation holding the
 confirmation.button = Return to at a glance
 confirmation.feedback.link = What did you think of this service?
 confirmation.feedback.time = (takes 30 seconds)
-
-chooseShortageExcessItem.title = What''s wrong with item {0}?
-chooseShortageExcessItem.heading = What''s wrong with item {0}?
-chooseShortageExcessItem.itemDetailsHint = View item {0} details
-chooseShortageExcessItem.error.required = Select if you received a shortage or excess of this item
-chooseShortageExcessItem.shortage = Shortage
-chooseShortageExcessItem.excess = Excess
