@@ -56,12 +56,14 @@
             )
         }
 
-        @govukRadios(
-            RadiosViewModel.yesNo(
-                field = form("value"),
-                legend = LegendViewModel(HtmlContent(heading)).withCssClass("govuk-fieldset__legend govuk-fieldset__legend--m")
+        @p(classes = "govuk-body govuk-!-margin-top-8") {
+            @govukRadios(
+                RadiosViewModel.yesNo(
+                    field = form("value"),
+                    legend = LegendViewModel(HtmlContent(heading)).withCssClass("govuk-fieldset__legend govuk-fieldset__legend--m")
+                )
             )
-        )
+        }
 
         @continueOrExit()
     }
