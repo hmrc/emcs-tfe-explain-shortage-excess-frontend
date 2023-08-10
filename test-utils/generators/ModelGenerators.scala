@@ -16,7 +16,7 @@
 
 package generators
 
-import models.HowGiveInformation
+import models.{ChooseShortageExcessItem, HowGiveInformation}
 import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
@@ -24,6 +24,11 @@ trait ModelGenerators {
   implicit lazy val arbitraryHowGiveInformation: Arbitrary[HowGiveInformation] =
     Arbitrary {
       Gen.oneOf(HowGiveInformation.values)
+    }
+
+  implicit lazy val arbitraryChooseShortageExcessItem: Arbitrary[ChooseShortageExcessItem] =
+    Arbitrary {
+      Gen.oneOf(ChooseShortageExcessItem.values)
     }
 
 

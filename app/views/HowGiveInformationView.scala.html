@@ -30,7 +30,7 @@
 
 @layout(pageTitle = title(form, messages("howGiveInformation.title"))) {
 
-    @formHelper(action = call, 'autoComplete -> "off") {
+    @formHelper(action = call, Symbol("autoComplete") -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))

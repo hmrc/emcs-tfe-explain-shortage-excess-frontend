@@ -18,7 +18,7 @@ package generators
 
 import org.scalacheck.Arbitrary
 import pages._
-import pages.individualItems.ItemAmountPage
+import pages.individualItems._
 
 trait PageGenerators {
 
@@ -30,6 +30,9 @@ trait PageGenerators {
 
   implicit lazy val arbitraryDetailsSelectItemPage: Arbitrary[DetailsSelectItemPage.type] =
     Arbitrary(DetailsSelectItemPage)
+
+  implicit lazy val arbitraryChooseShortageExcessItemPage: Arbitrary[ChooseShortageExcessItemPage] =
+    Arbitrary(ChooseShortageExcessItemPage(1))
 
   implicit lazy val arbitraryWhenReceiveShortageExcessPage: Arbitrary[WhenReceiveShortageExcessPage.type] =
     Arbitrary(WhenReceiveShortageExcessPage)

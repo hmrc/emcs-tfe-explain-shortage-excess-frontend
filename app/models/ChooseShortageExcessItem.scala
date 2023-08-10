@@ -16,14 +16,30 @@
 
 package models
 
+import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
+
 sealed trait ChooseShortageExcessItem
 
 object ChooseShortageExcessItem extends Enumerable.Implicits {
 
-  case object Shortage extends WithName("Shortage") with ChooseShortageExcessItem
-  case object Excess extends WithName("Excess") with ChooseShortageExcessItem
+  case object Shortage extends WithName("shortage") with ChooseShortageExcessItem
 
-  val values: Seq[ChooseShortageExcessItem] = Seq(Shortage, Excess)
+  case object Excess extends WithName("excess") with ChooseShortageExcessItem
+
+  val values: Seq[ChooseShortageExcessItem] = Seq(
+    Shortage, Excess
+  )
+
+  def options(implicit messages: Messages): Seq[RadioItem] = values.map {
+    value =>
+      RadioItem(
+        content = Text(messages(s"chooseShortageExcessItem.$value")),
+        value = Some(value.toString),
+        id = Some(value.toString)
+      )
+  }
 
   implicit val enumerable: Enumerable[ChooseShortageExcessItem] =
     Enumerable(values.map(v => v.toString -> v): _*)

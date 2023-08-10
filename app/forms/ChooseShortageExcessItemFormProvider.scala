@@ -14,25 +14,18 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import org.scalacheck.Arbitrary
-import pages.behaviour.PageBehaviours
+import forms.mappings.Mappings
+import models.ChooseShortageExcessItem
+import play.api.data.Form
 
-import java.time.LocalDate
+import javax.inject.Inject
 
-class WhenReceiveShortageExcessPageSpec extends PageBehaviours {
+class ChooseShortageExcessItemFormProvider @Inject() extends Mappings {
 
-  "WhenReceiveShortageExcessPage" - {
-
-    implicit lazy val arbitraryLocalDate: Arbitrary[LocalDate] = Arbitrary {
-      datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
-    }
-
-    beRetrievable[LocalDate](WhenReceiveShortageExcessPage)
-
-    beSettable[LocalDate](WhenReceiveShortageExcessPage)
-
-    beRemovable[LocalDate](WhenReceiveShortageExcessPage)
-  }
+  def apply(): Form[ChooseShortageExcessItem] =
+    Form(
+      "value" -> enumerable[ChooseShortageExcessItem]("chooseShortageExcessItem.error.required")
+    )
 }

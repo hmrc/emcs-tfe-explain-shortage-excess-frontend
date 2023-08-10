@@ -20,7 +20,7 @@ import controllers.routes
 import models.HowGiveInformation.Whole
 import models.{Mode, NormalMode, UserAnswers}
 import pages._
-import pages.individualItems.{GiveInformationItemPage, ItemAmountPage, SelectItemPage}
+import pages.individualItems._
 import play.api.mvc.Call
 
 import javax.inject.Inject
@@ -37,12 +37,14 @@ class Navigator @Inject()() extends BaseNavigator {
         case _ =>
           routes.SelectItemController.onPageLoad(userAnswers.ern, userAnswers.arc)
       }
+
     case GiveInformationMovementPage => (_: UserAnswers) =>
       //TODO: Update as part of future story when Next page exists
       testOnly.controllers.routes.UnderConstructionController.onPageLoad()
-    case SelectItemPage(_) => (_: UserAnswers) =>
-      //TODO: Update as part of future story when Next page exists
-      testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+    case SelectItemPage(idx) => (userAnswers: UserAnswers) =>
+      routes.ChooseShortageExcessItemController.onPageLoad(userAnswers.ern, userAnswers.arc, idx, NormalMode)
+    case ChooseShortageExcessItemPage(idx) => (userAnswers: UserAnswers) =>
+      routes.ItemAmountController.onPageLoad(userAnswers.ern, userAnswers.arc, idx, NormalMode)
     case ItemAmountPage(idx) => (userAnswers: UserAnswers) =>
       routes.GiveInformationItemController.onPageLoad(userAnswers.ern, userAnswers.arc, idx, NormalMode)
     case GiveInformationItemPage(_) => (_: UserAnswers) =>
