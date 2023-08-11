@@ -20,7 +20,7 @@ import base.SpecBase
 import mocks.services.{MockGetCnCodeInformationService, MockUserAnswersService}
 import models.UserAnswers
 import navigation.{FakeNavigator, Navigator}
-import pages.individualItems.{SelectItemPage, CheckAnswersItemPage}
+import pages.individualItems.{CheckAnswersItemPage, SelectItemPage}
 import play.api.inject
 import play.api.test.FakeRequest
 import play.api.test.Helpers._

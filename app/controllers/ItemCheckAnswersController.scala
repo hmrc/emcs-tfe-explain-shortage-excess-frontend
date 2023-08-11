@@ -40,7 +40,7 @@ class ItemCheckAnswersController @Inject()(
 
   def onPageLoad(ern: String, arc: String, idx: Int): Action[AnyContent] =
     authorisedDataRequestWithCachedMovementAsync(ern, arc) { implicit request =>
-      withMovementItemAsync(idx) {
+      withAddedItemAsync(idx) {
         _ =>
           saveAndRedirect(CheckAnswersItemPage(idx), true, request.userAnswers, NormalMode)
       }

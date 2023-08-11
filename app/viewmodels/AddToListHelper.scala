@@ -20,47 +20,32 @@ import controllers.routes
 import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
 import models.{CheckMode, ChooseShortageExcessItem, ReviewMode, UnitOfMeasure}
-import pages.individualItems.{ChooseShortageExcessItemPage, GiveInformationItemPage, ItemAmountPage, SelectItemPage}
+import pages.individualItems.{ChooseShortageExcessItemPage, GiveInformationItemPage, ItemAmountPage}
 import play.api.i18n.Messages
-import services.UserAnswersService
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content._
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{SummaryList, SummaryListRow}
-import uk.gov.hmrc.http.HeaderCarrier
 import utils.JsonOptionFormatter
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import views.html.components.link
 
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
 
-class AddToListHelper @Inject()(
-                                 link: link,
-                                 userAnswersService: UserAnswersService
-                               ) extends JsonOptionFormatter {
+class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
   def summaryList(item: MovementItem, unitOfMeasure: UnitOfMeasure, onFinalCheckAnswers: Boolean = false)
-                 (implicit request: DataRequest[_], hc: HeaderCarrier, ec: ExecutionContext, messages: Messages): Future[SummaryList] = {
+                 (implicit request: DataRequest[_], messages: Messages): SummaryList = {
     val additionalLinkIdSignifier = if (onFinalCheckAnswers) s"-item-${item.itemUniqueReference}" else ""
 
-    val futureRows: Future[Seq[SummaryListRow]] =
-      (
-        request.userAnswers.get(SelectItemPage(item.itemUniqueReference)),
-        request.userAnswers.get(ChooseShortageExcessItemPage(item.itemUniqueReference))
-      ) match {
-      case (Some(idx), Some(answer)) =>
-        Future.successful(Seq(
-          whatWasWrongRow(answer, idx, additionalLinkIdSignifier),
-          amountReceivedRow(idx, unitOfMeasure, additionalLinkIdSignifier),
-          moreInformationRow(answer, idx, additionalLinkIdSignifier)
-        ).flatten)
-      case _ =>
-        val newUserAnswers = request.userAnswers.removeItem(item.itemUniqueReference)
-        userAnswersService.set(newUserAnswers).map {
-          _ => Seq.empty
-        }
-    }
+    val rows: Seq[SummaryListRow] = request.userAnswers.get(ChooseShortageExcessItemPage(item.itemUniqueReference)).map {
+      answer =>
+        Seq(
+          whatWasWrongRow(answer, item.itemUniqueReference, additionalLinkIdSignifier),
+          amountReceivedRow(item.itemUniqueReference, unitOfMeasure, additionalLinkIdSignifier),
+          moreInformationRow(answer, item.itemUniqueReference, additionalLinkIdSignifier)
+        ).flatten
+    }.getOrElse(Seq.empty)
 
-    futureRows.map(SummaryListViewModel(_))
+    SummaryListViewModel(rows)
   }
 
 

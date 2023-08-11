@@ -18,7 +18,6 @@ package viewmodels
 
 import base.SpecBase
 import controllers.routes
-import mocks.services.MockUserAnswersService
 import models.UnitOfMeasure.Kilograms
 import models.requests.DataRequest
 import models.{CheckMode, ChooseShortageExcessItem, ReviewMode}
@@ -27,29 +26,22 @@ import play.api.Application
 import play.api.i18n.Messages
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{await, defaultAwaitTimeout}
 import uk.gov.hmrc.govukfrontend.views.Aliases.{SummaryList, SummaryListRow}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions}
-import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 import views.html.components.link
 
-import scala.concurrent.{ExecutionContext, Future}
-
-class AddToListHelperSpec extends SpecBase with MockUserAnswersService {
+class AddToListHelperSpec extends SpecBase {
   private lazy val app: Application = applicationBuilder().build()
   private lazy val link: link = app.injector.instanceOf[link]
 
   implicit lazy val msgs: Messages = messages(app)
 
-  implicit val hc: HeaderCarrier = HeaderCarrier()
-  implicit val ec: ExecutionContext = scala.concurrent.ExecutionContext.global
-
   trait Test {
 
-    lazy val addToListHelper = new AddToListHelper(link, mockUserAnswersService)
+    lazy val addToListHelper = new AddToListHelper(link)
 
     val wrongWithItemPageValue: ChooseShortageExcessItem
     val amountReceivedValue: Option[BigDecimal] = Some(3.2)
@@ -118,7 +110,7 @@ class AddToListHelperSpec extends SpecBase with MockUserAnswersService {
                   )
                 )
 
-                await(addToListHelper.summaryList(item1, Kilograms)) mustBe result
+                addToListHelper.summaryList(item1, Kilograms) mustBe result
               }
             }
 
@@ -160,7 +152,7 @@ class AddToListHelperSpec extends SpecBase with MockUserAnswersService {
                   )
                 )
 
-                await(addToListHelper.summaryList(item1, Kilograms)) mustBe result
+                addToListHelper.summaryList(item1, Kilograms) mustBe result
               }
             }
 
@@ -202,7 +194,7 @@ class AddToListHelperSpec extends SpecBase with MockUserAnswersService {
                   )
                 )
 
-                await(addToListHelper.summaryList(item1, Kilograms)) mustBe result
+                addToListHelper.summaryList(item1, Kilograms) mustBe result
               }
             }
 
@@ -248,36 +240,22 @@ class AddToListHelperSpec extends SpecBase with MockUserAnswersService {
                   )
                 )
 
-                await(addToListHelper.summaryList(item1, Kilograms, onFinalCheckAnswers = true)) mustBe result
+                addToListHelper.summaryList(item1, Kilograms, onFinalCheckAnswers = true) mustBe result
               }
             }
           }
       )
 
       "must render an empty list" - {
-        "when SelectItemPage is empty" in {
-          lazy val addToListHelper = new AddToListHelper(link, mockUserAnswersService)
-
-          implicit def request: DataRequest[AnyContentAsEmpty.type] = dataRequest(
-            FakeRequest(),
-            emptyUserAnswers.set(ChooseShortageExcessItemPage(1), ChooseShortageExcessItem.Excess)
-          )
-
-          MockUserAnswersService.set()returns(Future.successful(emptyUserAnswers))
-
-          await(addToListHelper.summaryList(item1, Kilograms)) mustBe SummaryList(rows = Seq())
-        }
         "when ChooseShortageExcessItemPage is empty" in {
-          lazy val addToListHelper = new AddToListHelper(link, mockUserAnswersService)
+          lazy val addToListHelper = new AddToListHelper(link)
 
           implicit def request: DataRequest[AnyContentAsEmpty.type] = dataRequest(
             FakeRequest(),
             emptyUserAnswers.set(SelectItemPage(1), 1)
           )
 
-          MockUserAnswersService.set() returns (Future.successful(emptyUserAnswers))
-
-          await(addToListHelper.summaryList(item1, Kilograms)) mustBe SummaryList(rows = Seq())
+          addToListHelper.summaryList(item1, Kilograms) mustBe SummaryList(rows = Seq())
         }
       }
     }

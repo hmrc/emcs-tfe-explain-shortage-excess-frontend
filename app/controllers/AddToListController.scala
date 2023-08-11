@@ -54,12 +54,8 @@ class AddToListController @Inject()(
     authorisedDataRequestWithCachedMovementAsync(ern, arc) { implicit request =>
       withCompletedItems { items =>
         formattedItems(items).map { formattedItems =>
-          if(formattedItems.flatMap(_._2.rows).isEmpty) {
-            Redirect(routes.SelectItemController.onPageLoad(ern, arc))
-          } else {
-            val allItemsAdded = formattedItems.size == request.movementDetails.items.size
-            Ok(view(Some(formProvider()), formattedItems, allItemsAdded, routes.AddToListController.onSubmit(ern, arc)))
-          }
+          val allItemsAdded = formattedItems.size == request.movementDetails.items.size
+          Ok(view(Some(formProvider()), formattedItems, allItemsAdded, routes.AddToListController.onSubmit(ern, arc)))
         }
       }
     }
@@ -87,15 +83,14 @@ class AddToListController @Inject()(
     }
 
   private def formattedItems(items: Seq[MovementItem])(implicit request: DataRequest[_]): Future[Seq[(Int, SummaryList)]] =
-    getCnCodeInformationService.getCnCodeInformationWithMovementItems(items).flatMap { serviceResult =>
-      Future.sequence(serviceResult.map {
-        case (item, cnCodeInformation) => item.itemUniqueReference -> addToListHelper.summaryList(
-          item = item,
-          unitOfMeasure = cnCodeInformation.unitOfMeasureCode.toUnitOfMeasure
-        )
-      }.map {
-        case (idx, futureSummaryList) => futureSummaryList.map { summaryList => (idx, summaryList) }
-      })
+    getCnCodeInformationService.getCnCodeInformationWithMovementItems(items).map { serviceResult =>
+      serviceResult.map {
+        case (item, cnCodeInformation) =>
+          item.itemUniqueReference -> addToListHelper.summaryList(
+            item = item,
+            unitOfMeasure = cnCodeInformation.unitOfMeasureCode.toUnitOfMeasure
+          )
+      }
     }
 
   private def withCompletedItems(f: Seq[MovementItem] => Future[Result])(implicit request: DataRequest[_]): Future[Result] =
