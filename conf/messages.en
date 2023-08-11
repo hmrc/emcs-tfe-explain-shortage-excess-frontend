@@ -310,8 +310,7 @@ addToList.item.details.hidden = for item {0}
 addToList.item.remove = Remove
 addToList.item.remove.hidden = item {0}
 addToList.error.required = Select yes if you want to give information about another item
-addToList.error.atLeastOneItem.amount = You must refuse an amount of at least one item
-addToList.error.atLeastOneItem.information = You must give information about all the items you have added
+addToList.error.informationForAllItems = You must give information about all the items you have added
 
 confirmation.title = Explanation for a shortage or excess submitted
 confirmation.heading = Explanation for a shortage or excess submitted

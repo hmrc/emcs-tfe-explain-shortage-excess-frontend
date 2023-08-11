@@ -281,60 +281,6 @@ class AddToListControllerSpec extends SpecBase
       }
     }
 
-    ".hasAmountForAtLeastOneItem()" - {
-      def controller = baseApplicationBuilder.build().injector.instanceOf[AddToListController]
-
-      "must return true" - {
-        "when all amounts are above 0" in new Fixture(Some(
-          emptyUserAnswers
-            .set(SelectItemPage(1), item1.itemUniqueReference)
-            .set(ItemAmountPage(1), Some(BigDecimal(1)))
-            .set(CheckAnswersItemPage(1), true)
-            .set(SelectItemPage(2), item2.itemUniqueReference)
-            .set(ItemAmountPage(2), Some(BigDecimal(1)))
-            .set(CheckAnswersItemPage(2), true)
-        )) {
-          controller.hasAmountForAtLeastOneItem()(dataRequest(FakeRequest(), userAnswers.get)) mustBe true
-        }
-
-        "when at last one amount is above 0" in new Fixture(Some(
-          emptyUserAnswers
-            .set(SelectItemPage(1), item1.itemUniqueReference)
-            .set(ItemAmountPage(1), Some(BigDecimal(1)))
-            .set(CheckAnswersItemPage(1), true)
-            .set(SelectItemPage(2), item2.itemUniqueReference)
-            .set(CheckAnswersItemPage(2), true)
-        )) {
-          controller.hasAmountForAtLeastOneItem()(dataRequest(FakeRequest(), userAnswers.get)) mustBe true
-        }
-      }
-
-      "must return false" - {
-        "when all amounts add up to <= 0" in new Fixture(Some(
-          emptyUserAnswers
-            .set(SelectItemPage(1), item1.itemUniqueReference)
-            .set(ItemAmountPage(1), Some(BigDecimal(0)))
-            .set(CheckAnswersItemPage(1), true)
-            .set(SelectItemPage(2), item2.itemUniqueReference)
-            .set(ItemAmountPage(2), Some(BigDecimal(0)))
-            .set(CheckAnswersItemPage(2), true)
-        )) {
-          controller.hasAmountForAtLeastOneItem()(dataRequest(FakeRequest(), userAnswers.get)) mustBe false
-        }
-
-        "no amounts are present" in new Fixture(Some(
-          emptyUserAnswers
-            .set(SelectItemPage(1), item1.itemUniqueReference)
-            .set(ItemAmountPage(1), None)
-            .set(CheckAnswersItemPage(1), true)
-            .set(SelectItemPage(2), item2.itemUniqueReference)
-            .set(CheckAnswersItemPage(2), true)
-        )) {
-          controller.hasAmountForAtLeastOneItem()(dataRequest(FakeRequest(), userAnswers.get)) mustBe false
-        }
-      }
-    }
-
     ".hasMoreInfoForAllItems()" - {
       def controller = baseApplicationBuilder.build().injector.instanceOf[AddToListController]
 
@@ -419,29 +365,7 @@ class AddToListControllerSpec extends SpecBase
       }
 
       "must return a 400 (BadRequest)" - {
-        "hasAmountForAtLeastOneItem is false" in new Fixture(Some(
-          emptyUserAnswers
-            .set(SelectItemPage(1), item1.itemUniqueReference)
-            .set(GiveInformationItemPage(1), "info")
-            .set(CheckAnswersItemPage(1), true)
-        )) {
-          val result: Result = controller.onwardRedirect(Seq(), allItemsAdded = true)(dataRequest(FakeRequest(), userAnswers.get))
-
-          result.header.status mustBe BAD_REQUEST
-        }
-
-        "hasMoreInfoForAllItems is false" in new Fixture(Some(
-          emptyUserAnswers
-            .set(SelectItemPage(1), item1.itemUniqueReference)
-            .set(ItemAmountPage(1), Some(BigDecimal(1)))
-            .set(CheckAnswersItemPage(1), true)
-        )) {
-          val result: Result = controller.onwardRedirect(Seq(), allItemsAdded = true)(dataRequest(FakeRequest(), userAnswers.get))
-
-          result.header.status mustBe BAD_REQUEST
-        }
-
-        "hasAmountForAtLeastOneItem and hasMoreInfoForAllItems are both false" in new Fixture(Some(
+        "when hasMoreInfoForAllItems is false" in new Fixture(Some(
           emptyUserAnswers
             .set(SelectItemPage(1), item1.itemUniqueReference)
             .set(CheckAnswersItemPage(1), true)

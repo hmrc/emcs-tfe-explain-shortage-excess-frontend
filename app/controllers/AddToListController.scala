@@ -22,7 +22,7 @@ import models.NormalMode
 import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
 import navigation.Navigator
-import pages.individualItems.{AddToListPage, GiveInformationItemPage, ItemAmountPage}
+import pages.individualItems.{AddToListPage, GiveInformationItemPage}
 import play.api.data.Form
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -102,13 +102,6 @@ class AddToListController @Inject()(
   private def addAnotherItemRedirect()(implicit request: DataRequest[_]): Result =
     Redirect(routes.SelectItemController.onPageLoad(request.ern, request.arc))
 
-  private[controllers] def hasAmountForAtLeastOneItem()(implicit request: DataRequest[_]): Boolean = {
-    request.userAnswers.itemReferences.map {
-      uniqueReference =>
-        request.userAnswers.get(ItemAmountPage(uniqueReference)).flatten
-    }.map(_.getOrElse[BigDecimal](0)).sum > 0
-  }
-
   private[controllers] def hasMoreInfoForAllItems()(implicit request: DataRequest[_]): Boolean = {
     val infos: Seq[Option[String]] = request.userAnswers.itemReferences.map {
       uniqueReference =>
@@ -124,17 +117,12 @@ class AddToListController @Inject()(
   private[controllers] def onwardRedirect(serviceResult: Seq[(Int, SummaryList)],
                                           allItemsAdded: Boolean)
                                          (implicit request: DataRequest[_]): Result = {
-    val hasAmount: Boolean = hasAmountForAtLeastOneItem()
-    val hasInfo: Boolean = hasMoreInfoForAllItems()
-    if (hasAmount && hasInfo) {
+    if (hasMoreInfoForAllItems()) {
       Redirect(navigator.nextPage(AddToListPage, NormalMode, request.userAnswers))
     } else {
-      val formWithError: Form[Boolean] =
-        Some(formProvider())
-          .map(fp => if (!hasAmount) fp.withGlobalError("addToList.error.atLeastOneItem.amount") else fp)
-          .map(fp => if (!hasInfo) fp.withGlobalError("addToList.error.atLeastOneItem.information") else fp)
-          .get
-          .fill(false)
+      val formWithError: Form[Boolean] = formProvider()
+        .withGlobalError("addToList.error.informationForAllItems")
+        .fill(false)
 
       BadRequest(
         view(Some(formWithError), serviceResult, allItemsAdded, routes.AddToListController.onSubmit(request.ern, request.arc))
