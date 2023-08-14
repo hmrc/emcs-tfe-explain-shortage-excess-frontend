@@ -27,6 +27,8 @@ object GiveInformationMovementMessages {
     val lengthError: String
     val characterError: String
     val invalidCharacterError: String
+    val checkAnswersLabel: String
+    val checkAnswersHiddenChangeLinkText: String
   }
 
   object English extends ViewMessages with BaseEnglish {
@@ -36,6 +38,8 @@ object GiveInformationMovementMessages {
     override val lengthError = "Information must be 350 characters or less"
     override val characterError = "Information must contain letters or numbers"
     override val invalidCharacterError = "Information must not include < and > and : and ;"
+    override val checkAnswersLabel = "Information about shortage or excess"
+    override val checkAnswersHiddenChangeLinkText = "information about shortage or excess"
   }
 
   object Welsh extends ViewMessages with BaseWelsh {
@@ -45,5 +49,7 @@ object GiveInformationMovementMessages {
     override val lengthError = "Information must be 350 characters or less"
     override val characterError = "Information must contain letters or numbers"
     override val invalidCharacterError = "Information must not include < and > and : and ;"
+    override val checkAnswersLabel = "Information about shortage or excess"
+    override val checkAnswersHiddenChangeLinkText = "information about shortage or excess"
   }
 }

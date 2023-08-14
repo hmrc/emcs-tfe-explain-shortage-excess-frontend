@@ -78,19 +78,17 @@ class NavigatorSpec extends SpecBase {
       }
 
       "from AddToListPage" - {
-        "must go to Under Construction" in {
-          //TODO: update in future story when next page is created
+        "must go to Check Answers" in {
           navigator.nextPage(AddToListPage, NormalMode, emptyUserAnswers) mustBe
-            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+            routes.CheckYourAnswersController.onPageLoad(testErn, testArc)
         }
       }
 
       "from GiveInformationMovementPage" - {
 
-        //TODO: Update as part of future story when page exists
-        "must go to UnderConstructionPage" in {
+        "must go to Check Answers" in {
           navigator.nextPage(GiveInformationMovementPage, NormalMode, emptyUserAnswers) mustBe
-            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+            routes.CheckYourAnswersController.onPageLoad(testErn, testArc)
         }
       }
 
@@ -125,15 +123,23 @@ class NavigatorSpec extends SpecBase {
             routes.ItemCheckAnswersController.onPageLoad(testErn, testArc, testIdx)
         }
       }
+
+      "from CheckAnswersPage" - {
+
+        "must go to ConfirmationPage" in {
+          navigator.nextPage(CheckAnswersPage, NormalMode, emptyUserAnswers) mustBe
+            routes.ConfirmationController.onPageLoad(testErn, testArc)
+        }
+      }
     }
 
     "in Check mode" - {
 
       "from ChooseShortageExcessItemPage" - {
 
-        "must go to AddToListPage" in {
+        "must go through the normal routes to the next page" in {
           navigator.nextPage(ChooseShortageExcessItemPage(testIdx), CheckMode, emptyUserAnswers) mustBe
-            routes.AddToListController.onPageLoad(testErn, testArc)
+            navigator.normalRoutes(ChooseShortageExcessItemPage(testIdx))(emptyUserAnswers)
         }
       }
 
@@ -155,22 +161,28 @@ class NavigatorSpec extends SpecBase {
 
       "default scenario" - {
 
-        //TODO: Update as part of future story when page exists to go to Check Answers
-        "must go to UnderConstructionPage" in {
+        "must go to Check Answers" in {
           navigator.nextPage(TestPage, CheckMode, emptyUserAnswers) mustBe
-            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+            routes.CheckYourAnswersController.onPageLoad(testErn, testArc)
         }
       }
     }
 
     "in Review mode" - {
 
+      "for ChooseShortageExcessItemPage" - {
+
+        "must go through the normal routes to the next page" in {
+          navigator.nextPage(ChooseShortageExcessItemPage(testIdx), ReviewMode, emptyUserAnswers) mustBe
+            navigator.normalRoutes(ChooseShortageExcessItemPage(testIdx))(emptyUserAnswers)
+        }
+      }
+
       "default scenario" - {
 
-        //TODO: Update as part of future story when page exists to go to Check Answers
-        "must go to UnderConstructionPage" in {
+        "must go to Check Answers" in {
           navigator.nextPage(TestPage, ReviewMode, emptyUserAnswers) mustBe
-            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+            routes.CheckYourAnswersController.onPageLoad(testErn, testArc)
         }
       }
     }

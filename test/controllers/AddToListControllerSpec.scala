@@ -244,7 +244,7 @@ class AddToListControllerSpec extends SpecBase
             val result: Future[Result] = route(application, request).value
 
             status(result) mustEqual SEE_OTHER
-            redirectLocation(result) mustBe Some(testOnly.controllers.routes.UnderConstructionController.onPageLoad().url)
+            redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad(testErn, testArc).url)
           }
         }
       }
@@ -276,7 +276,7 @@ class AddToListControllerSpec extends SpecBase
           val result: Future[Result] = route(application, request).value
 
           status(result) mustEqual SEE_OTHER
-          redirectLocation(result) mustBe Some(testOnly.controllers.routes.UnderConstructionController.onPageLoad().url)
+          redirectLocation(result) mustBe Some(routes.CheckYourAnswersController.onPageLoad(testErn, testArc).url)
         }
       }
     }
@@ -360,7 +360,7 @@ class AddToListControllerSpec extends SpecBase
           val result: Result = controller.onwardRedirect(Seq(), allItemsAdded = true)(dataRequest(FakeRequest(), userAnswers.get))
 
           result.header.status mustBe SEE_OTHER
-          result.header.headers("Location") mustBe testOnly.controllers.routes.UnderConstructionController.onPageLoad().url
+          result.header.headers("Location") mustBe routes.CheckYourAnswersController.onPageLoad(testErn, testArc).url
         }
       }
 

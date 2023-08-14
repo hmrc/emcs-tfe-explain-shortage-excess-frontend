@@ -32,6 +32,8 @@ object WhenReceiveShortageExcessMessages {
     val invalidDate: String
     val notBeforeDateOfDispatch: String => String
     val notInFuture: String
+    val checkAnswersLabel: String
+    val checkAnswersHiddenChangeLinkText: String
   }
 
   object English extends ViewMessages with BaseEnglish {
@@ -46,6 +48,8 @@ object WhenReceiveShortageExcessMessages {
     override val invalidDate = "The date you received the shortage or excess must be a real date"
     override val notBeforeDateOfDispatch = (dispatchDate: String) => s"The date you received the shortage or excess must be the same as or after $dispatchDate when the movement started"
     override val notInFuture = "The date you received the shortage or excess must be today or in the past"
+    override val checkAnswersLabel = "Date shortage or excess was received"
+    override val checkAnswersHiddenChangeLinkText = "date movement received"
   }
 
   object Welsh extends ViewMessages with BaseWelsh {
@@ -60,5 +64,7 @@ object WhenReceiveShortageExcessMessages {
     override val invalidDate = "The date you received the shortage or excess must be a real date"
     override val notBeforeDateOfDispatch = (dispatchDate: String) => s"The date you received the shortage or excess must be the same as or after $dispatchDate when the movement started"
     override val notInFuture = "The date you received the shortage or excess must be today or in the past"
+    override val checkAnswersLabel = "Date shortage or excess was received"
+    override val checkAnswersHiddenChangeLinkText = "date movement received"
   }
 }

@@ -171,6 +171,8 @@ whenReceiveShortageExcess.error.required = The date you received the shortage or
 whenReceiveShortageExcess.error.invalid = The date you received the shortage or excess must be a real date
 whenReceiveShortageExcess.error.notInFuture = The date you received the shortage or excess must be today or in the past
 whenReceiveShortageExcess.error.notBeforeDateOfDispatch = The date you received the shortage or excess must be the same as or after {0} when the movement started
+whenReceiveShortageExcess.checkYourAnswers.label = Date shortage or excess was received
+whenReceiveShortageExcess.checkYourAnswers.change.hidden = date movement received
 
 howGiveInformation.title = How do you want to give information about the shortage or excess?
 howGiveInformation.heading = How do you want to give information about the shortage or excess?
@@ -178,6 +180,10 @@ howGiveInformation.whole = I want to give information about the whole movement
 howGiveInformation.choose = I want to choose which item(s) to give information about
 howGiveInformation.checkYourAnswersLabel = How do you want to give information about the shortage or excess?
 howGiveInformation.error.required = Select how you want to give information about the shortage or excess
+howGiveInformation.checkYourAnswers.label = Information given
+howGiveInformation.checkYourAnswers.value.whole = Whole movement
+howGiveInformation.checkYourAnswers.value.choose = Specific items
+howGiveInformation.checkYourAnswers.change.hidden = how information is given
 
 giveInformationMovement.title = Give information about the shortage or excess
 giveInformationMovement.heading = Give information about the shortage or excess
@@ -185,6 +191,8 @@ giveInformationMovement.error.required = Enter information
 giveInformationMovement.error.length = Information must be 350 characters or less
 giveInformationMovement.error.character = Information must contain letters or numbers
 giveInformationMovement.error.invalidCharacter = Information must not include < and > and : and ;
+giveInformationMovement.checkYourAnswers.label = Information about shortage or excess
+giveInformationMovement.checkYourAnswers.change.hidden = information about shortage or excess
 
 selectItem.title = Select an item to give information about
 selectItem.heading = Select an item to give information about
@@ -336,3 +344,20 @@ confirmation.mayNeedToDo.excess.bullet4 = the person or organisation holding the
 confirmation.button = Return to at a glance
 confirmation.feedback.link = What did you think of this service?
 confirmation.feedback.time = (takes 30 seconds)
+
+checkYourAnswers.title = Check your answers
+checkYourAnswers.heading = Check your answers
+checkYourAnswers.movementDetails.h2 = Movement
+checkYourAnswers.items.h2 = Items
+checkYourAnswers.item.cardTitle = Item {0}
+checkYourAnswers.item.details = Item details
+checkYourAnswers.item.details.hidden = for item {0}
+checkYourAnswers.item.remove = Remove
+checkYourAnswers.item.remove.hidden = item {0}
+checkYourAnswers.submit.h2 = Now submit your explanation for a shortage or excess
+checkYourAnswers.declaration = By submitting this explanation for a shortage or excess, you are confirming that to the best of your knowledge, the details you are providing are correct.
+checkYourAnswers.submit.button = Submit explanation for shortage or excess
+checkYourAnswers.add.item.link = Add another item
+
+checkYourAnswersItem.title = Check your answers for {0}
+checkYourAnswersItem.heading = Check your answers for {0}

@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 class Navigator @Inject()() extends BaseNavigator {
 
-  private val normalRoutes: Page => UserAnswers => Call = {
+  private[navigation] val normalRoutes: Page => UserAnswers => Call = {
     case WhenReceiveShortageExcessPage => (userAnswers: UserAnswers) =>
       controllers.routes.HowGiveInformationController.onPageLoad(userAnswers.ern, userAnswers.arc, NormalMode)
     case HowGiveInformationPage => (userAnswers: UserAnswers) =>
@@ -37,10 +37,8 @@ class Navigator @Inject()() extends BaseNavigator {
         case _ =>
           routes.SelectItemController.onPageLoad(userAnswers.ern, userAnswers.arc)
       }
-
-    case GiveInformationMovementPage => (_: UserAnswers) =>
-      //TODO: Update as part of future story when Next page exists
-      testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+    case GiveInformationMovementPage => (userAnswers: UserAnswers) =>
+      routes.CheckYourAnswersController.onPageLoad(userAnswers.ern, userAnswers.arc)
     case SelectItemPage(idx) => (userAnswers: UserAnswers) =>
       routes.ChooseShortageExcessItemController.onPageLoad(userAnswers.ern, userAnswers.arc, idx, NormalMode)
     case ChooseShortageExcessItemPage(idx) => (userAnswers: UserAnswers) =>
@@ -51,29 +49,29 @@ class Navigator @Inject()() extends BaseNavigator {
       routes.ItemCheckAnswersController.onPageLoad(userAnswers.ern, userAnswers.arc, idx)
     case CheckAnswersItemPage(_) => (userAnswers: UserAnswers) =>
       routes.AddToListController.onPageLoad(userAnswers.ern, userAnswers.arc)
-    case AddToListPage => (_: UserAnswers) =>
-      //TODO: Update as part of future story when Next page exists
-      testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+    case AddToListPage => (userAnswers: UserAnswers) =>
+      routes.CheckYourAnswersController.onPageLoad(userAnswers.ern, userAnswers.arc)
+    case CheckAnswersPage => (userAnswers: UserAnswers) =>
+      routes.ConfirmationController.onPageLoad(userAnswers.ern, userAnswers.arc)
     case _ => (userAnswers: UserAnswers) =>
       routes.IndexController.onPageLoad(userAnswers.ern, userAnswers.arc)
   }
 
-  private val checkRoutes: Page => UserAnswers => Call = {
-    case ChooseShortageExcessItemPage(_) => (userAnswers: UserAnswers) =>
-      routes.AddToListController.onPageLoad(userAnswers.ern, userAnswers.arc)
+  private[navigation] val checkRoutes: Page => UserAnswers => Call = {
+    case page@ChooseShortageExcessItemPage(_) => normalRoutes(page)
     case ItemAmountPage(_) => (userAnswers: UserAnswers) =>
       routes.AddToListController.onPageLoad(userAnswers.ern, userAnswers.arc)
     case GiveInformationItemPage(_) => (userAnswers: UserAnswers) =>
       routes.AddToListController.onPageLoad(userAnswers.ern, userAnswers.arc)
-    case _ => (_: UserAnswers) =>
-      //TODO: Update as part of future story when Check Answers page exists
-      testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+    case _ => (userAnswers: UserAnswers) =>
+      routes.CheckYourAnswersController.onPageLoad(userAnswers.ern, userAnswers.arc)
   }
 
   private[navigation] val reviewRoutesMap: Page => UserAnswers => Call = {
-    case _ => (_: UserAnswers) =>
-      //TODO: Update as part of future story when Check Answers page exists
-      testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+    case page@ChooseShortageExcessItemPage(_) =>
+      normalRoutes(page)
+    case _ => (userAnswers: UserAnswers) =>
+      routes.CheckYourAnswersController.onPageLoad(userAnswers.ern, userAnswers.arc)
   }
 
   override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
