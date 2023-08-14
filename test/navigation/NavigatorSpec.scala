@@ -123,6 +123,14 @@ class NavigatorSpec extends SpecBase {
             routes.ItemCheckAnswersController.onPageLoad(testErn, testArc, testIdx)
         }
       }
+
+      "from CheckAnswersPage" - {
+
+        "must go to ConfirmationPage" in {
+          navigator.nextPage(CheckAnswersPage, NormalMode, emptyUserAnswers) mustBe
+            routes.ConfirmationController.onPageLoad(testErn, testArc)
+        }
+      }
     }
 
     "in Check mode" - {

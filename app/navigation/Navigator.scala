@@ -51,6 +51,8 @@ class Navigator @Inject()() extends BaseNavigator {
       routes.AddToListController.onPageLoad(userAnswers.ern, userAnswers.arc)
     case AddToListPage => (userAnswers: UserAnswers) =>
       routes.CheckYourAnswersController.onPageLoad(userAnswers.ern, userAnswers.arc)
+    case CheckAnswersPage => (userAnswers: UserAnswers) =>
+      routes.ConfirmationController.onPageLoad(userAnswers.ern, userAnswers.arc)
     case _ => (userAnswers: UserAnswers) =>
       routes.IndexController.onPageLoad(userAnswers.ern, userAnswers.arc)
   }
