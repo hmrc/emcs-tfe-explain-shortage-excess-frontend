@@ -22,7 +22,9 @@
 package models
 
 import base.SpecBase
+import models.response.emcsTfe.MovementItem
 import pages.QuestionPage
+import pages.individualItems._
 import play.api.libs.json._
 
 
@@ -319,6 +321,153 @@ class UserAnswersSpec extends SpecBase {
 
         "must return the user answers" in {
           emptyUserAnswers.handleResult(JsSuccess(emptyUserAnswers.data)) mustBe emptyUserAnswers
+        }
+      }
+    }
+
+    "when calling .itemReferences" - {
+
+      "must return all the item references" - {
+
+        "when item references are in user answers, and it must be sorted by reference" in {
+
+          val withData = emptyUserAnswers
+            .set(SelectItemPage(2), 2)
+            .set(ChooseShortageExcessItemPage(2), ChooseShortageExcessItem.Excess)
+            .set(SelectItemPage(1), 1)
+            .set(ChooseShortageExcessItemPage(1), ChooseShortageExcessItem.Shortage)
+
+          withData.itemReferences mustBe Seq(1, 2)
+        }
+      }
+
+      "must return a filtered list" - {
+
+        "when not all item references are in user answers" in {
+
+          val withData = emptyUserAnswers
+            .set(ChooseShortageExcessItemPage(1), ChooseShortageExcessItem.Shortage)
+            .set(SelectItemPage(2), 2)
+            .set(ChooseShortageExcessItemPage(2), ChooseShortageExcessItem.Excess)
+
+          withData.itemReferences mustBe Seq(2)
+        }
+
+        "when no item references are in user answers" in {
+
+          val withData = emptyUserAnswers
+            .set(ChooseShortageExcessItemPage(1), ChooseShortageExcessItem.Shortage)
+            .set(ChooseShortageExcessItemPage(2), ChooseShortageExcessItem.Excess)
+
+          withData.itemReferences mustBe Seq()
+        }
+
+        "when user answers is empty" in {
+
+          val withData = emptyUserAnswers
+
+          withData.itemReferences mustBe Seq()
+        }
+      }
+    }
+
+    "when calling .completedItems" - {
+
+      "must return all the completed items" - {
+
+        "when item references are in user answers, and CheckAnswersItemPage(idx) is true" in {
+
+          val withData = emptyUserAnswers
+            .set(SelectItemPage(1), 1)
+            .set(CheckAnswersItemPage(1), true)
+            .set(SelectItemPage(2), 2)
+            .set(CheckAnswersItemPage(2), true)
+
+          withData.completedItems mustBe Seq(
+            ItemModel(1),
+            ItemModel(2)
+          )
+        }
+      }
+
+      "must return a filtered list" - {
+
+        "when not all items are completed" in {
+
+          val withData = emptyUserAnswers
+            // item 1 has CheckAnswersItemPage = true
+            .set(SelectItemPage(1), 1)
+            .set(CheckAnswersItemPage(1), true)
+            // item 2 has no CheckAnswersItemPage
+            .set(SelectItemPage(2), 2)
+            // item 3 has CheckAnswersItemPage = false
+            .set(SelectItemPage(3), 3)
+            .set(CheckAnswersItemPage(3), false)
+
+          withData.completedItems mustBe Seq(
+            // only item 1 is returned
+            ItemModel(1)
+          )
+        }
+      }
+    }
+
+    "when calling .itemKeys" - {
+      "must return all keys" - {
+        "when items is an object" in {
+          val input = emptyUserAnswers.copy(data = Json.obj(
+            "items" -> Json.obj(
+              "key1" -> "value1",
+              "key2" -> "value2"
+            )
+          ))
+
+          input.itemKeys mustBe Seq("key1", "key2")
+        }
+      }
+
+      "must return an empty Seq" - {
+        "when items is not an object" in {
+          val input = emptyUserAnswers.copy(data = Json.obj(
+            "items" -> JsArray(Seq(Json.obj(
+              "key1" -> "value1",
+              "key2" -> "value2"
+            )))
+          ))
+
+          input.itemKeys mustBe Seq()
+        }
+      }
+    }
+
+    "when calling .getItemWithReads(key)" - {
+      "must return a value" - {
+        "when value found matches the Reads" in {
+          val input = emptyUserAnswers
+            .set(SelectItemPage(1), 1)
+            .set(SelectItemPage(2), 2)
+
+          input.getItemWithReads("item-1")(MovementItem.readItemUniqueReference) mustBe Seq(1)
+        }
+      }
+
+      "must return an empty Seq" - {
+        "when value found doesn't match the Reads" in {
+          val input = emptyUserAnswers.copy(data = Json.obj(
+            "items" -> Json.obj(
+              "item-1" -> "1"
+            )
+          ))
+
+          input.getItemWithReads("item-1")(ItemModel.reads) mustBe Seq()
+        }
+
+        "when no value is found for the inputted key" in {
+          val input = emptyUserAnswers
+            .set(SelectItemPage(1), 1)
+            .set(SelectItemPage(2), 2)
+
+          input.getItemWithReads("item-3")(MovementItem.readItemUniqueReference) mustBe Seq()
         }
       }
     }

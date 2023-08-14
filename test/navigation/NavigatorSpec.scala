@@ -22,10 +22,15 @@ import models.HowGiveInformation.{Choose, Whole}
 import models._
 import pages._
 import pages.individualItems._
+import play.api.libs.json.JsPath
 
 class NavigatorSpec extends SpecBase {
 
   val navigator = new Navigator
+
+  case object TestPage extends QuestionPage[String] {
+    override def path: JsPath = JsPath
+  }
 
   "Navigator" - {
 
@@ -65,6 +70,21 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
+      "from CheckAnswersItemPage" - {
+        "must go to AddToList" in {
+          navigator.nextPage(CheckAnswersItemPage(1), NormalMode, emptyUserAnswers) mustBe
+            routes.AddToListController.onPageLoad(testErn, testArc)
+        }
+      }
+
+      "from AddToListPage" - {
+        "must go to Under Construction" in {
+          //TODO: update in future story when next page is created
+          navigator.nextPage(AddToListPage, NormalMode, emptyUserAnswers) mustBe
+            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+        }
+      }
+
       "from GiveInformationMovementPage" - {
 
         //TODO: Update as part of future story when page exists
@@ -100,21 +120,56 @@ class NavigatorSpec extends SpecBase {
 
       "from GiveInformationItemPage" - {
 
-        //TODO: Update as part of future story when page exists
-        "must go to UnderConstructionPage" in {
+        "must go to CheckAnswersItemPage" in {
           navigator.nextPage(GiveInformationItemPage(1), NormalMode, emptyUserAnswers) mustBe
-            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+            routes.ItemCheckAnswersController.onPageLoad(testErn, testArc, testIdx)
         }
       }
     }
 
     "in Check mode" - {
 
-      "from WhenReceiveShortageExcessPage" - {
+      "from ChooseShortageExcessItemPage" - {
+
+        "must go to AddToListPage" in {
+          navigator.nextPage(ChooseShortageExcessItemPage(testIdx), CheckMode, emptyUserAnswers) mustBe
+            routes.AddToListController.onPageLoad(testErn, testArc)
+        }
+      }
+
+      "from ItemAmountPage" - {
+
+        "must go to AddToListPage" in {
+          navigator.nextPage(ItemAmountPage(testIdx), CheckMode, emptyUserAnswers) mustBe
+            routes.AddToListController.onPageLoad(testErn, testArc)
+        }
+      }
+
+      "from GiveInformationItemPage" - {
+
+        "must go to AddToListPage" in {
+          navigator.nextPage(GiveInformationItemPage(testIdx), CheckMode, emptyUserAnswers) mustBe
+            routes.AddToListController.onPageLoad(testErn, testArc)
+        }
+      }
+
+      "default scenario" - {
 
         //TODO: Update as part of future story when page exists to go to Check Answers
         "must go to UnderConstructionPage" in {
-          navigator.nextPage(WhenReceiveShortageExcessPage, CheckMode, emptyUserAnswers) mustBe
+          navigator.nextPage(TestPage, CheckMode, emptyUserAnswers) mustBe
+            testOnly.controllers.routes.UnderConstructionController.onPageLoad()
+        }
+      }
+    }
+
+    "in Review mode" - {
+
+      "default scenario" - {
+
+        //TODO: Update as part of future story when page exists to go to Check Answers
+        "must go to UnderConstructionPage" in {
+          navigator.nextPage(TestPage, ReviewMode, emptyUserAnswers) mustBe
             testOnly.controllers.routes.UnderConstructionController.onPageLoad()
         }
       }

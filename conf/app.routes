@@ -48,15 +48,26 @@ GET         /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess         
 POST        /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess               controllers.ChooseShortageExcessItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
 GET         /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess/change        controllers.ChooseShortageExcessItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
 POST        /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess/change        controllers.ChooseShortageExcessItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+GET         /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess/review        controllers.ChooseShortageExcessItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = ReviewMode)
+POST        /trader/:ern/movement/:arc/item/:idx/choose-shortage-excess/review        controllers.ChooseShortageExcessItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = ReviewMode)
 
 GET         /trader/:ern/movement/:arc/item/:idx/item-amount                          controllers.ItemAmountController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
 POST        /trader/:ern/movement/:arc/item/:idx/item-amount                          controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
 GET         /trader/:ern/movement/:arc/item/:idx/item-amount/change                   controllers.ItemAmountController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
 POST        /trader/:ern/movement/:arc/item/:idx/item-amount/change                   controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+GET         /trader/:ern/movement/:arc/item/:idx/item-amount/review                   controllers.ItemAmountController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = ReviewMode)
+POST        /trader/:ern/movement/:arc/item/:idx/item-amount/review                   controllers.ItemAmountController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = ReviewMode)
 
 GET         /trader/:ern/movement/:arc/item/:idx/give-information-item                controllers.GiveInformationItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
 POST        /trader/:ern/movement/:arc/item/:idx/give-information-item                controllers.GiveInformationItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
 GET         /trader/:ern/movement/:arc/item/:idx/give-information-item/change         controllers.GiveInformationItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
 POST        /trader/:ern/movement/:arc/item/:idx/give-information-item/change         controllers.GiveInformationItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = CheckMode)
+GET         /trader/:ern/movement/:arc/item/:idx/give-information-item/review         controllers.GiveInformationItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = ReviewMode)
+POST        /trader/:ern/movement/:arc/item/:idx/give-information-item/review         controllers.GiveInformationItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = ReviewMode)
+
+GET         /trader/:ern/movement/:arc/item/:idx/check-answers-item                   controllers.ItemCheckAnswersController.onPageLoad(ern: String, arc: String, idx: Int)
+
+GET         /trader/:ern/movement/:arc/add-to-list                                    controllers.AddToListController.onPageLoad(ern, arc)
+POST        /trader/:ern/movement/:arc/add-to-list                                    controllers.AddToListController.onSubmit(ern, arc)
 
 GET         /trader/:ern/movement/:arc/confirmation                                   controllers.ConfirmationController.onPageLoad(ern: String, arc: String)

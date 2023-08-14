@@ -19,8 +19,7 @@ package forms
 import forms.mappings.Mappings
 import models.UnitOfMeasure
 import play.api.data.Form
-import play.api.data.Forms.{text => playText}
-import play.api.data.Forms.optional
+import play.api.data.Forms.{optional, text => playText}
 import play.api.i18n.Messages
 
 import javax.inject.Inject
@@ -43,8 +42,9 @@ class ItemAmountFormProvider @Inject() extends Mappings {
               Some(greaterThanValue(BigDecimal(MIN_VALUE_0), "itemAmount.error.notGreaterThanZero", MIN_VALUE_0)),
               Some(maxScale(3, "itemAmount.error.threeDecimalPlaces")),
               maxAmount.map(max => lessThanEqualValue(max, "itemAmount.error.exceedsMaxAmount", max, messages(s"unitOfMeasure.$unit.short")))
-            ).flatten:_*
+            ).flatten: _*
           )
-        ))
+        )
+      )
     )
 }

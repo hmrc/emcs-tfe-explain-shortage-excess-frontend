@@ -47,14 +47,14 @@ class ItemAmountControllerSpec extends SpecBase with MockUserAnswersService with
 
     val formProvider = new ItemAmountFormProvider()
     val form =
-      if(userAnswers.flatMap(_.get(ChooseShortageExcessItemPage(1))).contains(Shortage)) {
+      if (userAnswers.flatMap(_.get(ChooseShortageExcessItemPage(1))).contains(Shortage)) {
         formProvider(Some(item1.quantity), Kilograms)
       } else {
         formProvider(None, Kilograms)
       }
   }
 
-  val validAnswer: Option[BigDecimal] = Some(BigDecimal(5.145))
+  val validAnswer = Some(BigDecimal(5.145))
   val defaultUserAnswers = emptyUserAnswers.set(ChooseShortageExcessItemPage(1), Shortage)
 
   lazy val itemAmountRoute = routes.ItemAmountController.onPageLoad(testErn, testArc, 1, NormalMode).url

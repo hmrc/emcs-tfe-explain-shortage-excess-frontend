@@ -20,6 +20,8 @@ import base.SpecBase
 import forms.DetailsSelectItemFormProvider
 import mocks.services.{MockReferenceDataService, MockUserAnswersService}
 import models.UserAnswers
+import navigation.{FakeNavigator, Navigator}
+import pages.individualItems.{GiveInformationItemPage, ItemAmountPage, SelectItemPage}
 import play.api.inject.bind
 import play.api.mvc.Results.Redirect
 import play.api.test.FakeRequest
@@ -34,6 +36,7 @@ class DetailsSelectItemControllerSpec extends SpecBase with MockUserAnswersServi
   class Fixture(val userAnswers: Option[UserAnswers] = Some(emptyUserAnswers)) {
     val application = applicationBuilder(userAnswers)
       .overrides(
+        bind[Navigator].toInstance(new FakeNavigator(testOnwardRoute)),
         bind[ReferenceDataService].toInstance(mockReferenceDataService),
         bind[UserAnswersService].toInstance(mockUserAnswersService)
       ).build()
@@ -125,6 +128,27 @@ class DetailsSelectItemControllerSpec extends SpecBase with MockUserAnswersServi
 
             status(result) mustEqual SEE_OTHER
             redirectLocation(result).value mustEqual routes.SelectItemController.onPageLoad(testErn, testArc).url
+          }
+        }
+      }
+
+      "must redirect to the next page" - {
+        "when the user answer YES to the question on the page" in new Fixture(Some(
+          emptyUserAnswers
+            .set(SelectItemPage(1), 3)
+            .set(ItemAmountPage(1), Some(BigDecimal(1)))
+            .set(GiveInformationItemPage(1), "info")
+        )) {
+          running(application) {
+
+            // Item is reset
+            MockUserAnswersService.set(emptyUserAnswers.set(SelectItemPage(1), 1)).returns(Future.successful(emptyUserAnswers))
+
+            val request = FakeRequest(POST, detailsSelectItemRoute).withFormUrlEncodedBody(("value", "true"))
+            val result = route(application, request).value
+
+            status(result) mustEqual SEE_OTHER
+            redirectLocation(result).value mustEqual testOnwardRoute.url
           }
         }
       }
