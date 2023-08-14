@@ -36,6 +36,9 @@ trait BaseController extends FrontendBaseController with I18nSupport with Enumer
                  (implicit request: DataRequest[_], format: Format[A]): Form[A] =
     request.userAnswers.get(page).fold(form)(form.fill)
 
+  def withAllCompletedItemsAsync()(f: Seq[MovementItem] => Future[Result])(implicit request: DataRequest[_]): Future[Result] =
+    f(request.getAllCompletedItemDetails)
+
   def withMovementItemAsync(idx: Int)(f: MovementItem => Future[Result])(implicit request: DataRequest[_]): Future[Result] =
     request.movementDetails.item(idx) match {
       case Some(item) => f(item)
