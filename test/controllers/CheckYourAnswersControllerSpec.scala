@@ -17,31 +17,34 @@
 package controllers
 
 import base.SpecBase
+import fixtures.SubmitShortageExcessFixtures
 import handlers.ErrorHandler
-import mocks.services.{MockGetCnCodeInformationService, MockUserAnswersService}
-import mocks.utils.MockTimeMachine
+import mocks.services.{MockGetCnCodeInformationService, MockSubmitShortageExcessService, MockUserAnswersService}
 import mocks.viewmodels.MockCheckAnswersHelper
 import models.ChooseShortageExcessItem.Excess
 import models.HowGiveInformation.{Choose, Whole}
-import models.{ConfirmationDetails, UserAnswers}
+import models.{ConfirmationDetails, MissingMandatoryPage, SubmitShortageExcessException, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
-import pages.individualItems.{CheckAnswersItemPage, ChooseShortageExcessItemPage, GiveInformationItemPage, ItemAmountPage, SelectItemPage}
+import pages.individualItems._
 import pages.{ConfirmationPage, GiveInformationMovementPage, HowGiveInformationPage, WhenReceiveShortageExcessPage}
 import play.api.inject
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.{GetCnCodeInformationService, UserAnswersService}
+import services.{GetCnCodeInformationService, SubmitShortageExcessService, UserAnswersService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
+import utils.JsonOptionFormatter._
 import viewmodels.checkAnswers.CheckAnswersHelper
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
-import utils.JsonOptionFormatter._
-import utils.TimeMachine
 
 import scala.concurrent.Future
 
-class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency with MockCheckAnswersHelper with MockGetCnCodeInformationService
-  with MockUserAnswersService with MockTimeMachine {
+class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency
+  with MockCheckAnswersHelper
+  with MockGetCnCodeInformationService
+  with MockUserAnswersService
+  with MockSubmitShortageExcessService
+  with SubmitShortageExcessFixtures {
 
   class Fixture(userAnswers: Option[UserAnswers]) {
     val application =
@@ -51,7 +54,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency wi
           inject.bind[Navigator].toInstance(new FakeNavigator(testOnwardRoute)),
           inject.bind[GetCnCodeInformationService].toInstance(mockGetCnCodeInformationService),
           inject.bind[UserAnswersService].toInstance(mockUserAnswersService),
-          inject.bind[TimeMachine].toInstance(mockTimeMachine)
+          inject.bind[SubmitShortageExcessService].toInstance(mockSubmitShortageExcessService)
         )
         .build()
 
@@ -160,13 +163,14 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency wi
               val updatedUserAnswers = emptyUserAnswers.set(
                 ConfirmationPage,
                 ConfirmationDetails(
-                  "DUMMY_RECEIPT", //TODO: These will be returned from submission in future
-                  testSubmissionDate //TODO: These will be returned from submission in future
+                  submitShortageOrExcessResponse.receipt,
+                  submitShortageOrExcessResponse.receiptDate
                 )
               )
 
-              MockTimeMachine.now(testSubmissionDate.atTime(1,50))
               MockUserAnswersService.set(updatedUserAnswers).returns(Future.successful(updatedUserAnswers))
+              MockSubmitShortageExcessService.submit(testErn, testArc, getMovementResponseModel, userAnswers)
+                .returns(Future.successful(submitShortageOrExcessResponse))
 
               val result = route(application, request).value
 
@@ -175,42 +179,41 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency wi
             }
           }
         }
-//        TODO: Can't run yet as no call to submission service, add test in when submission service created
-//        "when the submission fails" - {
-//
-//          "must render an ISE" in new Fixture(Some(userAnswers)) {
-//
-//            running(application) {
-//
-//              MockSubmitReportOfReceiptService.submit(testErn, testArc, getMovementResponseModel, userAnswers)
-//                .returns(Future.failed(SubmitReportOfReceiptException("bang")))
-//
-//              val result = route(application, request).value
-//
-//              status(result) mustBe INTERNAL_SERVER_ERROR
-//              contentAsString(result) mustBe errorHandler.internalServerErrorTemplate(request).toString()
-//            }
-//          }
-//        }
+
+        "when the submission fails" - {
+
+          "must render an ISE" in new Fixture(Some(userAnswers)) {
+
+            running(application) {
+
+              MockSubmitShortageExcessService.submit(testErn, testArc, getMovementResponseModel, userAnswers)
+                .returns(Future.failed(SubmitShortageExcessException("bang")))
+
+              val result = route(application, request).value
+
+              status(result) mustBe INTERNAL_SERVER_ERROR
+              contentAsString(result) mustBe errorHandler.internalServerErrorTemplate(request).toString()
+            }
+          }
+        }
       }
-//
-//      TODO: Can't run yet as no call to submission service, add test in when submission service created
-//      "when invalid data exists so the submission can NOT be generated" - {
-//
-//        "must return BadRequest" in new Fixture(Some(emptyUserAnswers)) {
-//
-//          running(application) {
-//
-//            MockSubmitReportOfReceiptService.submit(testErn, testArc, getMovementResponseModel, emptyUserAnswers)
-//              .returns(Future.failed(MissingMandatoryPage("bang")))
-//
-//            val result = route(application, request).value
-//
-//            status(result) mustBe BAD_REQUEST
-//            contentAsString(result) mustBe errorHandler.badRequestTemplate(request).toString()
-//          }
-//        }
-//      }
+
+      "when invalid data exists so the submission can NOT be generated" - {
+
+        "must return BadRequest" in new Fixture(Some(emptyUserAnswers)) {
+
+          running(application) {
+
+            MockSubmitShortageExcessService.submit(testErn, testArc, getMovementResponseModel, emptyUserAnswers)
+              .returns(Future.failed(MissingMandatoryPage("bang")))
+
+            val result = route(application, request).value
+
+            status(result) mustBe BAD_REQUEST
+            contentAsString(result) mustBe errorHandler.badRequestTemplate(request).toString()
+          }
+        }
+      }
     }
   }
 }

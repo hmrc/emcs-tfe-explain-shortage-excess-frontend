@@ -14,21 +14,24 @@
  * limitations under the License.
  */
 
-package utils
+package models.audit
 
-import play.api.i18n.Messages
+import base.SpecBase
+import fixtures.audit.SubmitShortageExcessAuditModelFixtures
 
-import java.time.{LocalDate, LocalDateTime}
+class SubmitShortageExcessAuditModelSpec extends SpecBase with SubmitShortageExcessAuditModelFixtures {
 
-trait DateUtils {
-  implicit class LocalDateExtensions(date: LocalDate) {
-    def formatDateForUIOutput()(implicit messages: Messages): String = {
-      val monthMessage = messages(s"date.month.${date.getMonthValue}")
-      s"${date.getDayOfMonth} $monthMessage ${date.getYear}"
+  "SubmitShortageExcessAuditModel" - {
+
+    "should write a correct audit json" - {
+
+      "when a successful submission has occurred" in {
+        submitShortageOrExcessAuditSuccessful.detail mustBe submitShortageOrExcessAuditSuccessfulJSON
+      }
+
+      "when a failed to submit has occurred" in {
+        submitShortageOrExcessAuditFailed.detail mustBe submitShortageOrExcessAuditFailedJSON
+      }
     }
-  }
-
-  implicit class LocalDateTimeExtensions(dateTime: LocalDateTime) {
-    def formatDateForUIOutput()(implicit messages: Messages): String = dateTime.toLocalDate.formatDateForUIOutput()
   }
 }
