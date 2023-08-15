@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, NormalMode}
+import models.NormalMode
 import models.requests.DataRequest
 import pages.HowGiveInformationPage
 import play.api.i18n.Messages

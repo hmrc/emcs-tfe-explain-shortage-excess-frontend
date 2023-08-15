@@ -80,7 +80,7 @@ class AddToListHelperSpec extends SpecBase {
                         content = msgs("site.change"),
                         href = routes.ChooseShortageExcessItemController.onPageLoad(testErn, testArc, testIdx, CheckMode).url,
                         visuallyHiddenText = Some(msgs("chooseShortageExcessItem.checkYourAnswers.change.hidden")),
-                        attributes = Map("id" -> "chooseShortageExcessItem")
+                        attributes = Map("id" -> "chooseShortageExcessItem-item-1")
                       ))))
                     ),
                     SummaryListRow(
@@ -94,7 +94,7 @@ class AddToListHelperSpec extends SpecBase {
                         content = msgs("site.change"),
                         href = routes.ItemAmountController.onPageLoad(testErn, testArc, item1.itemUniqueReference, CheckMode).url,
                         visuallyHiddenText = Some(msgs("itemAmount.checkYourAnswers.change.hidden")),
-                        attributes = Map("id" -> "itemAmount")
+                        attributes = Map("id" -> "itemAmount-item-1")
                       ))))
                     ),
                     SummaryListRow(
@@ -104,7 +104,7 @@ class AddToListHelperSpec extends SpecBase {
                         content = msgs("site.change"),
                         href = routes.GiveInformationItemController.onPageLoad(testErn, testArc, testIdx, CheckMode).url,
                         visuallyHiddenText = Some(msgs(s"giveInformationItem.checkYourAnswers.$shortageOrExcess.change.hidden")),
-                        attributes = Map("id" -> "giveInformationItem")
+                        attributes = Map("id" -> "giveInformationItem-item-1")
                       ))))
                     )
                   )
@@ -128,14 +128,15 @@ class AddToListHelperSpec extends SpecBase {
                         content = msgs("site.change"),
                         href = routes.ChooseShortageExcessItemController.onPageLoad(testErn, testArc, testIdx, CheckMode).url,
                         visuallyHiddenText = Some(msgs("chooseShortageExcessItem.checkYourAnswers.change.hidden")),
-                        attributes = Map("id" -> "chooseShortageExcessItem")
+                        attributes = Map("id" -> "chooseShortageExcessItem-item-1")
                       ))))
                     ),
                     SummaryListRow(
                       key = "itemAmount.checkYourAnswers.label",
                       value = ValueViewModel(HtmlContent(link(
                         link = routes.ItemAmountController.onPageLoad(testErn, testArc, item1.itemUniqueReference, CheckMode).url,
-                        messageKey = "itemAmount.checkYourAnswers.addMoreInformation"
+                        messageKey = "itemAmount.checkYourAnswers.addMoreInformation",
+                        id = Some("itemAmount-item-1")
                       ))),
                       actions = Some(Actions(items = Seq()))
                     ),
@@ -144,7 +145,8 @@ class AddToListHelperSpec extends SpecBase {
                       value = ValueViewModel(
                         HtmlContent(link(
                           link = routes.GiveInformationItemController.onPageLoad(testErn, testArc, testIdx, CheckMode).url,
-                          messageKey = s"giveInformationItem.checkYourAnswers.$shortageOrExcess.addMoreInformation"
+                          messageKey = s"giveInformationItem.checkYourAnswers.$shortageOrExcess.addMoreInformation",
+                          id = Some("giveInformationItem-item-1")
                         ))
                       ),
                       actions = Some(Actions(items = Seq()))
@@ -170,14 +172,15 @@ class AddToListHelperSpec extends SpecBase {
                         content = msgs("site.change"),
                         href = routes.ChooseShortageExcessItemController.onPageLoad(testErn, testArc, testIdx, CheckMode).url,
                         visuallyHiddenText = Some(msgs("chooseShortageExcessItem.checkYourAnswers.change.hidden")),
-                        attributes = Map("id" -> "chooseShortageExcessItem")
+                        attributes = Map("id" -> "chooseShortageExcessItem-item-1")
                       ))))
                     ),
                     SummaryListRow(
                       key = "itemAmount.checkYourAnswers.label",
                       value = ValueViewModel(HtmlContent(link(
                         link = routes.ItemAmountController.onPageLoad(testErn, testArc, item1.itemUniqueReference, CheckMode).url,
-                        messageKey = "itemAmount.checkYourAnswers.addMoreInformation"
+                        messageKey = "itemAmount.checkYourAnswers.addMoreInformation",
+                        id = Some("itemAmount-item-1")
                       ))),
                       actions = Some(Actions(items = Seq()))
                     ),
@@ -186,7 +189,8 @@ class AddToListHelperSpec extends SpecBase {
                       value = ValueViewModel(
                         HtmlContent(link(
                           link = routes.GiveInformationItemController.onPageLoad(testErn, testArc, testIdx, CheckMode).url,
-                          messageKey = s"giveInformationItem.checkYourAnswers.$shortageOrExcess.addMoreInformation"
+                          messageKey = s"giveInformationItem.checkYourAnswers.$shortageOrExcess.addMoreInformation",
+                          id = Some("giveInformationItem-item-1")
                         ))
                       ),
                       actions = Some(Actions(items = Seq()))
@@ -199,7 +203,7 @@ class AddToListHelperSpec extends SpecBase {
             }
 
             "when on the final CYA page" - {
-              "must render the correct additionalLinkIdSignifier" in new Test {
+              "must render the correct /review route" in new Test {
                 override val wrongWithItemPageValue: ChooseShortageExcessItem = shortageOrExcess
                 val result: SummaryList = SummaryList(
                   rows = Seq(

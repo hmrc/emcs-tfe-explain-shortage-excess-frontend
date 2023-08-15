@@ -86,7 +86,7 @@ class SelectItemControllerSpec extends SpecBase
             val result = route(application, request).value
 
             status(result) mustEqual SEE_OTHER
-            redirectLocation(result).value mustEqual testOnly.controllers.routes.UnderConstructionController.onPageLoad().url
+            redirectLocation(result).value mustEqual routes.AddToListController.onPageLoad(testErn, testArc).url
           }
         }
       }
