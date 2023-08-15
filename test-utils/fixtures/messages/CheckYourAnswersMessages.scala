@@ -17,7 +17,6 @@
 package fixtures.messages
 
 import fixtures.i18n
-import fixtures.messages.CheckYourAnswersMessages.English.titleHelper
 
 object CheckYourAnswersMessages {
 

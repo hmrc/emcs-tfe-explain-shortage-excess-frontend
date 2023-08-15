@@ -17,12 +17,10 @@
 package views
 
 import base.ViewSpecBase
-import config.AppConfig
 import controllers.routes
 import fixtures.messages.CheckYourAnswersMessages
 import models.ChooseShortageExcessItem.Shortage
 import models.HowGiveInformation.Choose
-import models.ReviewMode
 import models.UnitOfMeasure.Kilograms
 import models.requests.DataRequest
 import org.jsoup.Jsoup
@@ -32,13 +30,9 @@ import pages.individualItems.{ChooseShortageExcessItemPage, ItemAmountPage, Sele
 import play.api.i18n.Messages
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
-import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.AddToListHelper
 import viewmodels.checkAnswers.CheckAnswersHelper
 import views.html.CheckYourAnswersView
-
-import scala.concurrent.ExecutionContext
 
 class CheckYourAnswersViewSpec extends ViewSpecBase with ViewBehaviours {
 
@@ -63,11 +57,8 @@ class CheckYourAnswersViewSpec extends ViewSpecBase with ViewBehaviours {
           .set(ChooseShortageExcessItemPage(item1.itemUniqueReference), Shortage)
           .set(ItemAmountPage(item1.itemUniqueReference), Some(BigDecimal(10)))
 
-        implicit val config: AppConfig = app.injector.instanceOf[AppConfig]
         implicit val msgs: Messages = messages(app, messagesForLanguage.lang)
         implicit val request: DataRequest[AnyContentAsEmpty.type] = dataRequest(FakeRequest(), userAnswers)
-        implicit val hc: HeaderCarrier = HeaderCarrier()
-        implicit val ec: ExecutionContext = ExecutionContext.global
 
         val cyaHelper = app.injector.instanceOf[CheckAnswersHelper]
         val view = app.injector.instanceOf[CheckYourAnswersView]

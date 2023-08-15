@@ -57,8 +57,7 @@ class SelectItemController @Inject()(
       case incompleteItems if incompleteItems.nonEmpty =>
         f(incompleteItems)
       case _ =>
-        // TODO: Change when /add-to-list is created
-        Future.successful(Redirect(testOnly.controllers.routes.UnderConstructionController.onPageLoad()))
+        Future.successful(Redirect(routes.AddToListController.onPageLoad(request.ern, request.arc)))
     }
 
   private[controllers] def incompleteItems()(implicit request: DataRequest[_]): Seq[MovementItem] =
