@@ -18,11 +18,10 @@ package models.response.emcsTfe
 
 import play.api.libs.json.{Format, Json}
 
-case class AddressModel(streetNumber: Option[String],
-                        street: Option[String],
-                        postcode: Option[String],
-                        city: Option[String])
+import java.time.LocalDate
 
-object AddressModel {
-  implicit val fmt: Format[AddressModel] = Json.format
+case class SubmitShortageExcessResponse(receipt: String, receiptDate: LocalDate)
+
+object SubmitShortageExcessResponse {
+  implicit val format: Format[SubmitShortageExcessResponse] = Json.format
 }

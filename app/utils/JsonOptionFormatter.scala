@@ -16,7 +16,7 @@
 
 package utils
 
-import play.api.libs.json.{Format, JsNull, JsResult, JsValue, Writes}
+import play.api.libs.json.{Format, JsNull, JsObject, JsResult, JsValue, Json, Writes}
 
 trait JsonOptionFormatter {
 
@@ -28,6 +28,9 @@ trait JsonOptionFormatter {
       case None ⇒ JsNull
     }
   }
+
+  def jsonObjNoNulls(fields: (String, Json.JsValueWrapper)*): JsObject =
+    JsObject(Json.obj(fields: _*).fields.filterNot(_._2 == JsNull).filterNot(_._2 == Json.obj()))
 }
 
 object JsonOptionFormatter extends JsonOptionFormatter

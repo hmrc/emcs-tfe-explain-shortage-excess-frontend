@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package models.response.emcsTfe
-
+package models.common
 
 import play.api.libs.json.{Format, Json}
 
-case class ConsignorTraderModel(traderExciseNumber: String,
-                                traderName: String,
-                                address: AddressModel) {
-}
+case class AddressModel(streetNumber: Option[String],
+                        street: Option[String],
+                        postcode: Option[String],
+                        city: Option[String])
 
-object ConsignorTraderModel {
-
-  implicit val fmt: Format[ConsignorTraderModel] = Json.format
+object AddressModel {
+  implicit val fmt: Format[AddressModel] = Json.format
 }

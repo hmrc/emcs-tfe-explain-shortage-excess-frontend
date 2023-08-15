@@ -25,10 +25,13 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpReads, HttpResponse}
 import scala.concurrent.{ExecutionContext, Future}
 
 trait EmcsTfeHttpParser[A] extends BaseConnectorUtils[A] {
+
+  type Response = Either[ErrorResponse, A]
+
   def http: HttpClient
 
-  implicit object EmcsTfeReads extends HttpReads[Either[ErrorResponse, A]] {
-    override def read(method: String, url: String, response: HttpResponse): Either[ErrorResponse, A] = {
+  implicit object EmcsTfeReads extends HttpReads[Response] {
+    override def read(method: String, url: String, response: HttpResponse): Response = {
       response.status match {
         case OK => response.validateJson match {
           case Some(valid) => Right(valid)
@@ -43,9 +46,19 @@ trait EmcsTfeHttpParser[A] extends BaseConnectorUtils[A] {
     }
   }
 
-  def get(url: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[ErrorResponse, A]] =
-    http.GET[Either[ErrorResponse, A]](url)(EmcsTfeReads, hc, ec)
+  def get(url: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Response] =
+    withExceptionRecovery("get") {
+      http.GET[Response](url)(EmcsTfeReads, hc, ec)
+    }
 
-  def post[I](url: String, body: I)(implicit hc: HeaderCarrier, ec: ExecutionContext, writes: Writes[I]): Future[Either[ErrorResponse, A]] =
-    http.POST[I, Either[ErrorResponse, A]](url, body)(writes, EmcsTfeReads, hc, ec)
+  def post[I](url: String, body: I)(implicit hc: HeaderCarrier, ec: ExecutionContext, writes: Writes[I]): Future[Response] =
+    withExceptionRecovery("post") {
+      http.POST[I, Response](url, body)(writes, EmcsTfeReads, hc, ec)
+    }
+
+  private def withExceptionRecovery(method: String)(f: => Future[Response])(implicit ec: ExecutionContext): Future[Response] = f recover {
+    case e: Throwable =>
+      logger.warn(s"[$method] Unexpected exception of type ${e.getClass.getSimpleName} was thrown")
+      Left(UnexpectedDownstreamResponseError)
+  }
 }

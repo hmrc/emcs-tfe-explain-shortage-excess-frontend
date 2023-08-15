@@ -39,6 +39,6 @@ case class PackagingTypesException(message: String) extends Exception(message) w
 case class WineOperationsException(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
 case class ReferenceDataException(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
 
-case class SubmitExplainShortageOrExcessException(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
+case class SubmitShortageExcessException(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
 case class UserAnswersException(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
 case class MissingMandatoryPage(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
