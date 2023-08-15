@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.ContinueDraftFormProvider
 import mocks.services.MockUserAnswersService
 import models.{NormalMode, UserAnswers}
-import pages.WhenReceiveShortageExcessPage
+import pages.{ConfirmationPage, WhenReceiveShortageExcessPage}
 import play.api.http.Status.SEE_OTHER
 import play.api.inject.bind
 import play.api.test.FakeRequest
@@ -56,6 +56,29 @@ class IndexControllerSpec extends SpecBase with MockUserAnswersService {
             MockUserAnswersService.set(emptyUserAnswers).returns(Future.successful(emptyUserAnswers))
 
             val request = FakeRequest(GET, routes.IndexController.onPageLoad(testErn, testArc).url)
+            val result = route(application, request).value
+
+            status(result) mustEqual SEE_OTHER
+            redirectLocation(result) mustBe Some(routes.WhenReceiveShortageExcessController.onPageLoad(testErn, testArc, NormalMode).url)
+          }
+        }
+      }
+
+      "when ConfirmationPage UserAnswers exist" - {
+
+        "must Initialise the UserAnswers and redirect to DelayType" in {
+
+          val userAnswers = emptyUserAnswers.set(ConfirmationPage, testConfirmationDetails)
+
+          val application = applicationBuilder(userAnswers = Some(userAnswers)).overrides(
+            bind[UserAnswersService].toInstance(mockUserAnswersService)
+          ).build()
+
+          MockUserAnswersService.set(emptyUserAnswers).returns(Future.successful(emptyUserAnswers))
+
+          running(application) {
+            val request = FakeRequest(GET, routes.IndexController.onPageLoad(testErn, testArc).url)
+
             val result = route(application, request).value
 
             status(result) mustEqual SEE_OTHER

@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package controllers.action
+package controllers.actions
 
 import base.SpecBase
-import controllers.actions.MovementActionImpl
 import handlers.ErrorHandler
 import mocks.connectors.MockGetMovementConnector
 import models.requests.{MovementRequest, UserRequest}
@@ -48,7 +47,7 @@ class MovementActionSpec extends SpecBase with MockitoSugar with MockGetMovement
 
   class Harness(forceFetchNew: Boolean, connectorResponse: Either[ErrorResponse, GetMovementResponse]) {
 
-    val action = if(forceFetchNew) movementAction.upToDate(testArc) else movementAction.fromCache(testArc)
+    val action = if (forceFetchNew) movementAction.upToDate(testArc) else movementAction.fromCache(testArc)
 
     MockGetMovementConnector.getMovement(testErn, testArc, forceFetchNew).returns(Future.successful(connectorResponse))
 

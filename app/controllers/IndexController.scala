@@ -18,6 +18,7 @@ package controllers
 
 import controllers.actions.{AuthAction, DataRetrievalAction, MovementAction}
 import models.{NormalMode, UserAnswers}
+import pages.ConfirmationPage
 import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import services.UserAnswersService
@@ -37,6 +38,8 @@ class IndexController @Inject()(override val messagesApi: MessagesApi,
   def onPageLoad(ern: String, arc: String): Action[AnyContent] =
     (authAction(ern, arc) andThen withMovement.fromCache(arc) andThen getData).async { implicit request =>
       request.userAnswers match {
+        case Some(ans) if ans.get(ConfirmationPage).isDefined =>
+          initialiseAndRedirect(UserAnswers(request.internalId, request.ern, request.arc))
         case Some(answers) if answers.data.fields.nonEmpty =>
           Future.successful(Redirect(routes.DraftController.onPageLoad(request.ern, request.arc)))
         case _ =>

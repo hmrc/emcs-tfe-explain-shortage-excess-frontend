@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package controllers.action
+package controllers.actions
 
-import controllers.actions.DataRetrievalAction
-import models.UserAnswers
-import models.requests.{MovementRequest, OptionalDataRequest}
+import fixtures.BaseFixtures
+import models.requests.UserRequest
+import play.api.mvc._
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class FakeDataRetrievalAction(dataToReturn: Option[UserAnswers]) extends DataRetrievalAction {
+class FakeUserAllowListAction @Inject()() extends UserAllowListAction with BaseFixtures {
+  override protected def refine[A](request: UserRequest[A]): Future[Either[Result, UserRequest[A]]] = Future.successful(Right(request))
 
-  override protected def transform[A](request: MovementRequest[A]): Future[OptionalDataRequest[A]] =
-    Future(OptionalDataRequest(request, dataToReturn))
-
-  override protected implicit val executionContext: ExecutionContext =
-    scala.concurrent.ExecutionContext.Implicits.global
+  override protected def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }

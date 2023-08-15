@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package controllers.action
+package controllers.actions
 
-import controllers.actions.AuthAction
 import fixtures.BaseFixtures
 import models.requests.UserRequest
 import play.api.mvc._

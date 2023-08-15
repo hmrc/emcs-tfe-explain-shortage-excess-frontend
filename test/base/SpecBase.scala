@@ -16,7 +16,7 @@
 
 package base
 
-import controllers.action.{FakeAuthAction, FakeDataRetrievalAction, FakeMovementAction, FakeUserAllowListAction}
+import controllers.actions.{FakeAuthAction, FakeDataRetrievalAction, FakeMovementAction, FakeUserAllowListAction}
 import controllers.actions.{AuthAction, DataRetrievalAction, MovementAction, UserAllowListAction}
 import fixtures.{BaseFixtures, GetMovementResponseFixtures}
 import models.UserAnswers
