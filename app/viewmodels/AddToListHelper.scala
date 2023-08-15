@@ -34,14 +34,14 @@ import javax.inject.Inject
 class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
   def summaryList(item: MovementItem, unitOfMeasure: UnitOfMeasure, onFinalCheckAnswers: Boolean = false)
                  (implicit request: DataRequest[_], messages: Messages): SummaryList = {
-    val additionalLinkIdSignifier = if (onFinalCheckAnswers) s"-item-${item.itemUniqueReference}" else ""
+    val additionalLinkIdSignifier = s"-item-${item.itemUniqueReference}"
 
     val rows: Seq[SummaryListRow] = request.userAnswers.get(ChooseShortageExcessItemPage(item.itemUniqueReference)).map {
       answer =>
         Seq(
-          whatWasWrongRow(answer, item.itemUniqueReference, additionalLinkIdSignifier),
-          amountReceivedRow(item.itemUniqueReference, unitOfMeasure, additionalLinkIdSignifier),
-          moreInformationRow(answer, item.itemUniqueReference, additionalLinkIdSignifier)
+          whatWasWrongRow(answer, item.itemUniqueReference, onFinalCheckAnswers, additionalLinkIdSignifier),
+          amountReceivedRow(item.itemUniqueReference, unitOfMeasure, onFinalCheckAnswers, additionalLinkIdSignifier),
+          moreInformationRow(answer, item.itemUniqueReference, onFinalCheckAnswers, additionalLinkIdSignifier)
         ).flatten
     }.getOrElse(Seq.empty)
 
@@ -49,9 +49,9 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
   }
 
 
-  private def whatWasWrongRow(answer: ChooseShortageExcessItem, idx: Int, additionalLinkIdSignifier: String)
+  private def whatWasWrongRow(answer: ChooseShortageExcessItem, idx: Int, onFinalCheckAnswers: Boolean, additionalLinkIdSignifier: String)
                              (implicit request: DataRequest[_], messages: Messages): Option[SummaryListRow] = {
-    val mode = if (additionalLinkIdSignifier != "") ReviewMode else CheckMode
+    val mode = if (onFinalCheckAnswers) ReviewMode else CheckMode
     Some(SummaryListRowViewModel(
       key = s"${ChooseShortageExcessItemPage(idx)}.checkYourAnswers.label",
       value = ValueViewModel(messages(s"${ChooseShortageExcessItemPage(idx)}.$answer")),
@@ -65,9 +65,9 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
     ))
   }
 
-  private def amountReceivedRow(idx: Int, unitOfMeasure: UnitOfMeasure, additionalLinkIdSignifier: String)
+  private def amountReceivedRow(idx: Int, unitOfMeasure: UnitOfMeasure, onFinalCheckAnswers: Boolean, additionalLinkIdSignifier: String)
                                (implicit request: DataRequest[_], messages: Messages): Option[SummaryListRow] = {
-    val mode = if (additionalLinkIdSignifier != "") ReviewMode else CheckMode
+    val mode = if (onFinalCheckAnswers) ReviewMode else CheckMode
     request.userAnswers.get(ItemAmountPage(idx)) match {
       case Some(answer) if answer.nonEmpty =>
         Some(SummaryListRowViewModel(
@@ -92,16 +92,17 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
           key = s"${ItemAmountPage(idx)}.checkYourAnswers.label",
           value = ValueViewModel(HtmlContent(link(
             link = routes.ItemAmountController.onPageLoad(request.userAnswers.ern, request.userAnswers.arc, idx, mode).url,
-            messageKey = s"${ItemAmountPage(idx)}.checkYourAnswers.addMoreInformation"
+            messageKey = s"${ItemAmountPage(idx)}.checkYourAnswers.addMoreInformation",
+            id = Some(ItemAmountPage(idx) + additionalLinkIdSignifier)
           ))),
           actions = Seq()
         ))
     }
   }
 
-  private def moreInformationRow(shortageOrExcess: ChooseShortageExcessItem, idx: Int, additionalLinkIdSignifier: String)
+  private def moreInformationRow(shortageOrExcess: ChooseShortageExcessItem, idx: Int, onFinalCheckAnswers: Boolean, additionalLinkIdSignifier: String)
                                 (implicit request: DataRequest[_], messages: Messages): Option[SummaryListRow] = {
-    val mode = if (additionalLinkIdSignifier != "") ReviewMode else CheckMode
+    val mode = if (onFinalCheckAnswers) ReviewMode else CheckMode
     Some(request.userAnswers.get(GiveInformationItemPage(idx)) match {
       case Some(answer) if answer.length > 0 =>
         SummaryListRowViewModel(
@@ -120,7 +121,8 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
           key = s"${GiveInformationItemPage(idx)}.checkYourAnswers.$shortageOrExcess.label",
           value = ValueViewModel(HtmlContent(link(
             link = routes.GiveInformationItemController.onPageLoad(request.ern, request.arc, idx, mode).url,
-            messageKey = s"${GiveInformationItemPage(idx)}.checkYourAnswers.$shortageOrExcess.addMoreInformation"
+            messageKey = s"${GiveInformationItemPage(idx)}.checkYourAnswers.$shortageOrExcess.addMoreInformation",
+            id = Some(GiveInformationItemPage(idx) + additionalLinkIdSignifier)
           ))),
           actions = Seq()
         )

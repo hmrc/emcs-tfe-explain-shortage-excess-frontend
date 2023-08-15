@@ -64,7 +64,7 @@ class CheckYourAnswersViewSpec extends ViewSpecBase with ViewBehaviours {
         val view = app.injector.instanceOf[CheckYourAnswersView]
         val itemHelper = app.injector.instanceOf[AddToListHelper]
 
-        val item1Summary = itemHelper.summaryList(item1, Kilograms, true)
+        val item1Summary = itemHelper.summaryList(item1, Kilograms, onFinalCheckAnswers = true)
 
         implicit val doc: Document = Jsoup.parse(view(
           submitAction = controllers.routes.CheckYourAnswersController.onSubmit(testErn, testArc),
