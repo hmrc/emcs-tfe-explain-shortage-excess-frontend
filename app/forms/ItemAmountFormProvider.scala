@@ -17,7 +17,8 @@
 package forms
 
 import forms.mappings.Mappings
-import models.UnitOfMeasure
+import models.ChooseShortageExcessItem.{Excess, Shortage}
+import models.{ChooseShortageExcessItem, UnitOfMeasure}
 import play.api.data.Form
 import play.api.data.Forms.{optional, text => playText}
 import play.api.i18n.Messages
@@ -26,7 +27,10 @@ import javax.inject.Inject
 
 class ItemAmountFormProvider @Inject() extends Mappings {
 
-  def apply(maxAmount: Option[BigDecimal], unit: UnitOfMeasure)(implicit messages: Messages): Form[Option[BigDecimal]] =
+  def apply(maxAmount: Option[BigDecimal],
+            unit: UnitOfMeasure,
+            shortageOrExcess: ChooseShortageExcessItem
+           )(implicit messages: Messages): Form[Option[BigDecimal]] =
     Form(
       "value" -> optional(playText
         .verifying(
@@ -41,7 +45,15 @@ class ItemAmountFormProvider @Inject() extends Mappings {
             Seq(
               Some(greaterThanValue(BigDecimal(MIN_VALUE_0), "itemAmount.error.notGreaterThanZero", MIN_VALUE_0)),
               Some(maxScale(3, "itemAmount.error.threeDecimalPlaces")),
-              maxAmount.map(max => lessThanEqualValue(max, "itemAmount.error.exceedsMaxAmount", max, messages(s"unitOfMeasure.$unit.short")))
+              maxAmount.map(
+                max =>
+                  shortageOrExcess match {
+                    case Shortage =>
+                      lessThanEqualValue(max, "itemAmount.error.exceedsMaxAmount", max, messages(s"unitOfMeasure.$unit.short"))
+                    case Excess =>
+                      greaterThanValue(max, "itemAmount.error.doesNotExceedValue", max)
+                  }
+              )
             ).flatten: _*
           )
         )

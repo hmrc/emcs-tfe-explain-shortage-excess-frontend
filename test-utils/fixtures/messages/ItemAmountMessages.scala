@@ -31,7 +31,7 @@ object ItemAmountMessages {
     val notGreaterThanZeroError: String
     val threeDecimalPlacesError: String
     val exceedsMaxAmountError: (BigDecimal, String) => String
-
+    val doesNotExceedValueError: BigDecimal => String
   }
 
   object English extends ViewMessages with BaseEnglish {
@@ -45,6 +45,7 @@ object ItemAmountMessages {
     override val notGreaterThanZeroError = "The amount you received must be more than 0"
     override val threeDecimalPlacesError = "The amount you received must have 3 decimals or less"
     override val exceedsMaxAmountError = (amount: BigDecimal, unit: String) => s"The amount you received must be $amount $unit or fewer"
+    override val doesNotExceedValueError = (amount: BigDecimal) => s"The amount you received must be more than $amount"
   }
 
   object Welsh extends ViewMessages with BaseWelsh {
@@ -58,5 +59,6 @@ object ItemAmountMessages {
     override val notGreaterThanZeroError = "The amount you received must be more than 0"
     override val threeDecimalPlacesError = "The amount you received must have 3 decimals or less"
     override val exceedsMaxAmountError = (amount: BigDecimal, unit: String) => s"The amount you received must be $amount $unit or fewer"
+    override val doesNotExceedValueError = (amount: BigDecimal) => s"The amount you received must be more than $amount"
   }
 }

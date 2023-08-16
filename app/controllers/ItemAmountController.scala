@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.ItemAmountFormProvider
-import models.ChooseShortageExcessItem.Shortage
+import models.ChooseShortageExcessItem.{Excess, Shortage}
 import models.Mode
 import models.requests.DataRequest
 import models.response.emcsTfe.MovementItem
@@ -35,19 +35,18 @@ import views.html.ItemAmountView
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class ItemAmountController @Inject()(
-                                      override val messagesApi: MessagesApi,
-                                      override val userAnswersService: UserAnswersService,
-                                      override val navigator: Navigator,
-                                      override val auth: AuthAction,
-                                      override val withMovement: MovementAction,
-                                      override val getData: DataRetrievalAction,
-                                      override val requireData: DataRequiredAction,
-                                      override val userAllowList: UserAllowListAction,
-                                      formProvider: ItemAmountFormProvider,
-                                      val controllerComponents: MessagesControllerComponents,
-                                      referenceDataService: ReferenceDataService,
-                                      view: ItemAmountView
+class ItemAmountController @Inject()(override val messagesApi: MessagesApi,
+                                     override val userAnswersService: UserAnswersService,
+                                     override val navigator: Navigator,
+                                     override val auth: AuthAction,
+                                     override val withMovement: MovementAction,
+                                     override val getData: DataRetrievalAction,
+                                     override val requireData: DataRequiredAction,
+                                     override val userAllowList: UserAllowListAction,
+                                     formProvider: ItemAmountFormProvider,
+                                     val controllerComponents: MessagesControllerComponents,
+                                     referenceDataService: ReferenceDataService,
+                                     view: ItemAmountView
                                     ) extends BaseNavigationController with AuthActionHelper with JsonOptionFormatter {
 
 
@@ -74,8 +73,8 @@ class ItemAmountController @Inject()(
     withMovementItemAsync(idx) { item =>
       referenceDataService.itemWithReferenceData(item) { (itemWithRefData, cnCode) =>
         withAnswer(ChooseShortageExcessItemPage(idx)) {
-          case Shortage => f(itemWithRefData, cnCode, formProvider(Some(item.quantity), cnCode.unitOfMeasureCode.toUnitOfMeasure))
-          case _ => f(itemWithRefData, cnCode, formProvider(None, cnCode.unitOfMeasureCode.toUnitOfMeasure))
+          case Shortage => f(itemWithRefData, cnCode, formProvider(Some(item.quantity), cnCode.unitOfMeasureCode.toUnitOfMeasure, Shortage))
+          case Excess => f(itemWithRefData, cnCode, formProvider(Some(item.quantity), cnCode.unitOfMeasureCode.toUnitOfMeasure, Excess))
         }
       }
     }

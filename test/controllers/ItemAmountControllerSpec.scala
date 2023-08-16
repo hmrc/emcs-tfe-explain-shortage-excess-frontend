@@ -48,9 +48,9 @@ class ItemAmountControllerSpec extends SpecBase with MockUserAnswersService with
     val formProvider = new ItemAmountFormProvider()
     val form =
       if (userAnswers.flatMap(_.get(ChooseShortageExcessItemPage(1))).contains(Shortage)) {
-        formProvider(Some(item1.quantity), Kilograms)
+        formProvider(Some(item1.quantity), Kilograms, Shortage)
       } else {
-        formProvider(None, Kilograms)
+        formProvider(None, Kilograms, Excess)
       }
   }
 
