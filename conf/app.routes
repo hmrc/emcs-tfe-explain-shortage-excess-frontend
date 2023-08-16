@@ -77,3 +77,7 @@ POST        /trader/:ern/movement/:arc/check-answers                            
 
 GET         /trader/:ern/movement/:arc/confirmation                                   controllers.ConfirmationController.onPageLoad(ern: String, arc: String)
 
+GET         /trader/:ern/movement/:arc/item/:idx/remove-item                          controllers.RemoveItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
+POST        /trader/:ern/movement/:arc/item/:idx/remove-item                          controllers.RemoveItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = NormalMode)
+GET         /trader/:ern/movement/:arc/item/:idx/remove-item/review                   controllers.RemoveItemController.onPageLoad(ern: String, arc: String, idx: Int, mode: Mode = ReviewMode)
+POST        /trader/:ern/movement/:arc/item/:idx/remove-item/review                   controllers.RemoveItemController.onSubmit(ern: String, arc: String, idx: Int, mode: Mode = ReviewMode)

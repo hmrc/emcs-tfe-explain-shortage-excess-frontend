@@ -21,6 +21,7 @@ import controllers.routes
 import fixtures.messages.CheckYourAnswersMessages
 import models.ChooseShortageExcessItem.Shortage
 import models.HowGiveInformation.Choose
+import models.ReviewMode
 import models.UnitOfMeasure.Kilograms
 import models.requests.DataRequest
 import org.jsoup.Jsoup
@@ -96,9 +97,8 @@ class CheckYourAnswersViewSpec extends ViewSpecBase with ViewBehaviours {
 
         "have a link to remove the Item" in {
 
-          //TODO: Update when Remove Item Controller is added
           doc.select(Selectors.itemRemoveLink(1)).attr("href") mustBe
-            testOnly.controllers.routes.UnderConstructionController.onPageLoad().url
+            controllers.routes.RemoveItemController.onPageLoad(testErn, testArc, item1.itemUniqueReference, ReviewMode).url
         }
       }
     }
