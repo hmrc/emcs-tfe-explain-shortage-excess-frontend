@@ -19,6 +19,7 @@ package views
 import base.ViewSpecBase
 import fixtures.messages.{ItemAmountMessages, UnitOfMeasureMessages}
 import forms.ItemAmountFormProvider
+import models.ChooseShortageExcessItem.Shortage
 import models.UnitOfMeasure.Kilograms
 import models.requests.DataRequest
 import org.jsoup.Jsoup
@@ -44,7 +45,7 @@ class ItemAmountViewSpec extends ViewSpecBase with ViewBehaviours {
         implicit val msgs: Messages = messages(app, messagesForLanguage.lang)
         implicit val request: DataRequest[AnyContentAsEmpty.type] = dataRequest(FakeRequest())
 
-        val form = app.injector.instanceOf[ItemAmountFormProvider].apply(None, Kilograms)
+        val form = app.injector.instanceOf[ItemAmountFormProvider].apply(None, Kilograms, Shortage)
         val view = app.injector.instanceOf[ItemAmountView]
 
         implicit val doc: Document = Jsoup.parse(view(form, testOnwardRoute, item1, cnCodeInfo).toString())

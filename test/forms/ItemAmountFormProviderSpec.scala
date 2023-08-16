@@ -18,6 +18,7 @@ package forms
 
 import fixtures.messages.{ItemAmountMessages, UnitOfMeasureMessages}
 import forms.behaviours.IntFieldBehaviours
+import models.ChooseShortageExcessItem.{Excess, Shortage}
 import models.UnitOfMeasure.Kilograms
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.data.FormError
@@ -34,7 +35,7 @@ class ItemAmountFormProviderSpec extends IntFieldBehaviours with GuiceOneAppPerS
 
     implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(Seq(messagesForLanguage.lang))
 
-    val form = new ItemAmountFormProvider().apply(None, Kilograms)
+    val form = new ItemAmountFormProvider().apply(None, Kilograms, Shortage)
 
     "ItemAmountForm" - {
 
@@ -70,13 +71,21 @@ class ItemAmountFormProviderSpec extends IntFieldBehaviours with GuiceOneAppPerS
             messages("itemAmount.error.notGreaterThanZero", 0) mustBe messagesForLanguage.notGreaterThanZeroError
           }
 
-          "when value exceeds the max amount passed to the form" in {
+          "when value exceeds the max amount passed to the form when user has a shortage" in {
 
-            val form = new ItemAmountFormProvider().apply(Some(12.56), Kilograms)
+            val form = new ItemAmountFormProvider().apply(Some(12.56), Kilograms, Shortage)
             val result = form.bind(Map(fieldName -> "12.57"))
             result.errors.headOption mustBe Some(FormError(fieldName, "itemAmount.error.exceedsMaxAmount", Seq(12.56, unitOfMeasureMessages.kilogramsShort)))
             messages("itemAmount.error.exceedsMaxAmount", 12.56, unitOfMeasureMessages.kilogramsShort) mustBe
               messagesForLanguage.exceedsMaxAmountError(12.56, unitOfMeasureMessages.kilogramsShort)
+          }
+
+          "when value does not exceed the max amount passed to the form when user has an excess" in {
+
+            val form = new ItemAmountFormProvider().apply(Some(12.56), Kilograms, Excess)
+            val result = form.bind(Map(fieldName -> "12.55"))
+            result.errors.headOption mustBe Some(FormError(fieldName, "itemAmount.error.doesNotExceedValue", Seq(12.56)))
+            messages("itemAmount.error.doesNotExceedValue", 12.56) mustBe messagesForLanguage.doesNotExceedValueError(12.56)
           }
         }
 

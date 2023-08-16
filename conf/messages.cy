@@ -290,6 +290,7 @@ itemAmount.error.isNotNumeric = The amount you received must be a number, like 1
 itemAmount.error.notGreaterThanZero = The amount you received must be more than 0
 itemAmount.error.threeDecimalPlaces = The amount you received must have 3 decimals or less
 itemAmount.error.exceedsMaxAmount = The amount you received must be {0} {1} or fewer
+itemAmount.error.doesNotExceedValue = The amount you received must be more than {0}
 
 giveInformationItem.title.shortage = Give more information about receiving a shortage of item {0}
 giveInformationItem.title.excess = Give more information about receiving an excess of item {0}
