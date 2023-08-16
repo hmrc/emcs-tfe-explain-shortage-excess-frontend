@@ -27,7 +27,7 @@
 <div class="govuk-button-group">
 
     @govukButton(
-        ButtonViewModel(messages(primaryKey)).preventingDoubleClick()
+        ButtonViewModel(messages(primaryKey)).preventingDoubleClick().withId("submit")
     )
 
     <a class="govuk-link" id="save-and-exit" href="@appConfig.emcsTfeHomeUrl(Some(request.ern))">@messages("site.savePreviousAnswersAndExit")</a>
