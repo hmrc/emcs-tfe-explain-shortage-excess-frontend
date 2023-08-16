@@ -30,12 +30,7 @@ import views.html.ItemAmountView
 
 class ItemAmountViewSpec extends ViewSpecBase with ViewBehaviours {
 
-  object Selectors extends BaseSelectors {
-    val day = "label[for='value.day']"
-    val month = "label[for='value.month']"
-    val year = "label[for='value.year']"
-    val legend = "legend h2"
-  }
+  object Selectors extends BaseSelectors
 
   "ItemAmount view" - {
 
@@ -58,10 +53,15 @@ class ItemAmountViewSpec extends ViewSpecBase with ViewBehaviours {
           Selectors.title -> messagesForLanguage.title(unitOfMeasureMessages.kilogramsLong, item1.itemUniqueReference),
           Selectors.h1 -> messagesForLanguage.heading(unitOfMeasureMessages.kilogramsLong, item1.itemUniqueReference),
           Selectors.h2(1) -> messagesForLanguage.arcSubheading(testArc),
+          Selectors.label("value") -> messagesForLanguage.heading(unitOfMeasureMessages.kilogramsLong, item1.itemUniqueReference),
           Selectors.hint -> messagesForLanguage.hint,
           Selectors.button -> messagesForLanguage.saveAndContinue,
           Selectors.link(1) -> messagesForLanguage.savePreviousAnswersAndExit
         ))
+
+        "label should be visually hidden" in {
+          doc.select(Selectors.label("value")).hasClass("govuk-visually-hidden") mustBe true
+        }
       }
     }
   }

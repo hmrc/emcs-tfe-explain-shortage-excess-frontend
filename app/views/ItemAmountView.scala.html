@@ -41,10 +41,12 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        @h1(messages("itemAmount.heading", messages(s"unitOfMeasure.${cnCodeInfo.unitOfMeasureCode.toUnitOfMeasure}.long"), item.itemUniqueReference), Some(messages("arc.subHeading", request.arc)), "govuk-heading-l")
+
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(HtmlContent(heading))
+                label = LabelViewModel(Text(messages("itemAmount.heading", messages(s"unitOfMeasure.${cnCodeInfo.unitOfMeasureCode.toUnitOfMeasure}.long"), item.itemUniqueReference))).hidden
             )
                     .asNumeric()
                     .withWidth(Fixed10)
@@ -62,10 +64,6 @@
     @p(classes = "govuk-hint") {
         @messages("itemAmount.hint")
     }
-}
-
-@heading = {
-    @h1(messages("itemAmount.heading", messages(s"unitOfMeasure.${cnCodeInfo.unitOfMeasureCode.toUnitOfMeasure}.long"), item.itemUniqueReference), Some(messages("arc.subHeading", request.arc)), "govuk-heading-l")
 }
 
 @{
