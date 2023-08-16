@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package controllers.action
+package controllers.actions
 
-import controllers.actions.MovementAction
 import models.requests.{MovementRequest, UserRequest}
 import models.response.emcsTfe.GetMovementResponse
 import play.api.mvc.{ActionRefiner, Result}

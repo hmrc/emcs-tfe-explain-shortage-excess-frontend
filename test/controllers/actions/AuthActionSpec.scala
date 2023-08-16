@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package controllers.action
+package controllers.actions
 
 import base.SpecBase
 import config.{AppConfig, EnrolmentKeys}
-import controllers.actions.AuthActionImpl
 import fixtures.BaseFixtures
 import org.scalatest.BeforeAndAfterAll
 import play.api.Play
@@ -70,7 +69,7 @@ class AuthActionSpec extends SpecBase with BaseFixtures with BeforeAndAfterAll {
                    enrolments: Enrolments = Enrolments(Set.empty),
                    internalId: Option[String] = Some(testInternalId),
                    credId: Option[Credentials] = Some(Credentials(testCredId, "gg"))): AuthRetrieval =
-    new ~(new ~(new ~(affinityGroup, enrolments), internalId), credId)
+    new~(new~(new~(affinityGroup, enrolments), internalId), credId)
 
   "AuthAction" - {
 

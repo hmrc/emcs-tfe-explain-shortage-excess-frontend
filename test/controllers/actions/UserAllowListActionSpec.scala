@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package controllers.action
+package controllers.actions
 
 import base.SpecBase
 import config.AppConfig
-import controllers.actions.UserAllowListActionImpl
 import featureswitch.core.config.{FeatureSwitching, UserAllowList}
 import handlers.ErrorHandler
 import mocks.connectors.MockUserAllowListConnector

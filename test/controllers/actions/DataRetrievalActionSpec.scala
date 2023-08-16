@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package controllers.action
+package controllers.actions
 
 import base.SpecBase
-import controllers.actions.DataRetrievalActionImpl
 import mocks.services.MockUserAnswersService
 import models.requests.{MovementRequest, OptionalDataRequest, UserRequest}
 import org.scalatestplus.mockito.MockitoSugar
