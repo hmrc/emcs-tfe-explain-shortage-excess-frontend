@@ -18,9 +18,9 @@ package models
 
 import play.api.libs.json.{Json, OFormat}
 
-import java.time.LocalDate
+import java.time.{LocalDate, LocalDateTime}
 
-case class ConfirmationDetails(receipt: String, dateOfSubmission: LocalDate)
+case class ConfirmationDetails(receipt: String, dateOfSubmission: LocalDateTime)
 
 object ConfirmationDetails {
   implicit def format: OFormat[ConfirmationDetails] = Json.format[ConfirmationDetails]

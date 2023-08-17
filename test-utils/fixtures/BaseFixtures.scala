@@ -22,7 +22,7 @@ import models.response.referenceData.CnCodeInformation
 import play.api.mvc.Call
 
 import java.time.temporal.ChronoUnit
-import java.time.{Instant, LocalDate}
+import java.time.{Instant, LocalDate, LocalDateTime}
 
 trait BaseFixtures {
 
@@ -33,8 +33,8 @@ trait BaseFixtures {
   val testDateOfWhenReceiveShortageOrExcess: LocalDate = LocalDate.now()
   val testIdx: Int = 1
   val testConfirmationReference = "UYVQBLMXCYK6HAEBZI7TSWAQ6XDTXFYU"
-  val testSubmissionDate = LocalDate.now()
-  val testConfirmationDetails = ConfirmationDetails(testConfirmationReference, testSubmissionDate)
+  val testReceiptDateTime = LocalDateTime.now()
+  val testConfirmationDetails = ConfirmationDetails(testConfirmationReference, testReceiptDateTime)
   val testOnwardRoute = Call("GET", "/foo")
   val cnCodeInfo = CnCodeInformation("", "", `1`)
 

@@ -16,15 +16,12 @@
 
 package models.response.emcsTfe
 
-
 import play.api.libs.json.{Format, Json}
 
-case class ConsignorTraderModel(traderExciseNumber: String,
-                                traderName: String,
-                                address: AddressModel) {
-}
+import java.time.{LocalDate, LocalDateTime}
 
-object ConsignorTraderModel {
+case class SubmitShortageExcessResponse(receipt: String, receiptDate: LocalDateTime)
 
-  implicit val fmt: Format[ConsignorTraderModel] = Json.format
+object SubmitShortageExcessResponse {
+  implicit val format: Format[SubmitShortageExcessResponse] = Json.format
 }

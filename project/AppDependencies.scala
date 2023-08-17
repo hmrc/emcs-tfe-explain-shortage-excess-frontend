@@ -4,17 +4,19 @@ object AppDependencies {
 
   import play.core.PlayVersion
 
-  val playSuffix = "-play-28"
-  val scalatestVersion = "3.2.15"
-  val hmrcBootstrapVersion = "7.20.0"
-  val hmrcMongoVersion = "1.3.0"
+  val playSuffix            = "-play-28"
+  val scalatestVersion      = "3.2.15"
+  val hmrcBootstrapVersion  = "7.20.0"
+  val hmrcMongoVersion      = "1.3.0"
+  val catsCoreVersion       =  "2.3.1"
 
   val compile = Seq(
     play.sbt.PlayImport.ws,
     "uk.gov.hmrc"             %%  "play-frontend-hmrc"                % s"7.16.0$playSuffix",
     "uk.gov.hmrc"             %% s"bootstrap-frontend$playSuffix"     %  hmrcBootstrapVersion,
     "uk.gov.hmrc.mongo"       %% s"hmrc-mongo$playSuffix"             %  hmrcMongoVersion,
-    "com.google.inject"       %   "guice"                             % "5.1.0"
+    "com.google.inject"       %   "guice"                             % "5.1.0",
+    "org.typelevel"           %%  "cats-core"                         % catsCoreVersion
   )
 
   val test = Seq(

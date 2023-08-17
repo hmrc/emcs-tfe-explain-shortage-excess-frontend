@@ -17,19 +17,19 @@
 package controllers
 
 import controllers.actions._
+import handlers.ErrorHandler
 import models.HowGiveInformation.Choose
 import models.requests.DataRequest
-import models.response.emcsTfe.MovementItem
-import models.{ConfirmationDetails, NormalMode, UserAnswers}
+import models.response.emcsTfe.{MovementItem, SubmitShortageExcessResponse}
+import models.{ConfirmationDetails, MissingMandatoryPage, NormalMode, UserAnswers}
 import navigation.Navigator
 import pages.{CheckAnswersPage, ConfirmationPage, HowGiveInformationPage}
 import play.api.i18n.MessagesApi
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
-import services.{GetCnCodeInformationService, UserAnswersService}
+import services.{GetCnCodeInformationService, SubmitShortageExcessService, UserAnswersService}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.TimeMachine
 import viewmodels.AddToListHelper
 import viewmodels.checkAnswers.CheckAnswersHelper
 import views.html.CheckYourAnswersView
@@ -50,7 +50,8 @@ class CheckYourAnswersController @Inject()(override val messagesApi: MessagesApi
                                            checkAnswersHelper: CheckAnswersHelper,
                                            checkAnswersItemHelper: AddToListHelper,
                                            getCnCodeInformationService: GetCnCodeInformationService,
-                                           timeMachine: TimeMachine
+                                           submitShortageOrExcessService: SubmitShortageExcessService,
+                                           errorHandler: ErrorHandler
                                           ) extends BaseNavigationController with AuthActionHelper {
 
   def onPageLoad(ern: String, arc: String): Action[AnyContent] =
@@ -99,14 +100,20 @@ class CheckYourAnswersController @Inject()(override val messagesApi: MessagesApi
 
   def onSubmit(ern: String, arc: String): Action[AnyContent] =
     authorisedDataRequestWithUpToDateMovementAsync(ern, arc) { implicit request =>
-      //TODO: Update to call submission service to send to EMCS TFE and handle response
-      deleteDraftAndSetConfirmationFlow("DUMMY_RECEIPT").map { _ =>
-        Redirect(navigator.nextPage(CheckAnswersPage, NormalMode, request.userAnswers))
+      submitShortageOrExcessService.submit(ern, arc).flatMap {
+        deleteDraftAndSetConfirmationFlow(_).map { userAnswers =>
+          Redirect(navigator.nextPage(CheckAnswersPage, NormalMode, userAnswers))
+        }
+      } recover {
+        case _: MissingMandatoryPage =>
+          BadRequest(errorHandler.badRequestTemplate)
+        case _ =>
+          InternalServerError(errorHandler.internalServerErrorTemplate)
       }
     }
 
 
-  private def deleteDraftAndSetConfirmationFlow(receipt: String)
+  private def deleteDraftAndSetConfirmationFlow(response: SubmitShortageExcessResponse)
                                                (implicit hc: HeaderCarrier, request: DataRequest[_]): Future[UserAnswers] = {
     userAnswersService.set(
       UserAnswers(
@@ -115,8 +122,8 @@ class CheckYourAnswersController @Inject()(override val messagesApi: MessagesApi
         request.arc,
         data = Json.obj(ConfirmationPage.toString ->
           Json.toJson(ConfirmationDetails(
-            receipt = receipt,
-            dateOfSubmission = timeMachine.now().toLocalDate
+            receipt = response.receipt,
+            dateOfSubmission = response.receiptDate
           )))
       ))
   }
