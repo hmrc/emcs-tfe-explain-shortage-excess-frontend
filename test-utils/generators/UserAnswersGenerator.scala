@@ -47,7 +47,6 @@ trait UserAnswersGenerator extends TryValues with BaseFixtures {
           case _ => Gen.mapOf(oneOf(generators))
         }
       } yield UserAnswers(
-        testInternalId,
         testErn,
         testArc,
         data = data.foldLeft(Json.obj()) {
