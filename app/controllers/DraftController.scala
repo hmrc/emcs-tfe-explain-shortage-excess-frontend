@@ -44,7 +44,7 @@ class DraftController @Inject()(override val messagesApi: MessagesApi,
         case Some(answers) if answers.data.fields.nonEmpty =>
           Future.successful(Ok(view(continueDraftFormProvider(), routes.DraftController.onSubmit(ern, arc))))
         case _ =>
-          initialiseAndRedirect(UserAnswers(request.internalId, request.ern, request.arc))
+          initialiseAndRedirect(UserAnswers(request.ern, request.arc))
       }
     }
 
@@ -56,7 +56,7 @@ class DraftController @Inject()(override val messagesApi: MessagesApi,
         continueDraft => {
           val userAnswers = request.userAnswers match {
             case Some(answers) if continueDraft => answers
-            case _ => UserAnswers(request.internalId, request.ern, request.arc)
+            case _ => UserAnswers(request.ern, request.arc)
           }
           initialiseAndRedirect(userAnswers)
         }

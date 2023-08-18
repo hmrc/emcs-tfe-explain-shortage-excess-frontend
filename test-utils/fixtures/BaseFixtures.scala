@@ -39,7 +39,6 @@ trait BaseFixtures {
   val cnCodeInfo = CnCodeInformation("", "", `1`)
 
   val emptyUserAnswers: UserAnswers = UserAnswers(
-    internalId = testInternalId,
     ern = testErn,
     arc = testArc,
     lastUpdated = Instant.now().truncatedTo(ChronoUnit.MILLIS)

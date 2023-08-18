@@ -18,7 +18,7 @@ package models
 
 import play.api.libs.json.{Json, OFormat}
 
-import java.time.{LocalDate, LocalDateTime}
+import java.time.LocalDateTime
 
 case class ConfirmationDetails(receipt: String, dateOfSubmission: LocalDateTime)
 

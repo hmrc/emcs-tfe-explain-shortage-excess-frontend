@@ -18,7 +18,7 @@ package models.response.emcsTfe
 
 import play.api.libs.json.{Format, Json}
 
-import java.time.{LocalDate, LocalDateTime}
+import java.time.LocalDateTime
 
 case class SubmitShortageExcessResponse(receipt: String, receiptDate: LocalDateTime)
 

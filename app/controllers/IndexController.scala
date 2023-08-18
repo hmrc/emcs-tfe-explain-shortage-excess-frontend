@@ -39,11 +39,11 @@ class IndexController @Inject()(override val messagesApi: MessagesApi,
     (authAction(ern, arc) andThen withMovement.fromCache(arc) andThen getData).async { implicit request =>
       request.userAnswers match {
         case Some(ans) if ans.get(ConfirmationPage).isDefined =>
-          initialiseAndRedirect(UserAnswers(request.internalId, request.ern, request.arc))
+          initialiseAndRedirect(UserAnswers(request.ern, request.arc))
         case Some(answers) if answers.data.fields.nonEmpty =>
           Future.successful(Redirect(routes.DraftController.onPageLoad(request.ern, request.arc)))
         case _ =>
-          initialiseAndRedirect(UserAnswers(request.internalId, request.ern, request.arc))
+          initialiseAndRedirect(UserAnswers(request.ern, request.arc))
       }
     }
 
