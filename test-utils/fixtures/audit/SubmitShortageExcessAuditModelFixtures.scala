@@ -17,6 +17,7 @@
 package fixtures.audit
 
 import fixtures.{BaseFixtures, SubmitShortageExcessFixtures}
+import models.ChooseShortageExcessItem.{Excess, Shortage}
 import models.UnexpectedDownstreamResponseError
 import models.audit.SubmitShortageExcessAuditModel
 import models.common.SubmitterType.Consignee
@@ -72,12 +73,14 @@ trait SubmitShortageExcessAuditModelFixtures extends BaseFixtures with SubmitSho
         "exciseProductCode" -> item1.productCode,
         "bodyRecordUniqueReference" -> item1.itemUniqueReference,
         "explanation" -> "reason",
-        "actualQuantity" -> 10.1
+        "actualQuantity" -> 10.1,
+        "whatWasWrong" -> Shortage.toString
       ),
       Json.obj(
         "exciseProductCode" -> item2.productCode,
         "bodyRecordUniqueReference" -> item2.itemUniqueReference,
-        "explanation" -> "reason"
+        "explanation" -> "reason",
+        "whatWasWrong" -> Excess.toString
       )
     ),
     "status" -> "failed",
