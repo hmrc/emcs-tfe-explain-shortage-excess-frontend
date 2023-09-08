@@ -60,17 +60,13 @@
             @govukRadios(
                 RadiosViewModel.yesNo(
                     field = form("value"),
-                    legend = LegendViewModel(HtmlContent(heading)).withCssClass("govuk-fieldset__legend govuk-fieldset__legend--m")
+                    legend = LegendViewModel(HtmlContent(messages("detailsSelectItem.heading"))).withCssClass("govuk-fieldset__legend--m")
                 )
             )
         }
 
         @continueOrExit()
     }
-}
-
-@heading = {
-    @h1("detailsSelectItem.heading", None, "govuk-fieldset__heading")
 }
 
 @{
