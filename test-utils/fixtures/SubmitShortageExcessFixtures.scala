@@ -16,6 +16,7 @@
 
 package fixtures
 
+import models.ChooseShortageExcessItem.{Excess, Shortage}
 import models.common.SubmitterType.Consignee
 import models.response.emcsTfe._
 import models.submitShortageExcess.{AnalysisModel, BodyAnalysisModel, SubmitShortageExcessModel}
@@ -64,13 +65,15 @@ trait SubmitShortageExcessFixtures extends TraderModelFixtures with GetMovementR
         exciseProductCode = item1.productCode,
         bodyRecordUniqueReference = item1.itemUniqueReference,
         explanation = "reason",
-        actualQuantity = Some(10.1)
+        actualQuantity = Some(10.1),
+        whatWasWrong = Shortage
       ),
       BodyAnalysisModel(
         exciseProductCode = item2.productCode,
         bodyRecordUniqueReference = item2.itemUniqueReference,
         explanation = "reason",
-        actualQuantity = None
+        actualQuantity = None,
+        whatWasWrong = Excess
       )
     ))
   )
@@ -90,12 +93,14 @@ trait SubmitShortageExcessFixtures extends TraderModelFixtures with GetMovementR
         "exciseProductCode" -> item1.productCode,
         "bodyRecordUniqueReference" -> item1.itemUniqueReference,
         "explanation" -> "reason",
-        "actualQuantity" -> 10.1
+        "actualQuantity" -> 10.1,
+        "whatWasWrong" -> Shortage.toString
       ),
       Json.obj(
         "exciseProductCode" -> item2.productCode,
         "bodyRecordUniqueReference" -> item2.itemUniqueReference,
-        "explanation" -> "reason"
+        "explanation" -> "reason",
+        "whatWasWrong" -> Excess.toString
       )
     )
   )

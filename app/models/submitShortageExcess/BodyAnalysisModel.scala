@@ -17,18 +17,19 @@
 package models.submitShortageExcess
 
 import cats.syntax.traverse._
-import models.submitShortageExcess.AnalysisModel.mandatoryPage
 import models.response.emcsTfe.GetMovementResponse
-import models.{HowGiveInformation, UserAnswers}
+import models.submitShortageExcess.AnalysisModel.mandatoryPage
+import models.{ChooseShortageExcessItem, HowGiveInformation, UserAnswers}
 import pages.HowGiveInformationPage
-import pages.individualItems.{GiveInformationItemPage, ItemAmountPage}
+import pages.individualItems.{ChooseShortageExcessItemPage, GiveInformationItemPage, ItemAmountPage}
 import play.api.libs.json.{Json, OFormat}
 import utils.JsonOptionFormatter._
 
 case class BodyAnalysisModel(exciseProductCode: String,
                              bodyRecordUniqueReference: Int,
                              explanation: String,
-                             actualQuantity: Option[BigDecimal])
+                             actualQuantity: Option[BigDecimal],
+                             whatWasWrong: ChooseShortageExcessItem)
 
 object BodyAnalysisModel {
   implicit val fmt: OFormat[BodyAnalysisModel] = Json.format
@@ -39,11 +40,13 @@ object BodyAnalysisModel {
       case HowGiveInformation.Choose =>
         userAnswers.completedItems.traverse { item =>
           movementDetails.item(item.itemUniqueReference).map { itemDetails =>
+
             BodyAnalysisModel(
               exciseProductCode = itemDetails.productCode,
               bodyRecordUniqueReference = item.itemUniqueReference,
               explanation = mandatoryPage(GiveInformationItemPage(item.itemUniqueReference)),
-              actualQuantity = userAnswers.get(ItemAmountPage(item.itemUniqueReference)).flatten
+              actualQuantity = userAnswers.get(ItemAmountPage(item.itemUniqueReference)).flatten,
+              whatWasWrong = userAnswers.get[ChooseShortageExcessItem](ChooseShortageExcessItemPage(item.itemUniqueReference)).get
             )
           }
         }
