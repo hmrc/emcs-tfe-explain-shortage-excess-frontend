@@ -33,30 +33,34 @@
 
     @formHelper(action, Symbol("autoComplete") -> "off") {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> "value.day")))
+        @defining(form.errors.headOption.map(_.args.map(_.toString)).getOrElse(Seq())) { erroredFields =>
+
+            @if(form.errors.nonEmpty) {
+                @govukErrorSummary(ErrorSummaryViewModel(form, errorLinkOverrides = Map("value" -> s"value.${erroredFields.headOption.getOrElse("day")}")))
+            }
+
+            @h1("whenReceiveShortageExcess.heading", Some(messages("arc.subHeading", request.arc)), "govuk-heading-l")
+
+            @p() {
+                @messages("whenReceiveShortageExcess.p1")
+            }
+
+            @p() {
+                @messages("whenReceiveShortageExcess.p2")
+            }
+
+            @govukDateInput(
+                DateViewModel(
+                    field = form("value"),
+                    legend = LegendViewModel(HtmlContent(legend)).withCssClass("govuk-fieldset__legend govuk-fieldset__legend--l"),
+                    erroredFields
+                ).withHint(HintViewModel(messages("whenReceiveShortageExcess.hint")))
+            )
+
+            @govukButton(
+                ButtonViewModel(messages("site.saveAndContinue"))
+            )
         }
-
-        @h1("whenReceiveShortageExcess.heading", Some(messages("arc.subHeading", request.arc)), "govuk-heading-l")
-
-        @p() {
-            @messages("whenReceiveShortageExcess.p1")
-        }
-
-        @p() {
-            @messages("whenReceiveShortageExcess.p2")
-        }
-
-        @govukDateInput(
-            DateViewModel(
-                field  = form("value"),
-                legend = LegendViewModel(HtmlContent(legend)).withCssClass("govuk-fieldset__legend govuk-fieldset__legend--l")
-            ).withHint(HintViewModel(messages("whenReceiveShortageExcess.hint")))
-        )
-
-        @govukButton(
-            ButtonViewModel(messages("site.saveAndContinue"))
-        )
     }
 }
 
