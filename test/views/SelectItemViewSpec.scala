@@ -97,7 +97,7 @@ class SelectItemViewSpec extends ViewSpecBase with ViewBehaviours {
             Selectors.tableHeader(3) -> messagesForLanguage.tableHeadQuantity,
             Selectors.tableHeader(4) -> messagesForLanguage.tableHeadPackaging,
             Selectors.tableRow(1, 1) -> messagesForLanguage.tableRowItem(item1.itemUniqueReference),
-            Selectors.tableRow(1, 2) -> "testdata1",
+            Selectors.tableRow(1, 2) -> "description 1",
             Selectors.tableRow(1, 3) -> (item1.quantity.toString() + " kg")
           ))
 
@@ -136,10 +136,10 @@ class SelectItemViewSpec extends ViewSpecBase with ViewBehaviours {
             Selectors.tableHeader(3) -> messagesForLanguage.tableHeadQuantity,
             Selectors.tableHeader(4) -> messagesForLanguage.tableHeadPackaging,
             Selectors.tableRow(1, 1) -> messagesForLanguage.tableRowItem(item1.itemUniqueReference),
-            Selectors.tableRow(1, 2) -> "testdata1",
+            Selectors.tableRow(1, 2) -> "description 1",
             Selectors.tableRow(1, 3) -> (item1.quantity.toString() + " kg"),
             Selectors.tableRow(2, 1) -> messagesForLanguage.tableRowItem(item2.itemUniqueReference),
-            Selectors.tableRow(2, 2) -> "testdata2",
+            Selectors.tableRow(2, 2) -> "description 2",
             Selectors.tableRow(2, 3) -> (item2.quantity.toString() + " kg")
           ))
 
