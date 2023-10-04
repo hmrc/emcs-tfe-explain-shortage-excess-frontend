@@ -63,7 +63,7 @@ trait GetMovementResponseFixtures { _: BaseFixtures =>
     designationOfOrigin = Some("FR"),
     sizeOfProducer = Some("Huge"),
     density = Some(9000),
-    commercialDescription = Some("description"),
+    commercialDescription = Some("description 1"),
     brandNameOfProduct = Some("Big fancy brand name"),
     maturationAge = Some("Lots"),
     packaging = Seq(boxPackage),
@@ -88,7 +88,7 @@ trait GetMovementResponseFixtures { _: BaseFixtures =>
     designationOfOrigin = Some("FR"),
     sizeOfProducer = Some("Huge"),
     density = None,
-    commercialDescription = Some("description"),
+    commercialDescription = Some("description 2"),
     brandNameOfProduct = Some("Big fancy brand name"),
     maturationAge = None,
     packaging = Seq(boxPackage, cratePackage),
@@ -156,7 +156,7 @@ trait GetMovementResponseFixtures { _: BaseFixtures =>
         "designationOfOrigin" -> "FR",
         "sizeOfProducer" -> "Huge",
         "density" -> 9000,
-        "commercialDescription" -> "description",
+        "commercialDescription" -> "description 1",
         "brandNameOfProduct" -> "Big fancy brand name",
         "maturationAge" -> "Lots",
         "packaging" -> Json.arr(
@@ -186,7 +186,7 @@ trait GetMovementResponseFixtures { _: BaseFixtures =>
         "fiscalMark" -> "Mark 2",
         "designationOfOrigin" -> "FR",
         "sizeOfProducer" -> "Huge",
-        "commercialDescription" -> "description",
+        "commercialDescription" -> "description 2",
         "brandNameOfProduct" -> "Big fancy brand name",
         "packaging" -> Json.arr(
           Json.obj(fields =

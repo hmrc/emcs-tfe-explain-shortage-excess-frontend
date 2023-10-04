@@ -67,7 +67,7 @@ class SelectItemTableHelperSpec extends SpecBase {
                 classes = "white-space-nowrap",
               ),
               TableRow(
-                content = Text("testdata1"),
+                content = Text("description 1"),
                 classes = "govuk-!-width-one-half"
               ),
               TableRow(
@@ -88,7 +88,7 @@ class SelectItemTableHelperSpec extends SpecBase {
                 classes = "white-space-nowrap",
               ),
               TableRow(
-                content = Text("testdata2"),
+                content = Text("description 2"),
                 classes = "govuk-!-width-one-half"
               ),
               TableRow(
