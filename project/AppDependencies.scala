@@ -12,7 +12,7 @@ object AppDependencies {
 
   val compile = Seq(
     play.sbt.PlayImport.ws,
-    "uk.gov.hmrc"             %%  "play-frontend-hmrc"                % s"7.20.0$playSuffix",
+    "uk.gov.hmrc"             %%  "play-frontend-hmrc"                % s"7.21.0$playSuffix",
     "uk.gov.hmrc"             %% s"bootstrap-frontend$playSuffix"     %  hmrcBootstrapVersion,
     "uk.gov.hmrc.mongo"       %% s"hmrc-mongo$playSuffix"             %  hmrcMongoVersion,
     "com.google.inject"       %   "guice"                             % "5.1.0",
