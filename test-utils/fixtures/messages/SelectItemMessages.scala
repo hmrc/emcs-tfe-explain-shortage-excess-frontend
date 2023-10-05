@@ -42,7 +42,7 @@ object SelectItemMessages {
     }
     override val viewAlreadyAddedItems: String = "View and manage the items you’ve already given information about."
     override val tableHeadItem = "Item"
-    override val tableHeadDescription = "Commercial description"
+    override val tableHeadDescription = "Description"
     override val tableHeadQuantity = "Quantity"
     override val tableHeadPackaging = "Packaging"
     override val tableRowItem: Int => String = "Item " + _
@@ -58,7 +58,7 @@ object SelectItemMessages {
     }
     override val viewAlreadyAddedItems: String = "View and manage the items you’ve already given information about."
     override val tableHeadItem = "Item"
-    override val tableHeadDescription = "Commercial description"
+    override val tableHeadDescription = "Description"
     override val tableHeadQuantity = "Quantity"
     override val tableHeadPackaging = "Packaging"
     override val tableRowItem: Int => String = "Item " + _

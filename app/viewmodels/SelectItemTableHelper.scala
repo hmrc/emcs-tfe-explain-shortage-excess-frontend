@@ -48,7 +48,7 @@ class SelectItemTableHelper @Inject()(link: link, list: list) {
             classes = "white-space-nowrap"
           ),
           TableRow(
-            content = Text(item.commercialDescription.getOrElse("")),
+            content = Text(item.commercialDescription.getOrElse(messages(cnCodeInformation.cnCodeDescription))),
             classes = "govuk-!-width-one-half"
           ),
           TableRow(
