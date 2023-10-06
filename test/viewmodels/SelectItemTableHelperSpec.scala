@@ -103,6 +103,37 @@ class SelectItemTableHelperSpec extends SpecBase {
             )
           )
         }
+
+        "should render the CN code description when the item description isn't present" in {
+          SelectItemTableHelper.dataRows(
+            ern = testErn,
+            arc = testArc,
+            items = Seq((item3, CnCodeInformation(s"Some CN Code Description", "", `1`)))
+          ) mustBe Seq(
+            Seq(
+              TableRow(
+                content = HtmlContent(link(
+                  link = controllers.routes.DetailsSelectItemController.onPageLoad(testErn, testArc, item3.itemUniqueReference).url,
+                  messageKey = langMessages.tableRowItem(item3.itemUniqueReference)
+                )),
+                classes = "white-space-nowrap",
+              ),
+              TableRow(
+                content = Text("Some CN Code Description"),
+                classes = "govuk-!-width-one-half"
+              ),
+              TableRow(
+                content = Text(item3.quantity.toString() + " " + langMessages.kilogramsShort)
+              ),
+              TableRow(
+                content = HtmlContent(list(Seq(
+                  Html(boxPackage.quantity.get.toString() + " " + boxPackage.typeOfPackage),
+                  Html(cratePackage.quantity.get.toString() + " " + cratePackage.typeOfPackage)
+                )))
+              )
+            )
+          )
+        }
       }
     }
   }

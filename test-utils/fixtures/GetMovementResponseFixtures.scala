@@ -95,6 +95,8 @@ trait GetMovementResponseFixtures { _: BaseFixtures =>
     wineProduct = Some(wineProduct)
   )
 
+  val item3 = item2.copy(commercialDescription = None)
+
   val item2WithReferenceData = item1.copy(
     packaging = Seq(boxPackage.copy(typeOfPackage = "Box"), cratePackage.copy(typeOfPackage = "Crate")),
     wineProduct = Some(wineProduct.copy(wineOperations = Some(Seq("Acidification"))))
