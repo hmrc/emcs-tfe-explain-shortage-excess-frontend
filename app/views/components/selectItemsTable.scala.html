@@ -52,16 +52,14 @@
 
 <dl class="govuk-summary-list hmrc-responsive-list">
     @table.rows.map { row =>
-        <tr class="govuk-table__row" role="row">
-            @row.zipWithIndex.map { case (r, idx) =>
-                <div class="govuk-summary-list__row">
-                    @table.head.map { header => <dt class="govuk-summary-list__key">@header(idx).content.asHtml</dt> }
-                    <dd class="govuk-summary-list__value">
-                    @r.content.asHtml
-                    </dd>
-                </div>
-            }
-        </tr>
+        @row.zipWithIndex.map { case (r, idx) =>
+            <div class="govuk-summary-list__row">
+                @table.head.map { header => <dt class="govuk-summary-list__key">@header(idx).content.asHtml</dt> }
+                <dd class="govuk-summary-list__value">
+                @r.content.asHtml
+                </dd>
+            </div>
+        }
     }
 </dl>
 
