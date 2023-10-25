@@ -18,9 +18,14 @@ package models.requests
 
 import play.api.libs.json.{Json, OWrites}
 
-case class CnCodeInformationRequest(productCodeList: Seq[String],
-                                    cnCodeList: Seq[String])
+case class CnCodeInformationRequest(items: Seq[CnCodeInformationItem])
+
+case class CnCodeInformationItem(productCode: String, cnCode: String)
 
 object CnCodeInformationRequest {
   implicit val writes: OWrites[CnCodeInformationRequest] = Json.writes
+}
+
+object CnCodeInformationItem {
+  implicit val writes: OWrites[CnCodeInformationItem] = Json.writes
 }

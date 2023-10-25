@@ -245,10 +245,14 @@ class ItemDetailsCardHelper @Inject()(link: link, list: list, appConfig: AppConf
       HtmlContent(cnCodeInformation.exciseProductCodeDescription)
     ))
 
-  private def commodityCodeRow()(implicit item: MovementItem, messages: Messages) =
+  private[viewmodels] def commodityCodeRow()(implicit item: MovementItem, messages: Messages) =
     Some(summaryListRowBuilder(
       Text(messages("itemDetails.key.commodityCode")),
-      HtmlContent(link(link = appConfig.getUrlForCommodityCode(item.cnCode), messageKey = item.cnCode, opensInNewTab = true, id = Some("commodity-code")))
+      if (item.hasProductCodeWithValidCnCode) {
+        HtmlContent(link(link = appConfig.getUrlForCommodityCode(item.cnCode), messageKey = item.cnCode, opensInNewTab = true, id = Some("commodity-code")))
+      } else {
+        Text(item.cnCode)
+      }
     ))
 
 

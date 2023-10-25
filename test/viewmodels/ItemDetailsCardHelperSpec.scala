@@ -51,6 +51,24 @@ class ItemDetailsCardHelperSpec extends SpecBase {
 
         lazy val helper = new ItemDetailsCardHelper(link, list, appConfig)
 
+        "should show the link for CN Code" - {
+          "if the CN Code is not S500" in {
+            helper.commodityCodeRow()(item1, messages) mustBe Some(summaryListRowBuilder(
+              Text(langMessages.commodityCodeKey),
+              HtmlContent(link(link = appConfig.getUrlForCommodityCode(item1.cnCode), messageKey = item1.cnCode, opensInNewTab = true, id = Some("commodity-code")))
+            ))
+          }
+        }
+
+        "should NOT show the link for CN Code" - {
+          "if the CN Code is S500" in {
+            helper.commodityCodeRow()(item1.copy(productCode = "S500"), messages) mustBe Some(summaryListRowBuilder(
+              Text(langMessages.commodityCodeKey),
+              Text(item1.cnCode)
+            ))
+          }
+        }
+
         "should render the ItemDetails card" - {
 
           val cnCodeInformation = CnCodeInformation("cn code description", "excise product code description", ReferenceDataUnitOfMeasure.`2`)

@@ -18,7 +18,7 @@ package services
 
 import base.SpecBase
 import mocks.connectors.MockGetCnCodeInformationConnector
-import models.requests.CnCodeInformationRequest
+import models.requests.{CnCodeInformationItem, CnCodeInformationRequest}
 import models.response.emcsTfe.MovementItem
 import models.response.referenceData.{CnCodeInformation, CnCodeInformationResponse}
 import models.{ReferenceDataException, ReferenceDataUnitOfMeasure, UnexpectedDownstreamResponseError}
@@ -34,7 +34,7 @@ class GetCnCodeInformationServiceSpec extends SpecBase with MockGetCnCodeInforma
 
   lazy val testService = new GetCnCodeInformationService(mockGetCnCodeInformationConnector)
 
-  val request = CnCodeInformationRequest(productCodeList = Seq("T400"), cnCodeList = Seq("24029000"))
+  val request = CnCodeInformationRequest(items = Seq(CnCodeInformationItem(productCode = "T400", cnCode = "24029000")))
   val movementItems = Seq(MovementItem(1, "T400", "24029000", 1, 1, 1, None, None, None, None, None, None, None, None, None, Seq(), None))
 
   ".getCnCodeInformationWithMovementItems" - {
@@ -70,7 +70,13 @@ class GetCnCodeInformationServiceSpec extends SpecBase with MockGetCnCodeInforma
       }
 
       "when not all items match something from the Connector" in {
-        val request = CnCodeInformationRequest(productCodeList = Seq("T400", "T401", "T402"), cnCodeList = Seq("24029000", "24029001", "24029002"))
+        val request = CnCodeInformationRequest(
+          items = Seq(
+            CnCodeInformationItem(productCode = "T400", cnCode = "24029000"),
+            CnCodeInformationItem(productCode = "T401", cnCode = "24029001"),
+            CnCodeInformationItem(productCode = "T402", cnCode = "24029002")
+          )
+        )
         val items = Seq(
           MovementItem(1, "T400", "24029000", 1, 1, 1, None, None, None, None, None, None, None, None, None, Seq(), None),
           MovementItem(1, "T401", "24029001", 1, 1, 1, None, None, None, None, None, None, None, None, None, Seq(), None),
