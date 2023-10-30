@@ -94,15 +94,17 @@ class ItemDetailsHelper @Inject()() {
       case None => None
     }
 
-    val packaging = {
+    val packagingTypes = item.packaging.map(pckg => {
+      messages("detailsSelectItem.value.packaging", pckg.quantity.getOrElse(""), pckg.typeOfPackage)
+    }).mkString("</br>")
+
+    val packaging =
       Some(
         createSummaryListRow(
           messages("detailsSelectItem.key.packaging"),
-          messages("detailsSelectItem.value.packaging", item.packaging.head.quantity.getOrElse(""), item.packaging.head.typeOfPackage)
+          packagingTypes
         )
       )
-
-    }
 
     Seq(
       productCategory,
