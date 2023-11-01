@@ -19,13 +19,15 @@ package viewmodels
 import models.response.emcsTfe.MovementItem
 import models.response.referenceData.CnCodeInformation
 import play.api.i18n.Messages
+import play.twirl.api.Html
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Key, Value}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+import views.html.components.list
 
 import javax.inject.Inject
 
-class ItemDetailsHelper @Inject()() {
+class ItemDetailsHelper @Inject()(list: list) {
   //noinspection ScalaStyle
   def constructItemSummaryRows(item: MovementItem, cnCodeInformation: CnCodeInformation)(implicit messages: Messages): Seq[SummaryListRow] = {
 
@@ -94,15 +96,15 @@ class ItemDetailsHelper @Inject()() {
       case None => None
     }
 
-    val packagingTypes = item.packaging.map(pckg => {
-      messages("detailsSelectItem.value.packaging", pckg.quantity.getOrElse(""), pckg.typeOfPackage)
-    }).mkString("</br>")
+    val packagingTypes = HtmlContent(list(item.packaging.map(pckg => {
+      Html(messages("detailsSelectItem.value.packaging", pckg.quantity.getOrElse(""), pckg.typeOfPackage))
+    })))
 
     val packaging =
       Some(
-        createSummaryListRow(
-          messages("detailsSelectItem.key.packaging"),
-          packagingTypes
+        SummaryListRow(
+          Key(Text(messages("detailsSelectItem.key.packaging"))),
+          Value(packagingTypes)
         )
       )
 

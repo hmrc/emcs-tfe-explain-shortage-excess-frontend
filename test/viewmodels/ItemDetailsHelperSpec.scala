@@ -22,9 +22,11 @@ import models.ReferenceDataUnitOfMeasure
 import models.response.emcsTfe.MovementItem
 import models.response.referenceData.CnCodeInformation
 import play.api.i18n.Messages
+import play.twirl.api.Html
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Key, SummaryListRow}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Value
+import views.html.components.list
 
 class ItemDetailsHelperSpec extends SpecBase {
 
@@ -41,18 +43,21 @@ class ItemDetailsHelperSpec extends SpecBase {
         implicit lazy val app = applicationBuilder().build()
         implicit lazy val messages: Messages = messagesApi(app).preferred(Seq(langMessages.lang))
 
-        lazy val helper = new ItemDetailsHelper
+        lazy val list = app.injector.instanceOf[list]
+        lazy val helper = new ItemDetailsHelper(list)
 
         "should create the SummaryListRows" - {
 
           val cnCodeInformation = CnCodeInformation("cn code description", "excise product code description", ReferenceDataUnitOfMeasure.`2`)
 
+          //noinspection ScalaStyle
           def expectedSummaryTable(
                                     item:MovementItem,
                                     includeBrandName: Boolean = true,
                                     includeCommercialDescription: Boolean = true,
                                     includeAlcoholicStrength: Boolean = true,
                                     includeDensity: Boolean = true): Seq[SummaryListRow] = {
+
 
             def createSummaryListRow(key: String, value: String): Option[Seq[SummaryListRow]] = {
               Some(
@@ -92,7 +97,21 @@ class ItemDetailsHelperSpec extends SpecBase {
                 None
               },
 
-              createSummaryListRow(langMessages.tablePackaging, item.packaging.map(pckg => s"${pckg.quantity.get} ${pckg.typeOfPackage}").mkString("</br>"))
+              Some(
+                Seq(
+                  SummaryListRow(
+                    Key(Text(messages("detailsSelectItem.key.packaging"))),
+                    Value(
+                      HtmlContent(
+                        list(item.packaging.map(pckg => {
+                          Html(messages("detailsSelectItem.value.packaging", pckg.quantity.getOrElse(""), pckg.typeOfPackage))
+                        }))
+                      )
+                    )
+                  )
+                )
+              )
+
             ).flatten.flatten
           }
 
