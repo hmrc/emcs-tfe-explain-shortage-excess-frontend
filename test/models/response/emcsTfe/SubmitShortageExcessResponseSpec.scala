@@ -16,16 +16,18 @@
 
 package models.response.emcsTfe
 
-import play.api.libs.functional.syntax._
-import play.api.libs.json._
+import base.SpecBase
+import fixtures.SubmitShortageExcessFixtures
+import play.api.libs.json.{JsPath, JsSuccess, Json}
 
-case class SubmitShortageExcessResponse(receipt: String, downstreamService: String)
+class SubmitShortageExcessResponseSpec extends SpecBase with SubmitShortageExcessFixtures {
+  "reads" - {
+    "must read ChRIS JSON" in {
+      Json.fromJson[SubmitShortageExcessResponse](submitShortageOrExcessChRISResponseJson) mustBe JsSuccess(submitShortageOrExcessChRISResponseModel, JsPath \ "receipt")
+    }
+    "must read EIS JSON" in {
+      Json.fromJson[SubmitShortageExcessResponse](submitShortageOrExcessEISResponseJson) mustBe JsSuccess(submitShortageOrExcessEISResponseModel, JsPath \ "message")
 
-object SubmitShortageExcessResponse {
-  implicit val reads: Reads[SubmitShortageExcessResponse] =
-    (__ \ "message").read[String].map(SubmitShortageExcessResponse(_, "EIS")) or
-      (__ \ "receipt").read[String].map(SubmitShortageExcessResponse(_, "ChRIS"))
-
-  implicit val writes: OWrites[SubmitShortageExcessResponse] =
-    (o: SubmitShortageExcessResponse) => Json.obj("receipt" -> o.receipt)
+    }
+  }
 }

@@ -25,6 +25,7 @@ import models.{ErrorResponse, SubmitShortageExcessException}
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Logging
 
+import java.time.LocalDateTime
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -54,6 +55,7 @@ class SubmitShortageExcessService @Inject()(submitShortageOrExcessConnector: Sub
         credentialId = dataRequest.request.request.credId,
         internalId = dataRequest.internalId,
         ern = dataRequest.ern,
+        receiptDate = LocalDateTime.now().toString,
         submissionRequest = submissionRequest,
         submissionResponse = submissionResponse
       )

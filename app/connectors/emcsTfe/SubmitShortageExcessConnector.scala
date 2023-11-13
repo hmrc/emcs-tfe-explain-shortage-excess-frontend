@@ -30,7 +30,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class SubmitShortageExcessConnector @Inject()(val http: HttpClient,
                                               config: AppConfig) extends EmcsTfeHttpParser[SubmitShortageExcessResponse] {
 
-  override implicit val reads: Reads[SubmitShortageExcessResponse] = SubmitShortageExcessResponse.format
+  override implicit val reads: Reads[SubmitShortageExcessResponse] = SubmitShortageExcessResponse.reads
 
   lazy val baseUrl: String = config.emcsTfeBaseUrl
   def submit(exciseRegistrationNumber: String, submitShortageOrExcessModel: SubmitShortageExcessModel)

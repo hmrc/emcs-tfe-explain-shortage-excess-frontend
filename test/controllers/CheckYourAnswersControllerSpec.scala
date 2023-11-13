@@ -67,6 +67,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency
     ".onPageLoad" - {
 
       def request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad(testErn, testArc).url)
+
       def selectItemsRoute = routes.SelectItemController.onPageLoad(testErn, testArc).url
 
       "must return OK and the correct view for a GET (when Whole Movement)" in new Fixture(Some(
@@ -163,14 +164,14 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency
               val updatedUserAnswers = emptyUserAnswers.set(
                 ConfirmationPage,
                 ConfirmationDetails(
-                  submitShortageOrExcessResponse.receipt,
-                  submitShortageOrExcessResponse.receiptDate
+                  submitShortageOrExcessChRISResponseModel.receipt,
+                  testReceiptDateTime
                 )
               )
 
-              MockUserAnswersService.set(updatedUserAnswers).returns(Future.successful(updatedUserAnswers))
+              MockUserAnswersService.set().returns(Future.successful(updatedUserAnswers))
               MockSubmitShortageExcessService.submit(testErn, testArc, getMovementResponseModel, userAnswers)
-                .returns(Future.successful(submitShortageOrExcessResponse))
+                .returns(Future.successful(submitShortageOrExcessChRISResponseModel))
 
               val result = route(application, request).value
 

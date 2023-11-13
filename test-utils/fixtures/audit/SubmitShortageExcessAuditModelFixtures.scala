@@ -29,8 +29,9 @@ trait SubmitShortageExcessAuditModelFixtures extends BaseFixtures with SubmitSho
     credentialId = testCredId,
     internalId = testInternalId,
     ern = testErn,
+    receiptDate = testReceiptDateTime.toString,
     submissionRequest = submitExplainShortageExcessWholeMovementModel,
-    submissionResponse = Right(submitShortageOrExcessResponse)
+    submissionResponse = Right(submitShortageOrExcessChRISResponseModel)
   )
 
   val submitShortageOrExcessAuditSuccessfulJSON: JsValue = Json.obj(
@@ -55,6 +56,7 @@ trait SubmitShortageExcessAuditModelFixtures extends BaseFixtures with SubmitSho
     credentialId = testCredId,
     internalId = testInternalId,
     ern = testErn,
+    receiptDate = testReceiptDateTime.toString,
     submissionRequest = submitExplainShortageExcessIndividualItemsModel,
     submissionResponse = Left(UnexpectedDownstreamResponseError)
   )

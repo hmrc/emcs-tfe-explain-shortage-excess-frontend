@@ -17,8 +17,8 @@
 package models.audit
 
 import models.ErrorResponse
-import models.submitShortageExcess.SubmitShortageExcessModel
 import models.response.emcsTfe.SubmitShortageExcessResponse
+import models.submitShortageExcess.SubmitShortageExcessModel
 import play.api.libs.json.{JsValue, Json}
 import utils.JsonOptionFormatter
 
@@ -26,6 +26,7 @@ case class SubmitShortageExcessAuditModel(
                                              credentialId: String,
                                              internalId: String,
                                              ern: String,
+                                             receiptDate: String,
                                              submissionRequest: SubmitShortageExcessModel,
                                              submissionResponse: Either[ErrorResponse, SubmitShortageExcessResponse]
                                            ) extends AuditModel with JsonOptionFormatter {
@@ -49,7 +50,7 @@ case class SubmitShortageExcessAuditModel(
         Json.obj(fields =
           "status" -> "success",
           "receipt" -> success.receipt,
-          "receiptDate" -> success.receiptDate
+          "receiptDate" -> receiptDate
         )
       case Left(failedMessage) =>
         Json.obj(fields =

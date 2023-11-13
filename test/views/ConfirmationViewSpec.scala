@@ -54,23 +54,22 @@ class ConfirmationViewSpec extends ViewSpecBase with ViewBehaviours with DateUti
           Selectors.summaryRowValue(1) -> testArc,
           Selectors.summaryRowKey(2) -> messagesForLanguage.movementInfoDate,
           Selectors.summaryRowValue(2) -> testConfirmationDetails.dateOfSubmission.formatDateForUIOutput(),
-          Selectors.p(1) -> messagesForLanguage.reference(testConfirmationReference),
-          Selectors.p(2) -> messagesForLanguage.print,
+          Selectors.p(1) -> messagesForLanguage.print,
           Selectors.h2(2) -> messagesForLanguage.whatNextH2,
-          Selectors.p(3) -> messagesForLanguage.whatNextP1,
+          Selectors.p(2) -> messagesForLanguage.whatNextP1,
           Selectors.h2(3) -> messagesForLanguage.whatMayNeedDoH2,
-          Selectors.p(4) -> messagesForLanguage.whatMayNeedDoP1,
+          Selectors.p(3) -> messagesForLanguage.whatMayNeedDoP1,
           Selectors.h3(1) -> messagesForLanguage.shortageH3,
-          Selectors.p(5) -> messagesForLanguage.shortageP1,
+          Selectors.p(4) -> messagesForLanguage.shortageP1,
           Selectors.h3(2) -> messagesForLanguage.excessH3,
-          Selectors.p(6) -> messagesForLanguage.excessP1,
+          Selectors.p(5) -> messagesForLanguage.excessP1,
           Selectors.bullet(1) -> messagesForLanguage.excessSameGoodsBullet1,
           Selectors.bullet(2) -> messagesForLanguage.excessSameGoodsBullet2,
-          Selectors.p(7) -> messagesForLanguage.excessP2,
+          Selectors.p(6) -> messagesForLanguage.excessP2,
           Selectors.bullet(1, 2) -> messagesForLanguage.excessDifferentGoodsBullet1,
           Selectors.bullet(2, 2) -> messagesForLanguage.excessDifferentGoodsBullet2,
           Selectors.button -> messagesForLanguage.returnToAtAGlance,
-          Selectors.p(8) -> messagesForLanguage.feedback
+          Selectors.p(7) -> messagesForLanguage.feedback
         ))
       }
     }

@@ -22,7 +22,8 @@ import models.response.emcsTfe._
 import models.submitShortageExcess.{AnalysisModel, BodyAnalysisModel, SubmitShortageExcessModel}
 import play.api.libs.json.Json
 
-trait SubmitShortageExcessFixtures extends TraderModelFixtures with GetMovementResponseFixtures { _: BaseFixtures =>
+trait SubmitShortageExcessFixtures extends TraderModelFixtures with GetMovementResponseFixtures {
+  _: BaseFixtures =>
 
   val submitExplainShortageExcessWholeMovementModel: SubmitShortageExcessModel = SubmitShortageExcessModel(
     submitterType = Consignee,
@@ -105,13 +106,22 @@ trait SubmitShortageExcessFixtures extends TraderModelFixtures with GetMovementR
     )
   )
 
-  val submitShortageOrExcessResponse: SubmitShortageExcessResponse = SubmitShortageExcessResponse(
-    receipt = testConfirmationReference,
-    receiptDate = testReceiptDateTime
-  )
-
-  val submitShortageOrExcessResponseJson = Json.obj(
+  val submitShortageOrExcessChRISResponseJson = Json.obj(
     "receipt" -> testConfirmationReference,
     "receiptDate" -> testReceiptDateTime.toString
+  )
+
+  val submitShortageOrExcessChRISResponseModel: SubmitShortageExcessResponse = SubmitShortageExcessResponse(
+    receipt = testConfirmationReference,
+    downstreamService = "ChRIS"
+  )
+
+  val submitShortageOrExcessEISResponseJson = Json.obj(
+    "message" -> testConfirmationReference
+  )
+
+  val submitShortageOrExcessEISResponseModel: SubmitShortageExcessResponse = SubmitShortageExcessResponse(
+    receipt = testConfirmationReference,
+    downstreamService = "EIS"
   )
 }

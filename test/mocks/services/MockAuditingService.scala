@@ -28,7 +28,7 @@ trait MockAuditingService extends MockFactory with BeforeAndAfterEach {
   lazy val mockAuditingService: AuditingService = mock[AuditingService]
 
   object MockAuditingService {
-    def audit(auditModel: AuditModel): CallHandler2[AuditModel, HeaderCarrier, Unit] =
+    def audit(): CallHandler2[AuditModel, HeaderCarrier, Unit] =
       (mockAuditingService.audit(_: AuditModel)(_: HeaderCarrier))
         .expects(*, *)
   }

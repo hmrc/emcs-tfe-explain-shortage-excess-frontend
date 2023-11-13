@@ -50,10 +50,10 @@ class SubmitShortageExcessConnectorISpec extends AnyFreeSpec
       server.stubFor(
         post(urlEqualTo(url))
           .withRequestBody(equalToJson(Json.stringify(submitExplainShortageExcessWholeMovementJson)))
-          .willReturn(aResponse().withStatus(OK).withBody(Json.stringify(submitShortageOrExcessResponseJson)))
+          .willReturn(aResponse().withStatus(OK).withBody(Json.stringify(submitShortageOrExcessChRISResponseJson)))
       )
 
-      connector.submit(testErn, submitExplainShortageExcessWholeMovementModel).futureValue mustBe Right(submitShortageOrExcessResponse)
+      connector.submit(testErn, submitExplainShortageExcessWholeMovementModel).futureValue mustBe Right(submitShortageOrExcessChRISResponseModel)
     }
 
     "must return false when the server responds NOT_FOUND" in {
