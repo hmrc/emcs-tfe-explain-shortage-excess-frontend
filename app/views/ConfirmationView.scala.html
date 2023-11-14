@@ -50,13 +50,6 @@
         )
     )))
 
-    @p() {
-        @messages("confirmation.reference")
-        @strong {
-            @{confirmationDetails.receipt}
-        }
-    }
-
     @p(classes = "govuk-body no-print") {
         @link(
             link = "javascript:if(window.print)window.print()",

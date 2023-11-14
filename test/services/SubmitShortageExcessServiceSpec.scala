@@ -21,9 +21,8 @@ import fixtures.SubmitShortageExcessFixtures
 import mocks.connectors.MockSubmitShortageExcessConnector
 import mocks.services.MockAuditingService
 import models.HowGiveInformation.Whole
-import models.{SubmitShortageExcessException, UnexpectedDownstreamResponseError}
-import models.audit.SubmitShortageExcessAuditModel
 import models.submitShortageExcess.SubmitShortageExcessModel
+import models.{SubmitShortageExcessException, UnexpectedDownstreamResponseError}
 import pages.{GiveInformationMovementPage, HowGiveInformationPage, WhenReceiveShortageExcessPage}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{await, defaultAwaitTimeout}
@@ -56,19 +55,11 @@ class SubmitShortageExcessServiceSpec extends SpecBase
 
         val submission = SubmitShortageExcessModel(getMovementResponseModel)(userAnswers)
 
-        MockSubmitShortageExcessConnector.submit(testErn, submission).returns(Future.successful(Right(submitShortageOrExcessResponse)))
+        MockSubmitShortageExcessConnector.submit(testErn, submission).returns(Future.successful(Right(submitShortageOrExcessChRISResponseModel)))
 
-        MockAuditingService.audit(
-          SubmitShortageExcessAuditModel(
-            "credId",
-            "internalId",
-            "ern",
-            submission,
-            Right(submitShortageOrExcessResponse)
-          )
-        ).noMoreThanOnce()
+        MockAuditingService.audit().noMoreThanOnce()
 
-        testService.submit(testErn, testArc)(hc, request).futureValue mustBe submitShortageOrExcessResponse
+        testService.submit(testErn, testArc)(hc, request).futureValue mustBe submitShortageOrExcessChRISResponseModel
       }
     }
 
@@ -81,15 +72,7 @@ class SubmitShortageExcessServiceSpec extends SpecBase
 
         MockSubmitShortageExcessConnector.submit(testErn, submission).returns(Future.successful(Left(UnexpectedDownstreamResponseError)))
 
-        MockAuditingService.audit(
-          SubmitShortageExcessAuditModel(
-            "credId",
-            "internalId",
-            "ern",
-            submission,
-            Left(UnexpectedDownstreamResponseError)
-          )
-        ).noMoreThanOnce()
+        MockAuditingService.audit().noMoreThanOnce()
 
         intercept[SubmitShortageExcessException](await(testService.submit(testErn, testArc)(hc, request))).getMessage mustBe
           s"Failed to submit Explain Shortage or Excess to emcs-tfe for ern: '$testErn' & arc: '$testArc'"

@@ -17,7 +17,7 @@
 package models.submitShortageExcess
 
 import base.SpecBase
-import fixtures.{GetMovementResponseFixtures, SubmitShortageExcessFixtures, TraderModelFixtures}
+import fixtures.{SubmitShortageExcessFixtures, TraderModelFixtures}
 import models.ChooseShortageExcessItem.{Excess, Shortage}
 import models.HowGiveInformation.{Choose, Whole}
 import pages.individualItems._
@@ -25,7 +25,6 @@ import pages.{GiveInformationMovementPage, HowGiveInformationPage, WhenReceiveSh
 import play.api.libs.json.Json
 
 class SubmitShortageExcessModelSpec extends SpecBase
-  with GetMovementResponseFixtures
   with SubmitShortageExcessFixtures
   with TraderModelFixtures {
 

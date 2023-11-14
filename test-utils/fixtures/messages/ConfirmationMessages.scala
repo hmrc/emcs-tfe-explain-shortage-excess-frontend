@@ -26,7 +26,6 @@ object ConfirmationMessages {
     val movementInfoH2: String
     val movementInfoArc: String
     val movementInfoDate: String
-    val reference: String => String
     val print: String
     val whatMayNeedDoH2: String
     val whatMayNeedDoP1: String
@@ -51,7 +50,6 @@ object ConfirmationMessages {
     override val movementInfoH2 = "Movement information"
     override val movementInfoArc = "Movement ARC"
     override val movementInfoDate = "Date of submission"
-    override val reference: String => String = "Your submission reference is " + _
     override val print: String = "Print this screen to make a record of your submission."
     override val whatNextH2 = "What happens next"
     override val whatNextP1 = "The movement will be updated to show you have successfully submitted an explanation for shortage or excess. This may not be happen straight away."
@@ -76,7 +74,6 @@ object ConfirmationMessages {
     override val movementInfoH2 = "Movement information"
     override val movementInfoArc = "Movement ARC"
     override val movementInfoDate = "Date of submission"
-    override val reference: String => String = "Your submission reference is " + _
     override val print: String = "Print this screen to make a record of your submission."
     override val whatNextH2 = "What happens next"
     override val whatNextP1 = "The movement will be updated to show you have successfully submitted an explanation for shortage or excess. This may not be happen straight away."

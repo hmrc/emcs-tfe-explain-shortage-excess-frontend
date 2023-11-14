@@ -34,6 +34,7 @@ import viewmodels.AddToListHelper
 import viewmodels.checkAnswers.CheckAnswersHelper
 import views.html.CheckYourAnswersView
 
+import java.time.LocalDateTime
 import javax.inject.Inject
 import scala.concurrent.Future
 
@@ -101,9 +102,12 @@ class CheckYourAnswersController @Inject()(override val messagesApi: MessagesApi
   def onSubmit(ern: String, arc: String): Action[AnyContent] =
     authorisedDataRequestWithUpToDateMovementAsync(ern, arc) { implicit request =>
       submitShortageOrExcessService.submit(ern, arc).flatMap {
-        deleteDraftAndSetConfirmationFlow(_).map { userAnswers =>
-          Redirect(navigator.nextPage(CheckAnswersPage, NormalMode, userAnswers))
-        }
+        response =>
+          logger.debug(s"[onSubmit] response received from downstream service ${response.downstreamService}: ${response.receipt}")
+
+          deleteDraftAndSetConfirmationFlow(response).map { userAnswers =>
+            Redirect(navigator.nextPage(CheckAnswersPage, NormalMode, userAnswers))
+          }
       } recover {
         case _: MissingMandatoryPage =>
           BadRequest(errorHandler.badRequestTemplate)
@@ -122,7 +126,7 @@ class CheckYourAnswersController @Inject()(override val messagesApi: MessagesApi
         data = Json.obj(ConfirmationPage.toString ->
           Json.toJson(ConfirmationDetails(
             receipt = response.receipt,
-            dateOfSubmission = response.receiptDate
+            dateOfSubmission = LocalDateTime.now()
           )))
       ))
   }
