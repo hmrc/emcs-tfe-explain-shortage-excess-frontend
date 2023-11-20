@@ -1,4 +1,6 @@
 @import "patterns/table";
+@import "lib/govuk-frontend/govuk/all";
+@import "lib/hmrc-frontend/hmrc/all";
 
 .js-visible {
   display: none !important;
@@ -19,3 +21,5 @@
     display: none !important;
   }
 }
+
+@import "active-trader-info";

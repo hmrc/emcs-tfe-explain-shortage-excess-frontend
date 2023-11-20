@@ -42,3 +42,5 @@ case class ReferenceDataException(message: String) extends Exception(message) wi
 case class SubmitShortageExcessException(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
 case class UserAnswersException(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
 case class MissingMandatoryPage(message: String) extends Exception(message) with NoStackTrace with ErrorResponse
+
+case class TraderKnownFactsException(message: String) extends Exception(message) with NoStackTrace with ErrorResponse

@@ -16,7 +16,7 @@
 
 package config
 
-import featureswitch.core.config.{FeatureSwitching, ReturnToLegacy, WelshLanguage}
+import featureswitch.core.config.{FeatureSwitching, ReturnToLegacy, StubGetTraderKnownFacts, WelshLanguage}
 import play.api.Configuration
 import play.api.i18n.Lang
 import play.api.mvc.RequestHeader
@@ -105,6 +105,13 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
     "cy" -> Lang("cy")
   )
 
+  private def traderKnownFactsReferenceDataService: String =
+    if (isEnabled(StubGetTraderKnownFacts)) {
+      servicesConfig.baseUrl("emcs-tfe-reference-data-stub")
+    } else {
+      servicesConfig.baseUrl("emcs-tfe-reference-data")
+    }
+
   def betaBannerFeedbackUrl(implicit request: RequestHeader): String =
     s"$contactHost/contact/beta-feedback?service=$deskproName&backUrl=${SafeRedirectUrl(host + request.uri).encodedUrl}"
 
@@ -117,6 +124,8 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
   private def referenceDataService: String = servicesConfig.baseUrl("reference-data")
 
   def referenceDataBaseUrl: String = s"$referenceDataService/emcs-tfe-reference-data"
+
+  def traderKnownFactsReferenceDataBaseUrl: String = s"$traderKnownFactsReferenceDataService/emcs-tfe-reference-data"
 }
 
 

@@ -368,3 +368,5 @@ removeItem.heading = Are you sure you want to remove item {0}?
 removeItem.checkYourAnswersLabel = removeItem
 removeItem.error.required = Select if you want to remove item {0}
 removeItem.change.hidden = RemoveItem
+
+activeTrader.link = Change trader type

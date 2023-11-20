@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
-package models.requests
+package mocks.services
 
-import models.UserAnswers
 import models.response.referenceData.TraderKnownFacts
-import play.api.mvc.WrappedRequest
+import org.scalamock.handlers.CallHandler2
+import org.scalamock.scalatest.MockFactory
+import services.GetTraderKnownFactsService
+import uk.gov.hmrc.http.HeaderCarrier
 
-case class OptionalDataRequest[A](request: MovementRequest[A],
-                                  userAnswers: Option[UserAnswers],
-                                  traderKnownFacts: Option[TraderKnownFacts]) extends WrappedRequest[A](request) {
-  val internalId = request.internalId
-  val ern = request.ern
-  val arc = request.arc
+import scala.concurrent.Future
+
+trait MockGetTraderKnownFactsService extends MockFactory {
+
+  lazy val mockGetTraderKnownFactsService: GetTraderKnownFactsService = mock[GetTraderKnownFactsService]
+
+  object MockGetTraderKnownFactsService {
+
+    def getTraderKnownFacts(ern: String): CallHandler2[String, HeaderCarrier, Future[Option[TraderKnownFacts]]] =
+      (mockGetTraderKnownFactsService.getTraderKnownFacts(_: String)(_: HeaderCarrier)).expects(ern, *)
+
+  }
 }
