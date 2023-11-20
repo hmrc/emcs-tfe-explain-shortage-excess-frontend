@@ -32,7 +32,7 @@
 
 @(items: Seq[(MovementItem, CnCodeInformation)])(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("selectItem.title")), fullWidthContent = true) {
+@layout(pageTitle = titleNoForm(messages("selectItem.title")), fullWidthContent = true, maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
     @h1("selectItem.heading", Some(messages("arc.subHeading", request.arc)), "govuk-heading-xl")
 

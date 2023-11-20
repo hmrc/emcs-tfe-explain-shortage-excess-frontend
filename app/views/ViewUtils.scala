@@ -16,7 +16,7 @@
 
 package views
 
-import models.requests.DataRequest
+import models.requests.{DataRequest, OptionalDataRequest}
 import play.api.data.Form
 import play.api.i18n.Messages
 import utils.DateUtils
@@ -44,5 +44,11 @@ object ViewUtils extends DateUtils {
     Option.when(request.request.request.hasMultipleErns) {
       TraderInfo(request.traderKnownFacts.traderName, request.ern)
     }
+
+  def maybeShowActiveTrader(request: OptionalDataRequest[_]): Option[TraderInfo] = {
+    Option.when(request.request.request.hasMultipleErns && request.traderKnownFacts.isDefined) {
+      TraderInfo(request.traderKnownFacts.get.traderName, request.ern)
+    }
+  }
 
 }
