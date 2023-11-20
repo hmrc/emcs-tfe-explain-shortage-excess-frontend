@@ -85,7 +85,7 @@ class DataRequiredActionSpec extends SpecBase with MockitoSugar with MockUserAns
                 getMovementResponseModel
               ),
               Some(userAnswers),
-              None
+              Some(testMinTraderKnownFacts)
             )
           ).futureValue
 
@@ -116,7 +116,7 @@ class DataRequiredActionSpec extends SpecBase with MockitoSugar with MockUserAns
                 getMovementResponseModel
               ),
               Some(userAnswers),
-              None
+              Some(testMinTraderKnownFacts)
             )
           ).futureValue
 
@@ -142,7 +142,7 @@ class DataRequiredActionSpec extends SpecBase with MockitoSugar with MockUserAns
               getMovementResponseModel
             ),
             Some(userAnswers),
-            None
+            Some(testMinTraderKnownFacts)
           )
         ).futureValue
 
