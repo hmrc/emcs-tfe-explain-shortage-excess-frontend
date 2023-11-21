@@ -17,11 +17,29 @@
 package views
 
 import base.ViewSpecBase
+import models.requests.{DataRequest, MovementRequest, OptionalDataRequest, UserRequest}
 import play.api.data.Form
 import play.api.i18n.Messages
 import play.api.data.Forms._
+import play.api.test.FakeRequest
+import viewmodels.traderInfo.TraderInfo
 
 class ViewUtilsSpec extends ViewSpecBase with ViewBehaviours {
+
+  def createMovementRequest(hasMultipleErns: Boolean): MovementRequest[_] = {
+    MovementRequest(
+      UserRequest(FakeRequest("GET", "/"), testErn, testInternalId, testCredId, hasMultipleErns),
+      testArc,
+      getMovementResponseModel
+    )
+  }
+
+  def createDataRequest(hasMultipleErns: Boolean): DataRequest[_] =
+    DataRequest(createMovementRequest(hasMultipleErns), emptyUserAnswers, testMinTraderKnownFacts)
+
+  def createOptionalDataRequest(hasMultipleErns: Boolean): OptionalDataRequest[_] =
+    OptionalDataRequest(createMovementRequest(hasMultipleErns), None, Some(testMinTraderKnownFacts))
+
 
   ".title" in {
     case class UserData(name: String, age: Int)
@@ -42,6 +60,25 @@ class ViewUtilsSpec extends ViewSpecBase with ViewBehaviours {
 
     implicit val msgs: Messages = messages(app)
     ViewUtils.titleNoForm("TITLE") mustBe "TITLE - Excise Movement and Control System - GOV.UK"
+  }
+
+  ".maybeShowActiveTrader" - {
+
+    "given an optional data request, where the user has multiple ERNs" in {
+      ViewUtils.maybeShowActiveTrader(createOptionalDataRequest(true)) mustBe Some(TraderInfo("testTraderName", "ern"))
+    }
+
+    "given an optional data request, where the user has a single ERN" in {
+      ViewUtils.maybeShowActiveTrader(createOptionalDataRequest(false)) mustBe None
+    }
+
+    "given a data request, where the user has multiple ERNs" in {
+      ViewUtils.maybeShowActiveTrader(createDataRequest(true)) mustBe Some(TraderInfo("testTraderName", "ern"))
+    }
+
+    "given a data request, where the user has a single ERN" in {
+      ViewUtils.maybeShowActiveTrader(createDataRequest(false)) mustBe None
+    }
   }
 
 }
