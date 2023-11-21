@@ -64,19 +64,19 @@ class ViewUtilsSpec extends ViewSpecBase with ViewBehaviours {
 
   ".maybeShowActiveTrader" - {
 
-    "given an optional data request, where the user has multiple ERNs" in {
+    "given an optional data request, when the user has multiple ERNs" in {
       ViewUtils.maybeShowActiveTrader(createOptionalDataRequest(true)) mustBe Some(TraderInfo("testTraderName", "ern"))
     }
 
-    "given an optional data request, where the user has a single ERN" in {
+    "given an optional data request, when the user has a single ERN" in {
       ViewUtils.maybeShowActiveTrader(createOptionalDataRequest(false)) mustBe None
     }
 
-    "given a data request, where the user has multiple ERNs" in {
+    "given a data request, when the user has multiple ERNs" in {
       ViewUtils.maybeShowActiveTrader(createDataRequest(true)) mustBe Some(TraderInfo("testTraderName", "ern"))
     }
 
-    "given a data request, where the user has a single ERN" in {
+    "given a data request, when the user has a single ERN" in {
       ViewUtils.maybeShowActiveTrader(createDataRequest(false)) mustBe None
     }
   }

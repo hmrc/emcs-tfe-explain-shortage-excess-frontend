@@ -29,7 +29,7 @@
 
 @(form: Form[_], action: Call)(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("whenReceiveShortageExcess.title")), maybeShowActiveTrader = None) {
+@layout(pageTitle = title(form, messages("whenReceiveShortageExcess.title")), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
     @formHelper(action, Symbol("autoComplete") -> "off") {
 
