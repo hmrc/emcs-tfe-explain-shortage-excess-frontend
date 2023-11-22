@@ -41,7 +41,7 @@ class GetTraderKnownFactsConnectorSpec extends SpecBase
   lazy val appConfig = app.injector.instanceOf[AppConfig]
   lazy val connector = new GetTraderKnownFactsConnector(mockHttpClient, appConfig)
 
-  "check" - {
+  "getTraderKnownFacts" - {
     "should return a successful response" - {
       "when downstream call is successful" in {
 
