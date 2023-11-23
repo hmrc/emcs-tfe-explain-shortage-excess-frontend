@@ -109,7 +109,7 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
     if (isEnabled(StubGetTraderKnownFacts)) {
       servicesConfig.baseUrl("emcs-tfe-reference-data-stub")
     } else {
-      servicesConfig.baseUrl("reference-data")
+      servicesConfig.baseUrl("emcs-tfe-reference-data")
     }
 
   def betaBannerFeedbackUrl(implicit request: RequestHeader): String =
@@ -121,7 +121,7 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
 
   def userAllowListBaseUrl: String = s"$userAllowListService/user-allow-list"
 
-  private def referenceDataService: String = servicesConfig.baseUrl("reference-data")
+  private def referenceDataService: String = servicesConfig.baseUrl("emcs-tfe-reference-data")
 
   def referenceDataBaseUrl: String = s"$referenceDataService/emcs-tfe-reference-data"
 
