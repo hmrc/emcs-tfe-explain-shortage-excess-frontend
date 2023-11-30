@@ -47,35 +47,19 @@ class ActiveTraderSpec extends ViewSpecBase {
       }
 
       "Should render the active trader component when trader info supplied" - {
-
         val traderName = "Greggs"
         val ern = "GB123K0950459403"
         val traderInfo = TraderInfo(traderName, ern)
 
-        "trader info div must exist" in {
-
+        "render the correct HTML" in {
           val html = activeTrader(Some(traderInfo), appConfig)
           val doc = Jsoup.parse(html.toString())
-
+          val link = doc.select(linkSelector).first
           doc.select(divSelector).size mustEqual 1
-        }
-
-        "title must exist" in {
-          val html = activeTrader(Some(traderInfo), appConfig)
-          val doc = Jsoup.parse(html.toString())
-
           doc.select(titleSelector).text mustEqual s"$traderName ($ern)"
+          link.attr("href") mustEqual "http://localhost:8310/emcs-tfe"
+          link.text mustEqual messagesForLanguage.changeTraderType
         }
-
-        "link must exist" in {
-          val html = activeTrader(Some(traderInfo), appConfig)
-          val doc = Jsoup.parse(html.toString())
-
-          val link =  doc.select(linkSelector).first
-
-          (link.attr("href"), link.text) mustEqual ("http://localhost:8310/emcs-tfe", messagesForLanguage.changeTraderType)
-        }
-
       }
 
     }
