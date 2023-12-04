@@ -1,9 +1,10 @@
 $govuk-assets-path: "/emcs/explain-shortage-or-excess/assets/lib/govuk-frontend/govuk/assets/";
 $hmrc-assets-path: "/emcs/explain-shortage-or-excess/assets/lib/hmrc-frontend/hmrc/assets/";
 
-@import "patterns/table";
 @import "lib/govuk-frontend/govuk/all";
 @import "lib/hmrc-frontend/hmrc/all";
+
+@import "patterns/table";
 
 .js-visible {
   display: none !important;
