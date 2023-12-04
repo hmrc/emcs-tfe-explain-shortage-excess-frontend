@@ -29,7 +29,7 @@
 
 @(form: Form[_], idx: Int, call: Call)(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("removeItem.title", idx))) {
+@layout(pageTitle = title(form, messages("removeItem.title", idx)), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
     @formHelper(action = call, 'autoComplete -> "off") {
 

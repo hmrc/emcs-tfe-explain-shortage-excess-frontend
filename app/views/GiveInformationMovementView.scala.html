@@ -30,7 +30,7 @@
 
 @(form: Form[_], action: Call)(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("giveInformationMovement.title"))) {
+@layout(pageTitle = title(form, messages("giveInformationMovement.title")), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
     @formHelper(action) {
 

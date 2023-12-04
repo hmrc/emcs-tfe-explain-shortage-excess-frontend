@@ -18,13 +18,14 @@ package controllers.actions
 
 import models.UserAnswers
 import models.requests.{MovementRequest, OptionalDataRequest}
+import models.response.referenceData.TraderKnownFacts
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class FakeDataRetrievalAction(dataToReturn: Option[UserAnswers]) extends DataRetrievalAction {
+class FakeDataRetrievalAction(dataToReturn: Option[UserAnswers], optTraderKnownFacts: Option[TraderKnownFacts]) extends DataRetrievalAction {
 
   override protected def transform[A](request: MovementRequest[A]): Future[OptionalDataRequest[A]] =
-    Future(OptionalDataRequest(request, dataToReturn))
+    Future(OptionalDataRequest(request, dataToReturn, optTraderKnownFacts))
 
   override protected implicit val executionContext: ExecutionContext =
     scala.concurrent.ExecutionContext.Implicits.global

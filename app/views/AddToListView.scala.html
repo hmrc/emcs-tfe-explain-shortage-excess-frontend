@@ -29,7 +29,7 @@
 
 @(form: Option[Form[Boolean]], itemList: Seq[(Int, SummaryList)], allItemsAdded: Boolean, action: Call)(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages(pluralSingular("addToList.title", itemList.size)))) {
+@layout(pageTitle = titleNoForm(messages(pluralSingular("addToList.title", itemList.size))), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
     @formHelper(action, 'autoComplete -> "off") {
 
