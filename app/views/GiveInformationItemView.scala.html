@@ -34,7 +34,7 @@
 
 @(form: Form[_], action: Call, item: MovementItem, cnCodeInfo: CnCodeInformation, shortageOrExcess: ChooseShortageExcessItem)(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages(s"giveInformationItem.title.$shortageOrExcess", item.itemUniqueReference))) {
+@layout(pageTitle = title(form, messages(s"giveInformationItem.title.$shortageOrExcess", item.itemUniqueReference)), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
     @formHelper(action) {
 
