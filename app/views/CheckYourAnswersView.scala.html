@@ -31,7 +31,7 @@
 
 @(submitAction: Call, addItemLink: String, list: SummaryList, itemList: Seq[(Int, SummaryList)], itemsToAdd: Boolean)(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
+@layout(pageTitle = titleNoForm(messages("checkYourAnswers.title")), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
     @h1("checkYourAnswers.heading", Some(messages("arc.subHeading", request.arc)), "govuk-heading-l")
 

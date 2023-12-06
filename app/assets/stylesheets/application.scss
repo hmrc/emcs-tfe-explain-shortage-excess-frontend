@@ -1,6 +1,9 @@
 $govuk-assets-path: "/emcs/explain-shortage-or-excess/assets/lib/govuk-frontend/govuk/assets/";
 $hmrc-assets-path: "/emcs/explain-shortage-or-excess/assets/lib/hmrc-frontend/hmrc/assets/";
 
+@import "lib/govuk-frontend/govuk/all";
+@import "lib/hmrc-frontend/hmrc/all";
+
 @import "patterns/table";
 
 .js-visible {
@@ -22,3 +25,5 @@ $hmrc-assets-path: "/emcs/explain-shortage-or-excess/assets/lib/hmrc-frontend/hm
     display: none !important;
   }
 }
+
+@import "active-trader-info";

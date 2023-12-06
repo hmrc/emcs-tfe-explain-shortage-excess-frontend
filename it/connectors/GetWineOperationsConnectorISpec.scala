@@ -36,7 +36,7 @@ class GetWineOperationsConnectorISpec
   private lazy val app: Application =
     new GuiceApplicationBuilder()
       .configure(
-        "microservice.services.reference-data.port" -> server.port
+        "microservice.services.emcs-tfe-reference-data.port" -> server.port
       )
       .build()
 

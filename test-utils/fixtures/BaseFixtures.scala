@@ -18,7 +18,7 @@ package fixtures
 
 import models.ReferenceDataUnitOfMeasure.`1`
 import models.{ConfirmationDetails, UserAnswers}
-import models.response.referenceData.CnCodeInformation
+import models.response.referenceData.{CnCodeInformation, TraderKnownFacts}
 import play.api.mvc.Call
 
 import java.time.temporal.ChronoUnit
@@ -42,5 +42,15 @@ trait BaseFixtures {
     ern = testErn,
     arc = testArc,
     lastUpdated = Instant.now().truncatedTo(ChronoUnit.MILLIS)
+  )
+
+  val testMinTraderKnownFacts: TraderKnownFacts = TraderKnownFacts(
+    traderName = "testTraderName",
+    addressLine1 = None,
+    addressLine2 = None,
+    addressLine3 = None,
+    addressLine4 = None,
+    addressLine5 = None,
+    postcode = None
   )
 }

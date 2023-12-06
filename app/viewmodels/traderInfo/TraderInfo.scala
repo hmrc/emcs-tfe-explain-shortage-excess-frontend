@@ -14,24 +14,6 @@
  * limitations under the License.
  */
 
-package fixtures.messages
+package viewmodels.traderInfo
 
-import fixtures.i18n
-
-object IndexMessages {
-
-  sealed trait ViewMessages { _: i18n =>
-    val title: String
-    val heading: String
-  }
-
-  object English extends ViewMessages with BaseEnglish {
-    override val heading = "Excise Movement and Control System - GOV.UK"
-    override val title = titleHelper("emcs-tfe-explain-shortage-excess-frontend")
-  }
-
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "Excise Movement and Control System - GOV.UK"
-    override val title = titleHelper("emcs-tfe-explain-shortage-excess-frontend")
-  }
-}
+case class TraderInfo(name: String, ern: String)
