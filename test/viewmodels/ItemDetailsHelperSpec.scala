@@ -31,7 +31,7 @@ import views.html.components.list
 class ItemDetailsHelperSpec extends SpecBase {
 
   lazy val app = applicationBuilder().build()
-  implicit lazy val msgs = messages(app)
+  implicit lazy val msgs: Messages = messages(app)
 
 
   "ItemDetailsHelper" - {

@@ -22,6 +22,7 @@ import mocks.services.MockUserAnswersService
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import pages.GiveInformationMovementPage
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -43,7 +44,7 @@ class GiveInformationMovementControllerSpec extends SpecBase with MockUserAnswer
         .build()
 
     lazy val view = application.injector.instanceOf[GiveInformationMovementView]
-    implicit lazy val msgs = messages(application)
+    implicit lazy val msgs: Messages = messages(application)
   }
 
   def onwardRoute = Call("GET", "/foo")

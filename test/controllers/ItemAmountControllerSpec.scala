@@ -24,6 +24,7 @@ import models.UnitOfMeasure.Kilograms
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import pages.individualItems.{ChooseShortageExcessItemPage, ItemAmountPage}
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -43,7 +44,7 @@ class ItemAmountControllerSpec extends SpecBase with MockUserAnswersService with
       ).build()
 
     lazy val view = application.injector.instanceOf[ItemAmountView]
-    implicit val msgs = messages(application)
+    implicit val msgs: Messages = messages(application)
 
     val formProvider = new ItemAmountFormProvider()
     val form =

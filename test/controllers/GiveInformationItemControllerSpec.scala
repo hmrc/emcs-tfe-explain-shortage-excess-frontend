@@ -23,6 +23,7 @@ import models.ChooseShortageExcessItem.{Excess, Shortage}
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import pages.individualItems._
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -45,7 +46,7 @@ class GiveInformationItemControllerSpec extends SpecBase with MockUserAnswersSer
         .build()
 
     lazy val view = application.injector.instanceOf[GiveInformationItemView]
-    implicit lazy val msgs = messages(application)
+    implicit lazy val msgs: Messages = messages(application)
   }
 
   def onwardRoute = Call("GET", "/foo")

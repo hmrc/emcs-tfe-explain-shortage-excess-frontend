@@ -28,7 +28,7 @@ import scala.concurrent.ExecutionContext
 
 class AuditServiceSpec extends SpecBase {
 
-  implicit val hc = HeaderCarrier()
+  implicit val hc: HeaderCarrier = HeaderCarrier()
   implicit val ec: ExecutionContext = ExecutionContext.global
 
   val auditConnector: AuditConnector = mock(classOf[AuditConnector])
