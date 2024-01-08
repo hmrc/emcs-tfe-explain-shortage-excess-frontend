@@ -47,7 +47,7 @@ class WhenReceiveShortageExcessControllerSpec extends SpecBase with MockUserAnsw
         .build()
 
     lazy val view = application.injector.instanceOf[WhenReceiveShortageExcessView]
-    implicit lazy val msgs = messages(application)
+    implicit lazy val msgs: Messages = messages(application)
   }
 
   val fixedNow = LocalDateTime.now()

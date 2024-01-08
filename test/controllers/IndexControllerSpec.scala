@@ -22,6 +22,7 @@ import mocks.services.MockUserAnswersService
 import models.{NormalMode, UserAnswers}
 import pages.{ConfirmationPage, WhenReceiveShortageExcessPage}
 import play.api.http.Status.SEE_OTHER
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -41,7 +42,7 @@ class IndexControllerSpec extends SpecBase with MockUserAnswersService {
 
     lazy val form = application.injector.instanceOf[ContinueDraftFormProvider].apply()
 
-    implicit val msgs = messages(application)
+    implicit val msgs: Messages = messages(application)
   }
 
   "IndexController" - {

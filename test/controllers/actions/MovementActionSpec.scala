@@ -24,6 +24,7 @@ import models.response.emcsTfe.GetMovementResponse
 import models.{ErrorResponse, JsonValidationError}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status.{OK, SEE_OTHER}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.mvc.Results.Ok
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{defaultAwaitTimeout, redirectLocation, status}
@@ -35,8 +36,8 @@ import scala.concurrent.Future
 class MovementActionSpec extends SpecBase with MockitoSugar with MockGetMovementConnector {
 
   lazy val app = applicationBuilder(userAnswers = None).build()
-  implicit val hc = HeaderCarrier()
-  implicit lazy val request = UserRequest(FakeRequest(), testErn, testInternalId, testCredId, false)
+  implicit val hc: HeaderCarrier = HeaderCarrier()
+  implicit lazy val request: UserRequest[AnyContentAsEmpty.type] = UserRequest(FakeRequest(), testErn, testInternalId, testCredId, false)
 
   lazy val errorHandler = app.injector.instanceOf[ErrorHandler]
 

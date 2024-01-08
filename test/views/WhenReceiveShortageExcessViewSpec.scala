@@ -19,9 +19,11 @@ package views
 import base.ViewSpecBase
 import fixtures.messages.WhenReceiveShortageExcessMessages
 import forms.WhenReceiveShortageExcessFormProvider
+import models.requests.DataRequest
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import play.api.i18n.Lang
+import play.api.i18n.{Lang, Messages}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import views.html.WhenReceiveShortageExcessView
 
@@ -40,8 +42,8 @@ class WhenReceiveShortageExcessViewSpec extends ViewSpecBase with ViewBehaviours
 
     val dateOfDispatch = LocalDate.now()
 
-    implicit val msgs = messages(app, language)
-    implicit val request = dataRequest(FakeRequest(), emptyUserAnswers)
+    implicit val msgs: Messages = messages(app, language)
+    implicit val request: DataRequest[AnyContentAsEmpty.type] = dataRequest(FakeRequest(), emptyUserAnswers)
 
     val form = app.injector.instanceOf[WhenReceiveShortageExcessFormProvider].apply(dateOfDispatch)
     val view = app.injector.instanceOf[WhenReceiveShortageExcessView]

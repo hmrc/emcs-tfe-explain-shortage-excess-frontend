@@ -24,7 +24,7 @@ import mocks.connectors.MockUserAllowListConnector
 import models.requests.{CheckUserAllowListRequest, UserRequest}
 import models.{ErrorResponse, UnexpectedDownstreamResponseError}
 import org.scalamock.scalatest.MockFactory
-import play.api.mvc.Result
+import play.api.mvc.{AnyContentAsEmpty, Result}
 import play.api.mvc.Results.Ok
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -37,8 +37,8 @@ import scala.concurrent.Future
 class UserAllowListActionSpec extends SpecBase with MockFactory with MockUserAllowListConnector with FeatureSwitching {
 
   lazy val app = applicationBuilder(userAnswers = None).build()
-  implicit val hc = HeaderCarrier()
-  implicit lazy val request = UserRequest(FakeRequest(), testErn, testInternalId, testCredId, false)
+  implicit val hc: HeaderCarrier = HeaderCarrier()
+  implicit lazy val request: UserRequest[AnyContentAsEmpty.type] = UserRequest(FakeRequest(), testErn, testInternalId, testCredId, false)
 
   lazy val errorHandler = app.injector.instanceOf[ErrorHandler]
   override lazy val config = mock[AppConfig]

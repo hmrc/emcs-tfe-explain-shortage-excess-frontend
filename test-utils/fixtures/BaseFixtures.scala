@@ -33,7 +33,7 @@ trait BaseFixtures {
   val testDateOfWhenReceiveShortageOrExcess: LocalDate = LocalDate.now()
   val testIdx: Int = 1
   val testConfirmationReference = "UYVQBLMXCYK6HAEBZI7TSWAQ6XDTXFYU"
-  val testReceiptDateTime = LocalDateTime.now()
+  lazy val testReceiptDateTime = LocalDateTime.now()
   val testConfirmationDetails = ConfirmationDetails(testConfirmationReference, testReceiptDateTime)
   val testOnwardRoute = Call("GET", "/foo")
   val cnCodeInfo = CnCodeInformation("", "", `1`)
