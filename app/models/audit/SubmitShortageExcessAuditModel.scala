@@ -31,7 +31,7 @@ case class SubmitShortageExcessAuditModel(
                                              submissionResponse: Either[ErrorResponse, SubmitShortageExcessResponse]
                                            ) extends AuditModel with JsonOptionFormatter {
 
-  override val auditType: String = "explainShortageOrExcessSubmission"
+  override val auditType: String = "SubmitExplainShortageExcess"
 
   override val detail: JsValue = jsonObjNoNulls(fields =
     "credentialId" -> credentialId,
@@ -42,8 +42,9 @@ case class SubmitShortageExcessAuditModel(
     "submitterType" -> submissionRequest.submitterType,
     "consigneeTrader" -> Json.toJson(submissionRequest.consigneeTrader),
     "consignorTrader" -> Json.toJson(submissionRequest.consignorTrader),
-    "wholeMovement" -> Json.toJson(submissionRequest.wholeMovement),
-    "individualItems" -> Json.toJson(submissionRequest.individualItems)
+    "individualItems" -> Json.toJson(submissionRequest.individualItems),
+    "dateOfAnalysis" -> submissionRequest.dateOfAnalysis,
+    "globalExplanation" -> submissionRequest.wholeMovement.map(_.globalExplanation)
   ) ++ {
     submissionResponse match {
       case Right(success) =>

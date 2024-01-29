@@ -19,16 +19,21 @@ package models.submitShortageExcess
 import models.UserAnswers
 import models.common.{SubmitterType, TraderModel}
 import models.response.emcsTfe.GetMovementResponse
+import models.submitShortageExcess.AnalysisModel.mandatoryPage
+import pages.WhenReceiveShortageExcessPage
 import play.api.libs.json.{Json, Writes}
 import utils.JsonOptionFormatter
 
+import java.time.LocalDate
+
 case class SubmitShortageExcessModel(submitterType: SubmitterType,
-                                            arc: String,
-                                            sequenceNumber: Int,
-                                            consigneeTrader: Option[TraderModel],
-                                            consignorTrader: Option[TraderModel],
-                                            wholeMovement: Option[AnalysisModel],
-                                            individualItems: Option[Seq[BodyAnalysisModel]])
+                                     arc: String,
+                                     sequenceNumber: Int,
+                                     consigneeTrader: Option[TraderModel],
+                                     consignorTrader: Option[TraderModel],
+                                     wholeMovement: Option[AnalysisModel],
+                                     individualItems: Option[Seq[BodyAnalysisModel]],
+                                     dateOfAnalysis: LocalDate)
 
 object SubmitShortageExcessModel extends JsonOptionFormatter {
 
@@ -56,6 +61,7 @@ object SubmitShortageExcessModel extends JsonOptionFormatter {
       consigneeTrader = movementDetails.consigneeTrader,
       consignorTrader = Some(movementDetails.consignorTrader),
       wholeMovement = AnalysisModel(),
-      individualItems = BodyAnalysisModel(movementDetails)
+      individualItems = BodyAnalysisModel(movementDetails),
+      dateOfAnalysis = mandatoryPage(WhenReceiveShortageExcessPage)
     )
 }
