@@ -35,7 +35,8 @@ trait SubmitShortageExcessFixtures extends TraderModelFixtures with GetMovementR
       dateOfAnalysis = testDateOfWhenReceiveShortageOrExcess,
       globalExplanation = "reason"
     )),
-    individualItems = None
+    individualItems = None,
+    dateOfAnalysis = testDateOfWhenReceiveShortageOrExcess
   )
 
   val submitExplainShortageExcessWholeMovementJson = Json.obj(fields =
@@ -76,7 +77,8 @@ trait SubmitShortageExcessFixtures extends TraderModelFixtures with GetMovementR
         actualQuantity = None,
         whatWasWrong = Excess
       )
-    ))
+    )),
+    dateOfAnalysis = testDateOfWhenReceiveShortageOrExcess
   )
 
   val submitExplainShortageExcessIndividualItemsJson = Json.obj(fields =

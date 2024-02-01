@@ -54,8 +54,7 @@ class WhenReceiveShortageExcessController @Inject()(
     authorisedDataRequestWithCachedMovementAsync(ern, arc) { implicit request =>
       formProvider(request.movementDetails.dateOfDispatch).bindFromRequest().fold(
         renderView(BadRequest, _, mode),
-        value =>
-          saveAndRedirect(WhenReceiveShortageExcessPage, value, mode)
+        saveAndRedirect(WhenReceiveShortageExcessPage, _, mode)
       )
     }
 

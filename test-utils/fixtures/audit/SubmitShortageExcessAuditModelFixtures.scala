@@ -43,13 +43,11 @@ trait SubmitShortageExcessAuditModelFixtures extends BaseFixtures with SubmitSho
     "submitterType" -> Consignee.toString,
     "consigneeTrader" -> traderModelJson,
     "consignorTrader" -> traderModelJson,
-    "wholeMovement" -> Json.obj(
-      "dateOfAnalysis" -> testDateOfWhenReceiveShortageOrExcess.toString,
-      "globalExplanation" -> "reason"
-    ),
     "status" -> "success",
     "receipt" -> testConfirmationReference,
-    "receiptDate" -> testReceiptDateTime
+    "receiptDate" -> testReceiptDateTime,
+    "dateOfAnalysis" -> testDateOfWhenReceiveShortageOrExcess.toString,
+    "globalExplanation" -> "reason"
   )
 
   val submitShortageOrExcessAuditFailed: SubmitShortageExcessAuditModel = SubmitShortageExcessAuditModel(
@@ -86,6 +84,7 @@ trait SubmitShortageExcessAuditModelFixtures extends BaseFixtures with SubmitSho
       )
     ),
     "status" -> "failed",
-    "failedMessage" -> "Unexpected downstream response status"
+    "failedMessage" -> "Unexpected downstream response status",
+    "dateOfAnalysis" -> testDateOfWhenReceiveShortageOrExcess.toString
   )
 }
