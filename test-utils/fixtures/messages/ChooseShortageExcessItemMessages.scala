@@ -36,14 +36,4 @@ object ChooseShortageExcessItemMessages {
     override val excess = "Excess"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override def heading(idx: Int) = s"Did you receive a shortage or excess of item $idx?"
-
-    override def title(idx: Int): String = titleHelper(heading(idx))
-
-    override def hint(idx: Int) = s"View item $idx details"
-
-    override val shortage = "Shortage"
-    override val excess = "Excess"
-  }
 }

@@ -29,8 +29,7 @@ class ItemAmountFormProviderSpec extends IntFieldBehaviours with GuiceOneAppPerS
   val fieldName = "value"
 
   Seq(
-    ItemAmountMessages.English -> UnitOfMeasureMessages.English,
-    ItemAmountMessages.Welsh -> UnitOfMeasureMessages.Welsh
+    ItemAmountMessages.English -> UnitOfMeasureMessages.English
   ).foreach { case (messagesForLanguage, unitOfMeasureMessages) =>
 
     implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(Seq(messagesForLanguage.lang))

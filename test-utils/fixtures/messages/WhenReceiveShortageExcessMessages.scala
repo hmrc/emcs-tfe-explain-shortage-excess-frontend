@@ -52,19 +52,4 @@ object WhenReceiveShortageExcessMessages {
     override val checkAnswersHiddenChangeLinkText = "date movement received"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val title: String = titleHelper("Tell HMRC about a shortage or excess")
-    override val heading = "Tell HMRC about a shortage or excess"
-    override val p1 = "Unlike with a report of receipt, the information you give here will only be visible to you and to HMRC."
-    override val p2 = "If you are a Northern Ireland warehousekeeper receiving goods from an EU member state, this information will also be visible to the state of dispatch."
-    override val h2 = "When did you receive the shortage or excess?"
-    override val requiredError = "Enter the date you received the shortage or excess"
-    override val twoRequiredError = (x: String, y: String) => s"The date you received the shortage or excess must include a $x and $y"
-    override val oneRequiredError = (x: String) => s"The date you received the shortage or excess must include a $x"
-    override val invalidDate = "The date you received the shortage or excess must be a real date"
-    override val notBeforeDateOfDispatch = (dispatchDate: String) => s"The date you received the shortage or excess must be the same as or after $dispatchDate when the movement started"
-    override val notInFuture = "The date you received the shortage or excess must be today or in the past"
-    override val checkAnswersLabel = "Date shortage or excess was received"
-    override val checkAnswersHiddenChangeLinkText = "date movement received"
-  }
 }

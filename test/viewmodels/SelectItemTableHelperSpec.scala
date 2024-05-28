@@ -29,7 +29,7 @@ class SelectItemTableHelperSpec extends SpecBase {
 
   "SelectItemTableHelper" - {
 
-    Seq(SelectItemMessages.English, SelectItemMessages.Welsh).foreach { langMessages =>
+    Seq(SelectItemMessages.English).foreach { langMessages =>
 
       s"when rendered for language code '${langMessages.lang.code}'" - {
 

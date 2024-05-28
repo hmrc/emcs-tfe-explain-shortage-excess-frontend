@@ -32,7 +32,7 @@ class NotPermittedViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "NotPermitted view" - {
 
-    Seq(NotPermittedMessages.English, NotPermittedMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(NotPermittedMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

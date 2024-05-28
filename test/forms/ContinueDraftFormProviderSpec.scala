@@ -48,7 +48,7 @@ class ContinueDraftFormProviderSpec extends BooleanFieldBehaviours with GuiceOne
 
   "Error Messages" - {
 
-    Seq(ContinueDraftMessages.English, ContinueDraftMessages.Welsh) foreach { messagesForLanguage =>
+    Seq(ContinueDraftMessages.English) foreach { messagesForLanguage =>
 
       implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(Seq(messagesForLanguage.lang))
 

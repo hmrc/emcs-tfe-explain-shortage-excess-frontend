@@ -36,11 +36,4 @@ object NotPermittedMessages {
     override val p3 = "You can also visit the EMCS general enquiries page for more help."
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val title: String = titleHelper("There is a problem")
-    override val heading = "There is a problem"
-    override val p1 = "You do not have permission to view this page."
-    override val p2 = "Go to your ‘At a glance’ page to see information about a specific movement or receipt."
-    override val p3 = "You can also visit the EMCS general enquiries page for more help."
-  }
 }

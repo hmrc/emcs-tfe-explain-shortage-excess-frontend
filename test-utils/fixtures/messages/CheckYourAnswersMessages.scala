@@ -48,17 +48,4 @@ object CheckYourAnswersMessages {
     override val submitButton = "Submit explanation for shortage or excess"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "Check your answers"
-    override val title: String = titleHelper(heading)
-    override val movementDetailsH2 = "Movement"
-    override val itemsH2 = "Items"
-    override val item = (itemReference: Int) => s"Item $itemReference"
-    override val itemDetails = (itemReference: Int) => s"Item details for item $itemReference"
-    override val itemRemove = (itemReference: Int) => s"Remove item $itemReference"
-    override val addAnotherItem = "Add another item"
-    override val submitH2 = "Now submit your explanation for a shortage or excess"
-    override val declaration = "By submitting this explanation for a shortage or excess, you are confirming that to the best of your knowledge, the details you are providing are correct."
-    override val submitButton = "Submit explanation for shortage or excess"
-  }
 }

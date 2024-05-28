@@ -32,7 +32,7 @@ class NoEnrolmentViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "NoEnrolmentView" - {
 
-    Seq(NoEnrolmentMessages.English, NoEnrolmentMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(NoEnrolmentMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

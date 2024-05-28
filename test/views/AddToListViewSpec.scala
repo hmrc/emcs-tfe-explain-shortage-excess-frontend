@@ -43,7 +43,7 @@ class AddToListViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "AddedItemsView" - {
 
-    Seq(AddToListMessages.English, AddToListMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(AddToListMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

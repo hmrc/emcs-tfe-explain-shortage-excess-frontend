@@ -68,29 +68,4 @@ object DetailsSelectItemMessages {
     override val viewAllDetails: Int => String = i => s"View all details for item $i"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "Do you want to give information about this item?"
-    override val title: String = titleHelper(heading)
-    override val h1: Int => String = i => s"Item $i"
-    override val tableProductCategoryKey = "Product category"
-    override val tableCNCodeKey = "CN code"
-    override val tableBrandNameKey = "Brand name"
-    override val tableCommercialDescriptionKey = "Commercial description"
-    override val tableQuantityKey = "Quantity"
-    override val quantityValue: BigDecimal => String = value => s"$value litres (temperature of 15°C)"
-    override val tableAlcoholStrengthKey = "Alcohol strength (ABV)"
-    override val alcoholicStrengthValue: BigDecimal => String = value => s"$value%"
-    override val tableDensityKey = "Density"
-    override val densityValue: BigDecimal => String = value => s"${value}kg/m<sup>3</sup> (temperature of 15&deg;C)"
-    override val alcoholStrength: Option[BigDecimal] => String = {
-      case Some(strength) => strength + "%"
-      case None => "N/A"
-    }
-    override val density: Option[BigDecimal] => String = {
-      case Some(density) => density + "kg/m3 kilograms"
-      case None => "N/A"
-    }
-    override val tablePackaging: String = "Packaging"
-    override val viewAllDetails: Int => String = i => s"View all details for item $i"
-  }
 }

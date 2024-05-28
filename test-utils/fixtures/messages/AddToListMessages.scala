@@ -43,16 +43,4 @@ object AddToListMessages {
     override val itemDetails = (itemReference: Int) => s"Item details for item $itemReference"
     override val itemRemove = (itemReference: Int) => s"Remove item $itemReference"
   }
-
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val headingSingular = "You have given information for 1 item"
-    override val headingPlural = (n: Int) => s"You have given information for $n items"
-    override val titleSingular = titleHelper(headingSingular)
-    override val titlePlural = (n: Int) => titleHelper(headingPlural(n))
-    override val requiredError: String = "Select yes if you want to give information about another item"
-    override val addAnother: String = "Do you want to add another item?"
-    override val item = (itemReference: Int) => s"Item $itemReference"
-    override val itemDetails = (itemReference: Int) => s"Item details for item $itemReference"
-    override val itemRemove = (itemReference: Int) => s"Remove item $itemReference"
-  }
 }

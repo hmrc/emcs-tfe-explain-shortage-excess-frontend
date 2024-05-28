@@ -32,7 +32,7 @@ class NotOnPrivateBetaViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "NotOnPrivateBetaView" - {
 
-    Seq(NotOnPrivateBetaMessages.English, NotOnPrivateBetaMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(NotOnPrivateBetaMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

@@ -34,7 +34,7 @@ class ItemDetailsViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "ItemDetailsView" - {
 
-    Seq(ItemDetailsMessages.English, ItemDetailsMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(ItemDetailsMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

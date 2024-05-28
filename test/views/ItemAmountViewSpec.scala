@@ -36,8 +36,7 @@ class ItemAmountViewSpec extends ViewSpecBase with ViewBehaviours {
   "ItemAmount view" - {
 
     Seq(
-      ItemAmountMessages.English -> UnitOfMeasureMessages.English,
-      ItemAmountMessages.Welsh -> UnitOfMeasureMessages.Welsh
+      ItemAmountMessages.English -> UnitOfMeasureMessages.English
     ).foreach { case (messagesForLanguage, unitOfMeasureMessages) =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {

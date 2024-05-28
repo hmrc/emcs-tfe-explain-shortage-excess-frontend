@@ -40,7 +40,7 @@ class GiveInformationItemViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "GiveInformationItem view" - {
 
-    Seq(GiveInformationItemMessages.English, GiveInformationItemMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(GiveInformationItemMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

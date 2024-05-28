@@ -44,15 +44,4 @@ object GiveInformationItemMessages {
     override val invalidCharacterError = "Information must not include < and > and : and ;"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val headingShortage: Int => String = "Give more information about receiving a shortage of item " + _
-    override val titleShortage: Int => String = i => titleHelper(headingShortage(i))
-    override val headingExcess: Int => String = "Give more information about receiving an excess of item " + _
-    override val titleExcess: Int => String = i => titleHelper(headingExcess(i))
-    override val viewItem: Int => String = i => s"View item $i details"
-    override val requiredError = "Enter information"
-    override val lengthError = "Information must be 350 characters or less"
-    override val characterError = "Information must contain letters or numbers"
-    override val invalidCharacterError = "Information must not include < and > and : and ;"
-  }
 }

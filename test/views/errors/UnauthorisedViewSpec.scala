@@ -32,7 +32,7 @@ class UnauthorisedViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "UnauthorisedView" - {
 
-    Seq(UnauthorisedMessages.English, UnauthorisedMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(UnauthorisedMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

@@ -33,7 +33,7 @@ class RemoveItemViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "RemoveItemView" - {
 
-    Seq(RemoveItemMessages.English, RemoveItemMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(RemoveItemMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

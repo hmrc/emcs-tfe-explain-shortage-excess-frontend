@@ -38,7 +38,7 @@ class ItemDetailsCardHelperSpec extends SpecBase {
 
   "ItemDetailsCardHelper" - {
 
-    Seq(ItemDetailsMessages.English, ItemDetailsMessages.Welsh).foreach { langMessages =>
+    Seq(ItemDetailsMessages.English).foreach { langMessages =>
 
       s"when rendered for language code '${langMessages.lang.code}'" - {
 

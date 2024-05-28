@@ -44,15 +44,4 @@ object NotOnPrivateBetaMessages {
     override val notSignedUpP2 = "To take part you must currently submit EMCS receipts using the HMRC platform."
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "There is a problem"
-    override val title = titleHelper("There is a problem")
-    override val p1 = "You do not have permission to view this page."
-    override val alreadySignedUpH2 = "If you have signed up for the Excise Movement and Control System (EMCS) private beta research"
-    override val alreadySignedUpP1 = "If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address."
-    override val alreadySignedUpP2 = "If you think you have signed in with the wrong details, sign out and check the details you have are correct."
-    override val notSignedUpH2 = "If you have not signed up for the EMCS private beta research"
-    override val notSignedUpP1 = "You can choose to take part in the EMCS private beta research if you are not already involved."
-    override val notSignedUpP2 = "To take part you must currently submit EMCS receipts using the HMRC platform."
-  }
 }

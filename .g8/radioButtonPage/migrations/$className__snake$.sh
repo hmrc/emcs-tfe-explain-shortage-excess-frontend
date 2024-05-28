@@ -22,15 +22,6 @@ echo "$className;format="decap"$.checkYourAnswersLabel = $title$" >> ../conf/mes
 echo "$className;format="decap"$.error.required = Select $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.change.hidden = $className$" >> ../conf/messages.en
 
-echo "" >> ../conf/messages.cy
-echo "$className;format="decap"$.title = $title$" >> ../conf/messages.cy
-echo "$className;format="decap"$.heading = $title$" >> ../conf/messages.cy
-echo "$className;format="decap"$.$option1key;format="decap"$ = $option1msg$" >> ../conf/messages.cy
-echo "$className;format="decap"$.$option2key;format="decap"$ = $option2msg$" >> ../conf/messages.cy
-echo "$className;format="decap"$.checkYourAnswersLabel = $title$" >> ../conf/messages.cy
-echo "$className;format="decap"$.error.required = Select $className;format="decap"$" >> ../conf/messages.cy
-echo "$className;format="decap"$.change.hidden = $className$" >> ../conf/messages.cy
-
 echo "Adding to UserAnswersEntryGenerators"
 awk '/trait UserAnswersEntryGenerators/ {\
     print;\

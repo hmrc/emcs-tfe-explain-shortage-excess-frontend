@@ -112,7 +112,7 @@ class WhenReceiveShortageExcessFormProviderSpec extends DateBehaviours with Date
 
   "Error Messages" - {
 
-    Seq(WhenReceiveShortageExcessMessages.English, WhenReceiveShortageExcessMessages.Welsh) foreach { messagesForLanguage =>
+    Seq(WhenReceiveShortageExcessMessages.English) foreach { messagesForLanguage =>
 
       implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(Seq(messagesForLanguage.lang))
 

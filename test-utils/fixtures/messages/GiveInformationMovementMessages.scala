@@ -42,14 +42,4 @@ object GiveInformationMovementMessages {
     override val checkAnswersHiddenChangeLinkText = "information about shortage or excess"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "Give information about the shortage or excess"
-    override val title: String = titleHelper(heading)
-    override val requiredError = "Enter information"
-    override val lengthError = "Information must be 350 characters or less"
-    override val characterError = "Information must contain letters or numbers"
-    override val invalidCharacterError = "Information must not include < and > and : and ;"
-    override val checkAnswersLabel = "Information about shortage or excess"
-    override val checkAnswersHiddenChangeLinkText = "information about shortage or excess"
-  }
 }

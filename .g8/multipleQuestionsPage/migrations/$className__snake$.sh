@@ -26,20 +26,6 @@ echo "$className;format="decap"$.error.$field2Name$.length = $field2Name$ must b
 echo "$className;format="decap"$.$field1Name$.change.hidden = $field1Name$" >> ../conf/messages.en
 echo "$className;format="decap"$.$field2Name$.change.hidden = $field2Name$" >> ../conf/messages.en
 
-echo "Adding messages to Welsh conf.messages"
-echo "" >> ../conf/messages.cy
-echo "$className;format="decap"$.title = $className;format="decap"$" >> ../conf/messages.cy
-echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../conf/messages.cy
-echo "$className;format="decap"$.$field1Name$ = $field1Name$" >> ../conf/messages.cy
-echo "$className;format="decap"$.$field2Name$ = $field2Name$" >> ../conf/messages.cy
-echo "$className;format="decap"$.checkYourAnswersLabel = $className$" >> ../conf/messages.cy
-echo "$className;format="decap"$.error.$field1Name$.required = Enter $field1Name$" >> ../conf/messages.cy
-echo "$className;format="decap"$.error.$field2Name$.required = Enter $field2Name$" >> ../conf/messages.cy
-echo "$className;format="decap"$.error.$field1Name$.length = $field1Name$ must be $field1MaxLength$ characters or less" >> ../conf/messages.cy
-echo "$className;format="decap"$.error.$field2Name$.length = $field2Name$ must be $field2MaxLength$ characters or less" >> ../conf/messages.cy
-echo "$className;format="decap"$.$field1Name$.change.hidden = $field1Name$" >> ../conf/messages.cy
-echo "$className;format="decap"$.$field2Name$.change.hidden = $field2Name$" >> ../conf/messages.cy
-
 echo "Adding to UserAnswersEntryGenerators"
 awk '/trait UserAnswersEntryGenerators/ {\
     print;\

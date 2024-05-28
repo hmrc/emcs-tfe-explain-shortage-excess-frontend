@@ -33,7 +33,7 @@ class InactiveEnrolmentViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "InactiveEnrolmentView" - {
 
-    Seq(InactiveEnrolmentMessages.English, InactiveEnrolmentMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(InactiveEnrolmentMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

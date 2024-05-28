@@ -32,7 +32,7 @@ class InternalServerErrorViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "InternalServerError view" - {
 
-    Seq(InternalServerErrorMessages.English, InternalServerErrorMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(InternalServerErrorMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 
