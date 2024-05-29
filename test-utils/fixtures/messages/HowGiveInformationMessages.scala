@@ -44,15 +44,4 @@ object HowGiveInformationMessages {
     override val checkAnswersValueIndividualItems = "Specific items"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val title: String = titleHelper("How do you want to give information about the shortage or excess?")
-    override val heading = "How do you want to give information about the shortage or excess?"
-    override val whole = "I want to give information about the whole movement"
-    override val choose = "I want to choose which item(s) to give information about"
-    override val errorRequired = "Select how you want to give information about the shortage or excess"
-    override val checkAnswersLabel = "Information given"
-    override val checkAnswersHiddenChangeLinkText = "how information is given"
-    override val checkAnswersValueWholeMovement = "Whole movement"
-    override val checkAnswersValueIndividualItems = "Specific items"
-  }
 }

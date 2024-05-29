@@ -39,7 +39,7 @@ class GiveInformationMovementViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "GiveInformationMovement view" - {
 
-    Seq(GiveInformationMovementMessages.English, GiveInformationMovementMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(GiveInformationMovementMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

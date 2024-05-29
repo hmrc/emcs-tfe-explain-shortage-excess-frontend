@@ -48,7 +48,7 @@ class RemoveItemFormProviderSpec extends BooleanFieldBehaviours with GuiceOneApp
 
   "for the RemoveItemPage" - {
 
-    Seq(RemoveItemMessages.English, RemoveItemMessages.Welsh) foreach { messagesForLanguage =>
+    Seq(RemoveItemMessages.English) foreach { messagesForLanguage =>
 
       implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(Seq(messagesForLanguage.lang))
 

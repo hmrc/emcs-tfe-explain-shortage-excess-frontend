@@ -35,7 +35,7 @@ class WhenReceiveShortageExcessSummarySpec extends SpecBase with DateUtils {
 
   "WhenReceiveShortageExcessSummary" - {
 
-    Seq(WhenReceiveShortageExcessMessages.English, WhenReceiveShortageExcessMessages.Welsh).foreach { langMessages =>
+    Seq(WhenReceiveShortageExcessMessages.English).foreach { langMessages =>
 
       s"when rendered for language code '${langMessages.lang.code}'" - {
 

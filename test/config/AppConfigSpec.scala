@@ -101,10 +101,6 @@ class AppConfigSpec extends SpecBase with FeatureSwitching {
       }
     }
 
-    ".languageMap()" in {
-      config.languageMap.size mustBe 2
-    }
-
     ".traderKnownFactsReferenceDataBaseUrl" - {
 
       "when StubGetTraderKnownFacts is enabled" - {

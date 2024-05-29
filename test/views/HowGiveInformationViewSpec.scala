@@ -33,7 +33,7 @@ class HowGiveInformationViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "HowGiveInformation view" - {
 
-    Seq(HowGiveInformationMessages.English, HowGiveInformationMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(HowGiveInformationMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

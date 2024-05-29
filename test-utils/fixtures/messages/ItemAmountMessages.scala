@@ -48,17 +48,4 @@ object ItemAmountMessages {
     override val doesNotExceedValueError = (amount: BigDecimal) => s"The amount you received must be more than $amount"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = (unit: String, item: Int) => s"How many $unit of item $item did you receive? (optional)"
-    override val title: (String, Int) => String = (unit: String, item: Int) => titleHelper(heading(unit, item))
-    override val itemDetails: Int => String = n => s"View item $n details"
-    override val hint = "For example, 150 or 12.694."
-    override val requiredError = "Enter the amount you received"
-    override val maxLengthError = (max: Int) => s"The amount you received must be $max numbers or less"
-    override val isNotNumericError = "The amount you received must be a number, like 150 or 12.694"
-    override val notGreaterThanZeroError = "The amount you received must be more than 0"
-    override val threeDecimalPlacesError = "The amount you received must have 3 decimals or less"
-    override val exceedsMaxAmountError = (amount: BigDecimal, unit: String) => s"The amount you received must be $amount $unit or fewer"
-    override val doesNotExceedValueError = (amount: BigDecimal) => s"The amount you received must be more than $amount"
-  }
 }

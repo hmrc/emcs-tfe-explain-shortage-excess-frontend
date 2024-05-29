@@ -43,15 +43,4 @@ object UnitOfMeasureMessages {
   }
   object English extends English
 
-  trait Welsh extends ViewMessages with BaseWelsh {
-    override val kilogramsShort: String = "kg"
-    override val kilogramsLong: String = "kilograms"
-    override val litres15Short: String = "litres"
-    override val litres15Long: String = "litres (temperature of 15°C)"
-    override val litres20Short: String = "litres"
-    override val litres20Long: String = "litres (temperature of 20°C)"
-    override val thousandsShort: String = "x1000"
-    override val thousandsLong: String = "x1000 items"
-  }
-  object Welsh extends Welsh
 }

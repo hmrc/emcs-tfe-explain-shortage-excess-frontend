@@ -35,7 +35,7 @@ class SelectItemViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "SelectItemView" - {
 
-    Seq(SelectItemMessages.English, SelectItemMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(SelectItemMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

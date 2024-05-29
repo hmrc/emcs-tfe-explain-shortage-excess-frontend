@@ -32,7 +32,7 @@ class GiveInformationMovementSummarySpec extends SpecBase with DateUtils {
 
   "GiveInformationMovementSummary" - {
 
-    Seq(GiveInformationMovementMessages.English, GiveInformationMovementMessages.Welsh).foreach { langMessages =>
+    Seq(GiveInformationMovementMessages.English).foreach { langMessages =>
 
       s"when rendered for language code '${langMessages.lang.code}'" - {
 

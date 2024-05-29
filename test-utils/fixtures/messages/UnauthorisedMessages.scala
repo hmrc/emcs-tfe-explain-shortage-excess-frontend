@@ -40,13 +40,4 @@ object UnauthorisedMessages {
     override val p3 = "If you are using the right sign in details and ERN, check the web address is correct."
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "There is a problem"
-    override val title = titleHelper("There is a problem")
-    override val p1 = "You do not have permission to view this page."
-    override val p2 = "You should:"
-    override val bullet1 = "check you have signed in with the right details"
-    override val bullet2 = "check you are using the right excise reference number (ERN)"
-    override val p3 = "If you are using the right sign in details and ERN, check the web address is correct."
-  }
 }

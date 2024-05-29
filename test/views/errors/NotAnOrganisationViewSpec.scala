@@ -32,7 +32,7 @@ class NotAnOrganisationViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "NotAnOrganisationView" - {
 
-    Seq(NotAnOrganisationMessages.English, NotAnOrganisationMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(NotAnOrganisationMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

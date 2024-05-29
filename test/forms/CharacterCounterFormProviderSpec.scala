@@ -133,7 +133,7 @@ class CharacterCounterFormProviderSpec extends StringFieldBehaviours with GuiceO
 
   "have the correct error messages for the GiveInformationMovementPage" - {
 
-    Seq(GiveInformationMovementMessages.English, GiveInformationMovementMessages.Welsh) foreach { messagesForLanguage =>
+    Seq(GiveInformationMovementMessages.English) foreach { messagesForLanguage =>
 
       implicit val messages: Messages = app.injector.instanceOf[MessagesApi].preferred(Seq(messagesForLanguage.lang))
 

@@ -40,13 +40,4 @@ object ContinueDraftMessages {
     override val startAgainRadio: String = "Start a new explanation for a shortage or excess"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "Do you want to continue this draft explanation for a shortage or excess?"
-    override val title = titleHelper(heading)
-    override val requiredError: String = "Select if you want to continue this draft explanation for a shortage or excess"
-    override val p1: String = "An explanation for a shortage or excess is already in progress for this movement. You can continue with this draft, or start a new one."
-    override val inset: String = "If you choose to start a new explanation for a shortage or excess this draft will be deleted."
-    override val continueRadio: String = "Continue with this draft"
-    override val startAgainRadio: String = "Start a new explanation for a shortage or excess"
-  }
 }

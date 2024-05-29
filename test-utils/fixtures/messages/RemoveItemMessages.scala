@@ -32,9 +32,4 @@ object RemoveItemMessages {
     override val errorRequired = (item: Int) => s"Select if you want to remove item $item"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = (item: Int) => s"Are you sure you want to remove item $item?"
-    override val title = (item: Int) => titleHelper(heading(item))
-    override val errorRequired = (item: Int) => s"Select if you want to remove item $item"
-  }
 }

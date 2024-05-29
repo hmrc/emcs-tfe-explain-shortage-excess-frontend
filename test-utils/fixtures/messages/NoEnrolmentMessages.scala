@@ -38,12 +38,4 @@ object NoEnrolmentMessages {
     override val p2 = "If you think you have signed in with the wrong details, sign out and check the details you have are correct."
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "There is a problem"
-    override val title = titleHelper("There is a problem")
-    override val p1 = "To use this service you or the account administrator must either:"
-    override val bullet1 = "enrol for EMCS"
-    override val bullet2 = "sign in to a business tax account that has an EMCS enrolment, if you have one of those"
-    override val p2 = "If you think you have signed in with the wrong details, sign out and check the details you have are correct."
-  }
 }

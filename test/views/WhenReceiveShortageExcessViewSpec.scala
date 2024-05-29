@@ -51,7 +51,7 @@ class WhenReceiveShortageExcessViewSpec extends ViewSpecBase with ViewBehaviours
 
   "WhenReceiveShortageExcess view" - {
 
-    Seq(WhenReceiveShortageExcessMessages.English, WhenReceiveShortageExcessMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(WhenReceiveShortageExcessMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - new Fixture(messagesForLanguage.lang) {
 

@@ -33,7 +33,7 @@ class JourneyRecoveryViewSpec extends ViewSpecBase with ViewBehaviours {
 
   "JourneyRecovery view" - {
 
-    Seq(JourneyRecoveryMessages.English, JourneyRecoveryMessages.Welsh).foreach { messagesForLanguage =>
+    Seq(JourneyRecoveryMessages.English).foreach { messagesForLanguage =>
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 

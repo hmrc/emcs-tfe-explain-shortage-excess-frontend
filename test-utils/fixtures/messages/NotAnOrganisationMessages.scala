@@ -38,12 +38,4 @@ object NotAnOrganisationMessages {
     override val bullet2 = "register for a business tax account and enrol for EMCS"
   }
 
-  object Welsh extends ViewMessages with BaseWelsh {
-    override val heading = "There is a problem"
-    override val title = titleHelper("There is a problem")
-    override val p1 = "You must be signed in as an organisation."
-    override val p2 = "To use this service you must either:"
-    override val bullet1 = "sign in to a business tax account that has an EMCS enrolment, if you have one of those"
-    override val bullet2 = "register for a business tax account and enrol for EMCS"
-  }
 }

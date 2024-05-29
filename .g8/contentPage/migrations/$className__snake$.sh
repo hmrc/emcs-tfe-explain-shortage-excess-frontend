@@ -12,9 +12,4 @@ echo "" >> ../conf/messages.en
 echo "$className;format="decap"$.title = $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../conf/messages.en
 
-echo "Adding messages to Welsh conf.messages"
-echo "" >> ../conf/messages.cy
-echo "$className;format="decap"$.title = $className;format="decap"$" >> ../conf/messages.cy
-echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../conf/messages.cy
-
 echo "Migration $className;format="snake"$ completed"

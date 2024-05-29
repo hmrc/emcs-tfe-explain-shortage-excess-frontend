@@ -35,7 +35,7 @@ class ChooseShortageExcessItemViewSpec extends ViewSpecBase with ViewBehaviours 
 
   "ChooseShortageExcessItem view" - {
 
-    Seq(ChooseShortageExcessItemMessages.English, ChooseShortageExcessItemMessages.Welsh).foreach {
+    Seq(ChooseShortageExcessItemMessages.English).foreach {
       messagesForLanguage =>
 
         s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {

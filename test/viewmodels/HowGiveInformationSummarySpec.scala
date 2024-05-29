@@ -33,7 +33,7 @@ class HowGiveInformationSummarySpec extends SpecBase with DateUtils {
 
   "HowGiveInformationSummary" - {
 
-    Seq(HowGiveInformationMessages.English, HowGiveInformationMessages.Welsh).foreach { langMessages =>
+    Seq(HowGiveInformationMessages.English).foreach { langMessages =>
 
       s"when rendered for language code '${langMessages.lang.code}'" - {
 

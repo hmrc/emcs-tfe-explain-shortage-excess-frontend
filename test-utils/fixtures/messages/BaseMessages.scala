@@ -16,9 +16,8 @@
 
 package fixtures.messages
 
-import fixtures.{CY, EN, i18n}
+import fixtures.{EN, i18n}
 import play.api.i18n.Lang
-
 
 sealed trait BaseMessages { _: i18n =>
   def titleHelper(heading: String): String
@@ -54,19 +53,3 @@ trait BaseEnglish extends BaseMessages with EN {
 }
 object BaseEnglish extends BaseEnglish
 
-trait BaseWelsh extends BaseMessages with CY {
-  override def titleHelper(heading: String) = s"$heading - Excise Movement and Control System - GOV.UK"
-  override val opensInNewTab: String = "(opens in new tab)"
-  override def arcSubheading(arc: String): String = s"Explanation for a shortage or excess for $arc"
-  override val continue = "Continue"
-  override val saveAndContinue = "Save and continue"
-  override val savePreviousAnswersAndExit = "Save previous answers and exit"
-  override val day: String = "Day"
-  override val month: String = "Month"
-  override val year: String = "Year"
-  override val yes: String = "Yes"
-  override val no: String = "No"
-  override val change: String = "Change"
-  override val remove: String = "Remove"
-}
-object BaseWelsh extends BaseWelsh
