@@ -17,6 +17,7 @@
 package controllers.actions
 
 import config.{AppConfig, EnrolmentKeys}
+import connectors.emcsTfeFrontend.NavBarPartialConnector
 import models.requests.UserRequest
 import play.api.Logging
 import play.api.mvc.Results._
@@ -37,6 +38,7 @@ trait AuthAction {
 
 @Singleton
 class AuthActionImpl @Inject()(override val authConnector: AuthConnector,
+                               navBarPartialConnector: NavBarPartialConnector,
                                config: AppConfig,
                                val bodyParser: BodyParsers.Default
                               )(implicit val ec: ExecutionContext) extends AuthAction with AuthorisedFunctions with Logging {
@@ -88,7 +90,7 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector,
                                                 internalId: String,
                                                 credId: String
                                                )(block: UserRequest[A] => Future[Result])
-                                               (implicit request: Request[A]): Future[Result] =
+                                               (implicit request: Request[A], hc: HeaderCarrier): Future[Result] =
     enrolments.enrolments.filter(enrolment => enrolment.key == EnrolmentKeys.EMCS_ENROLMENT) match {
       case emcsEnrolments if emcsEnrolments.isEmpty =>
         logger.debug(s"[checkOrganisationEMCSEnrolment] No ${EnrolmentKeys.EMCS_ENROLMENT} enrolment found")
@@ -96,7 +98,9 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector,
       case emcsEnrolments =>
         emcsEnrolments.find(_.identifiers.exists(ident => ident.key == EnrolmentKeys.ERN && ident.value == ernFromUrl)) match {
           case Some(enrolment) if enrolment.isActivated =>
-            block(UserRequest(request, ernFromUrl, internalId, credId, emcsEnrolments.size > 1))
+            navBarPartialConnector.getNavBar(ernFromUrl).flatMap { navBar =>
+              block(UserRequest(request, ernFromUrl, internalId, credId, emcsEnrolments.size > 1, navBar))
+            }
           case Some(_) =>
             logger.debug(s"[checkOrganisationEMCSEnrolment] ${EnrolmentKeys.EMCS_ENROLMENT} enrolment found but not activated")
             Future.successful(Redirect(controllers.error.routes.ErrorController.inactiveEnrolment()))

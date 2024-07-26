@@ -5,6 +5,7 @@ $hmrc-assets-path: "/emcs/explain-shortage-or-excess/assets/lib/hmrc-frontend/hm
 @import "lib/hmrc-frontend/hmrc/all";
 
 @import "patterns/table";
+@import "primary-navigation";
 
 .js-visible {
   display: none !important;
