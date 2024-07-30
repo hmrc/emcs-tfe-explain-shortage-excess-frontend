@@ -73,6 +73,8 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
 
   def emcsTfeBaseUrl: String = s"$emcsTfeService/emcs-tfe"
 
+  def emcsTfeFrontendBaseUrl: String = servicesConfig.baseUrl("emcs-tfe-frontend")
+
   def getFeatureSwitchValue(feature: String): Boolean = configuration.get[Boolean](feature)
 
   def emcsTfeHomeUrl(ern: Option[String]): String = {

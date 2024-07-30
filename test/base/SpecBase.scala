@@ -35,6 +35,7 @@ import play.api.test.FakeRequest
 
 import scala.concurrent.Future
 import play.api.test.Helpers.{cookies, defaultAwaitTimeout}
+import play.twirl.api.Html
 
 trait SpecBase
   extends AnyFreeSpec
@@ -72,12 +73,15 @@ trait SpecBase
         bind[MovementAction].toInstance(new FakeMovementAction(getMovementResponseModel))
       )
 
-  def userRequest[A](request: Request[A]): UserRequest[A] = UserRequest(request, testErn, testInternalId, testCredId, false)
+  def userRequest[A](request: Request[A], navBar: Option[Html] = None): UserRequest[A] =
+    UserRequest(request, testErn, testInternalId, testCredId, false, navBar)
 
-  def movementRequest[A](request: Request[A]): MovementRequest[A] = MovementRequest(userRequest(request), testArc, getMovementResponseModel)
+  def movementRequest[A](request: Request[A], navBar: Option[Html] = None): MovementRequest[A] =
+    MovementRequest(userRequest(request, navBar), testArc, getMovementResponseModel)
 
   def dataRequest[A](request: Request[A],
                      answers: UserAnswers = emptyUserAnswers,
-                     traderKnownFacts: TraderKnownFacts = testMinTraderKnownFacts): DataRequest[A] =
-    DataRequest(movementRequest(request), answers, traderKnownFacts)
+                     traderKnownFacts: TraderKnownFacts = testMinTraderKnownFacts,
+                     navBar: Option[Html] = None): DataRequest[A] =
+    DataRequest(movementRequest(request, navBar), answers, traderKnownFacts)
 }
