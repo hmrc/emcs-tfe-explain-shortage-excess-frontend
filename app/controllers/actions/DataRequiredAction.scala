@@ -31,11 +31,11 @@ class DataRequiredActionImpl @Inject()(implicit val executionContext: ExecutionC
 
     val currentlyOnTheConfirmationPage = request.uri contains routes.ConfirmationController.onPageLoad(request.ern, request.arc).url
 
-    (request.userAnswers, request.traderKnownFacts) match {
-      case (Some(data), Some(_)) if data.get(ConfirmationPage).isDefined && !currentlyOnTheConfirmationPage =>
+    request.userAnswers match {
+      case Some(data) if data.get(ConfirmationPage).isDefined && !currentlyOnTheConfirmationPage =>
         Future.successful(Left(Redirect(routes.NotPermittedController.onPageLoad(request.ern, request.arc))))
-      case (Some(data), Some(traderKnownFacts)) =>
-        Future.successful(Right(DataRequest(request.request, data, traderKnownFacts)))
+      case Some(data) =>
+        Future.successful(Right(DataRequest(request.request, data, request.traderKnownFacts)))
       case _ => Future.successful(Left(Redirect(routes.JourneyRecoveryController.onPageLoad(request.ern, request.arc))))
     }
   }
