@@ -21,7 +21,7 @@ import models.common.{SubmitterType, TraderModel}
 import models.response.emcsTfe.GetMovementResponse
 import models.submitShortageExcess.AnalysisModel.mandatoryPage
 import pages.WhenReceiveShortageExcessPage
-import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.{Json, OWrites}
 import utils.JsonOptionFormatter
 
 import java.time.LocalDate
@@ -37,7 +37,7 @@ case class SubmitShortageExcessModel(submitterType: SubmitterType,
 
 object SubmitShortageExcessModel extends JsonOptionFormatter {
 
-  implicit val writes: Writes[SubmitShortageExcessModel] = Writes { model =>
+  implicit val writes: OWrites[SubmitShortageExcessModel] = OWrites { model =>
     jsonObjNoNulls(
       "attributes" -> Json.obj(
         "submitterType" -> Json.toJson(model.submitterType)

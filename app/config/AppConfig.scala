@@ -75,6 +75,10 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
 
   def emcsTfeFrontendBaseUrl: String = servicesConfig.baseUrl("emcs-tfe-frontend")
 
+  private def nrsBrokerService: String = servicesConfig.baseUrl("nrs-broker")
+
+  def nrsBrokerBaseUrl(): String = s"$nrsBrokerService/emcs-tfe-nrs-message-broker"
+
   def getFeatureSwitchValue(feature: String): Boolean = configuration.get[Boolean](feature)
 
   def emcsTfeHomeUrl(ern: Option[String]): String = {

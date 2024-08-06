@@ -16,12 +16,15 @@
 
 package services
 
+import config.AppConfig
 import connectors.emcsTfe.SubmitShortageExcessConnector
+import featureswitch.core.config.{EnableNRS, FeatureSwitching}
 import models.audit.SubmitShortageExcessAuditModel
 import models.submitShortageExcess.SubmitShortageExcessModel
 import models.requests.DataRequest
 import models.response.emcsTfe.SubmitShortageExcessResponse
 import models.{ErrorResponse, SubmitShortageExcessException}
+import services.nrs.NRSBrokerService
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Logging
 
@@ -31,18 +34,28 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class SubmitShortageExcessService @Inject()(submitShortageOrExcessConnector: SubmitShortageExcessConnector,
-                                            auditingService: AuditingService)
-                                           (implicit ec: ExecutionContext) extends Logging {
+                                            nrsBrokerService: NRSBrokerService,
+                                            auditingService: AuditingService,
+                                            override val config: AppConfig)
+                                           (implicit ec: ExecutionContext) extends Logging with FeatureSwitching {
 
   def submit(ern: String, arc: String)(implicit hc: HeaderCarrier, dataRequest: DataRequest[_]): Future[SubmitShortageExcessResponse] = {
 
     val submissionRequest = SubmitShortageExcessModel(dataRequest.movementDetails)(dataRequest.userAnswers)
 
+    if(isEnabled(EnableNRS)) {
+      nrsBrokerService.submitPayload(submissionRequest, ern).flatMap(_ => handleSubmission(ern, arc, submissionRequest))
+    } else {
+      handleSubmission(ern, arc, submissionRequest)
+    }
+  }
+
+  private def handleSubmission(ern: String, arc: String, submissionRequest: SubmitShortageExcessModel)
+                              (implicit hc: HeaderCarrier, dataRequest: DataRequest[_]): Future[SubmitShortageExcessResponse] =
     submitShortageOrExcessConnector.submit(ern, submissionRequest).map {
       withAuditEvent(submissionRequest, _)
         .getOrElse(throw SubmitShortageExcessException(s"Failed to submit Explain Shortage or Excess to emcs-tfe for ern: '$ern' & arc: '$arc'"))
     }
-  }
 
   private def withAuditEvent(submissionRequest: SubmitShortageExcessModel,
                              submissionResponse: Either[ErrorResponse, SubmitShortageExcessResponse])
