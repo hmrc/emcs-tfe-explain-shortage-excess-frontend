@@ -81,7 +81,7 @@ trait SpecBase
 
   def dataRequest[A](request: Request[A],
                      answers: UserAnswers = emptyUserAnswers,
-                     traderKnownFacts: TraderKnownFacts = testMinTraderKnownFacts,
+                     traderKnownFacts: Option[TraderKnownFacts] = Some(testMinTraderKnownFacts),
                      navBar: Option[Html] = None): DataRequest[A] =
     DataRequest(movementRequest(request, navBar), answers, traderKnownFacts)
 }

@@ -62,6 +62,13 @@ class ActiveTraderSpec extends ViewSpecBase {
         }
       }
 
+      "if trader name is '' (blank) then only output the ERN" in {
+        val traderInfo = TraderInfo("", testErn)
+        val html = activeTrader(Some(traderInfo), appConfig)
+        val doc = Jsoup.parse(html.toString())
+
+        doc.select(titleSelector).text mustEqual testErn
+      }
     }
   }
 }

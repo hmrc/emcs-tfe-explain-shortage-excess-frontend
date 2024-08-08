@@ -25,7 +25,7 @@ import play.twirl.api.Html
 
 case class DataRequest[A](request: MovementRequest[A],
                           userAnswers: UserAnswers,
-                          traderKnownFacts: TraderKnownFacts) extends WrappedRequest[A](request) with NavBarRequest {
+                          traderKnownFacts: Option[TraderKnownFacts]) extends WrappedRequest[A](request) with NavBarRequest {
 
   val internalId: String = request.internalId
   val ern: String = request.ern
