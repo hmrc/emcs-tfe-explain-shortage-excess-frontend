@@ -16,7 +16,7 @@
 
 package controllers
 
-import java.time.{LocalDate, LocalDateTime, ZoneOffset}
+import java.time.{Instant, LocalDate, LocalDateTime, ZoneOffset}
 import base.SpecBase
 import forms.WhenReceiveShortageExcessFormProvider
 import mocks.services.MockUserAnswersService
@@ -55,6 +55,7 @@ class WhenReceiveShortageExcessControllerSpec extends SpecBase with MockUserAnsw
 
   val timeMachine = new TimeMachine {
     override def now(): LocalDateTime = fixedNow
+    override def instant(): Instant = Instant.now()
   }
 
   val formProvider = new WhenReceiveShortageExcessFormProvider(timeMachine)
