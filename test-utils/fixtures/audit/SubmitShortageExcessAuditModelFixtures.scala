@@ -29,7 +29,7 @@ trait SubmitShortageExcessAuditModelFixtures extends BaseFixtures with SubmitSho
     credentialId = testCredId,
     internalId = testInternalId,
     ern = testErn,
-    receiptDate = testReceiptDateTime.toString,
+    receiptDate = testReceiptDateTime,
     submissionRequest = submitExplainShortageExcessWholeMovementModel,
     submissionResponse = Right(submitShortageOrExcessChRISResponseModel)
   )
@@ -54,7 +54,7 @@ trait SubmitShortageExcessAuditModelFixtures extends BaseFixtures with SubmitSho
     credentialId = testCredId,
     internalId = testInternalId,
     ern = testErn,
-    receiptDate = testReceiptDateTime.toString,
+    receiptDate = testReceiptDateTime,
     submissionRequest = submitExplainShortageExcessIndividualItemsModel,
     submissionResponse = Left(UnexpectedDownstreamResponseError)
   )

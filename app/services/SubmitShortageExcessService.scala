@@ -68,7 +68,7 @@ class SubmitShortageExcessService @Inject()(submitShortageOrExcessConnector: Sub
         credentialId = dataRequest.request.request.credId,
         internalId = dataRequest.internalId,
         ern = dataRequest.ern,
-        receiptDate = LocalDateTime.now().toString,
+        receiptDate = LocalDateTime.now(),
         submissionRequest = submissionRequest,
         submissionResponse = submissionResponse
       )

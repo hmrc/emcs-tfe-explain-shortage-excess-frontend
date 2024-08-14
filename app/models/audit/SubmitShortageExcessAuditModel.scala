@@ -22,13 +22,15 @@ import models.submitShortageExcess.SubmitShortageExcessModel
 import play.api.libs.json.{JsValue, Json}
 import utils.JsonOptionFormatter
 
+import java.time.LocalDateTime
+
 case class SubmitShortageExcessAuditModel(
-                                             credentialId: String,
-                                             internalId: String,
-                                             ern: String,
-                                             receiptDate: String,
-                                             submissionRequest: SubmitShortageExcessModel,
-                                             submissionResponse: Either[ErrorResponse, SubmitShortageExcessResponse]
+                                           credentialId: String,
+                                           internalId: String,
+                                           ern: String,
+                                           receiptDate: LocalDateTime,
+                                           submissionRequest: SubmitShortageExcessModel,
+                                           submissionResponse: Either[ErrorResponse, SubmitShortageExcessResponse]
                                            ) extends AuditModel with JsonOptionFormatter {
 
   override val auditType: String = "SubmitExplainShortageExcess"
