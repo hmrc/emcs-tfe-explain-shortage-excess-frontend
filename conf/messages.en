@@ -342,7 +342,8 @@ confirmation.mayNeedToDo.excess.bullet2 = accept the duty liability for any good
 confirmation.mayNeedToDo.excess.p2 = When the excess goods do not match what’s on the eAD:
 confirmation.mayNeedToDo.excess.bullet3 = a duty point will be created for those goods
 confirmation.mayNeedToDo.excess.bullet4 = the person or organisation holding the goods must immediately pay the duty on them
-confirmation.button = Return to at a glance
+confirmation.returnToAccount = Return to account home
+confirmation.returnToMovement = Return to movement
 confirmation.feedback.link = What did you think of this service?
 confirmation.feedback.time = (takes 30 seconds)
 

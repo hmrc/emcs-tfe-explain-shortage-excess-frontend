@@ -84,9 +84,9 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
   def emcsTfeHomeUrl: String = configuration.get[String]("urls.emcsTfeHome")
 
   def emcsMovementDetailsUrl(ern: String, arc: String): String =
-    configuration.get[String]("urls.emcsTfeMovementDetails") + s"/$ern/$arc"
+    configuration.get[String]("urls.emcsTfeMovementDetails").replace(":ern", ern).replace(":arc", arc)
 
-  def emcsMovementsUrl(ern: String): String = configuration.get[String]("urls.emcsTfeMovementsIn") + s"/$ern"
+  def emcsMovementsUrl(ern: String): String = configuration.get[String]("urls.emcsTfeMovements").replace(":ern", ern)
 
   private def traderKnownFactsReferenceDataService: String =
     if (isEnabled(StubGetTraderKnownFacts)) {

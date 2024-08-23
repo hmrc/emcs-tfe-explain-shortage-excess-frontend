@@ -39,11 +39,6 @@ case object UserAllowList extends FeatureSwitch {
   override val displayName: String = "Enable the User Allow List"
 }
 
-case object ReturnToLegacy extends FeatureSwitch {
-  override val configName: String = "features.returnToLegacy"
-  override val displayName: String = "Return the User to the Legacy EMCS service"
-}
-
 case object StubGetTraderKnownFacts extends FeatureSwitch {
   override val configName: String = "features.stub-get-trader-known-facts"
   override val displayName: String = "Use stub to get trader known facts"
