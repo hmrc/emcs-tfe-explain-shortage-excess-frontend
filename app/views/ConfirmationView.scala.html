@@ -93,7 +93,7 @@
     @govukButton(
         ButtonViewModel("confirmation.button")
                 .withCssClass("govuk-!-margin-top-4 no-print")
-                .asLink(appConfig.emcsTfeHomeUrl(Some(request.ern)))
+                .asLink(appConfig.emcsTfeHomeUrl)
     )
 
     @p(classes = "govuk-body no-print") {

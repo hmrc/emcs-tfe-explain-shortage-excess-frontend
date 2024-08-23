@@ -25,7 +25,7 @@ import javax.inject.Singleton
 @Singleton
 class FeatureSwitchingModule extends Module with FeatureSwitchRegistry {
 
-  val switches: Seq[FeatureSwitch] = Seq(UserAllowList, ReturnToLegacy, StubGetTraderKnownFacts, EnableNRS)
+  val switches: Seq[FeatureSwitch] = Seq(UserAllowList, StubGetTraderKnownFacts, EnableNRS)
 
   override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = {
     Seq(
