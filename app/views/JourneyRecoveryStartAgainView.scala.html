@@ -54,7 +54,7 @@
     @p() {
         @HtmlFormat.fill(Seq(
             Html(messages("journeyRecovery.p3")),
-            link(config.emcsTfeHomeUrl(Some(request.ern)), "journeyRecovery.p3.viewAccountLink", withEndingComma = true),
+            link(config.emcsTfeHomeUrl, "journeyRecovery.p3.viewAccountLink", withEndingComma = true),
             Html(messages("journeyRecovery.p3.or")),
             link(controllers.auth.routes.AuthController.signOut().url, "journeyRecovery.p3.signOutLink", withFullStop = true)
         ))

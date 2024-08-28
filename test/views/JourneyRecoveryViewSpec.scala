@@ -64,8 +64,7 @@ class JourneyRecoveryViewSpec extends ViewSpecBase with ViewBehaviours {
 
         "have a link back to the EMCS home" in {
 
-          doc.select(Selectors.p(3)).select("a:nth-of-type(1)").attr("href") mustBe
-            config.emcsTfeHomeUrl(Some(testErn))
+          doc.select(Selectors.p(3)).select("a:nth-of-type(1)").attr("href") mustBe config.emcsTfeHomeUrl
         }
 
         "have a link back to sign out" in {

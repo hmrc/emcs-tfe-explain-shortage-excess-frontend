@@ -68,8 +68,9 @@ class ConfirmationViewSpec extends ViewSpecBase with ViewBehaviours with DateUti
           Selectors.p(6) -> messagesForLanguage.excessP2,
           Selectors.bullet(1, 2) -> messagesForLanguage.excessDifferentGoodsBullet1,
           Selectors.bullet(2, 2) -> messagesForLanguage.excessDifferentGoodsBullet2,
-          Selectors.button -> messagesForLanguage.returnToAtAGlance,
-          Selectors.p(7) -> messagesForLanguage.feedback
+          Selectors.p(7) -> messagesForLanguage.returnToMovementLink,
+          Selectors.p(8) -> messagesForLanguage.returnToAccountHomeLink,
+          Selectors.p(9) -> messagesForLanguage.feedback
         ))
       }
     }

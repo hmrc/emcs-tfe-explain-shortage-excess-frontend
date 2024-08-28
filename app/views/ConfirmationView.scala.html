@@ -19,7 +19,6 @@
 
 @this(
         layout: templates.Layout,
-        govukButton: GovukButton,
         govukSummaryList: GovukSummaryList,
         confirmationPanel: components.confirmationPanel,
         h2: components.h2,
@@ -90,11 +89,21 @@
         Html(messages("confirmation.mayNeedToDo.excess.bullet4"))
     ))
 
-    @govukButton(
-        ButtonViewModel("confirmation.button")
-                .withCssClass("govuk-!-margin-top-4 no-print")
-                .asLink(appConfig.emcsTfeHomeUrl(Some(request.ern)))
-    )
+    @p(classes = "govuk-body no-print govuk-!-margin-top-8") {
+        @link(
+            link = appConfig.emcsMovementDetailsUrl(request.ern, request.arc),
+            messageKey = "confirmation.returnToMovement",
+            id = Some("return-to-movement")
+        )
+    }
+
+    @p(classes = "govuk-body no-print govuk-!-margin-bottom-8") {
+        @link(
+            link = appConfig.emcsTfeHomeUrl,
+            messageKey = "confirmation.returnToAccount",
+            id = Some("return-to-account")
+        )
+    }
 
     @p(classes = "govuk-body no-print") {
         @link(

@@ -40,8 +40,9 @@ object ConfirmationMessages {
     val excessP2: String
     val excessDifferentGoodsBullet1: String
     val excessDifferentGoodsBullet2: String
-    val returnToAtAGlance: String
     val feedback: String
+    val returnToMovementLink: String
+    val returnToAccountHomeLink: String
   }
 
   object English extends ViewMessages with BaseEnglish {
@@ -64,8 +65,9 @@ object ConfirmationMessages {
     override val excessP2 = "When the excess goods do not match what’s on the eAD:"
     override val excessDifferentGoodsBullet1 = "a duty point will be created for those goods"
     override val excessDifferentGoodsBullet2 = "the person or organisation holding the goods must immediately pay the duty on them"
-    override val returnToAtAGlance = "Return to at a glance"
     override val feedback = "What did you think of this service? (opens in new tab) (takes 30 seconds)"
+    override val returnToMovementLink: String = "Return to movement"
+    override val returnToAccountHomeLink: String = "Return to account home"
   }
 
 }
