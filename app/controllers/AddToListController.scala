@@ -38,7 +38,6 @@ import scala.concurrent.Future
 class AddToListController @Inject()(
                                      override val messagesApi: MessagesApi,
                                      override val auth: AuthAction,
-                                     override val userAllowList: UserAllowListAction,
                                      override val withMovement: MovementAction,
                                      override val getData: DataRetrievalAction,
                                      override val requireData: DataRequiredAction,

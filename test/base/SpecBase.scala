@@ -16,8 +16,7 @@
 
 package base
 
-import controllers.actions.{FakeAuthAction, FakeDataRetrievalAction, FakeMovementAction, FakeUserAllowListAction}
-import controllers.actions.{AuthAction, DataRetrievalAction, MovementAction, UserAllowListAction}
+import controllers.actions._
 import fixtures.{BaseFixtures, GetMovementResponseFixtures}
 import models.UserAnswers
 import models.requests.{DataRequest, MovementRequest, OptionalDataRequest, UserRequest}
@@ -32,10 +31,10 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.{Request, Result}
 import play.api.test.FakeRequest
-
-import scala.concurrent.Future
 import play.api.test.Helpers.{cookies, defaultAwaitTimeout}
 import play.twirl.api.Html
+
+import scala.concurrent.Future
 
 trait SpecBase
   extends AnyFreeSpec
@@ -68,7 +67,6 @@ trait SpecBase
       )
       .overrides(
         bind[AuthAction].to[FakeAuthAction],
-        bind[UserAllowListAction].to[FakeUserAllowListAction],
         bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers, traderKnownFacts)),
         bind[MovementAction].toInstance(new FakeMovementAction(getMovementResponseModel))
       )

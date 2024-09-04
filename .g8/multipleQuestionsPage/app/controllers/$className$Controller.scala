@@ -21,7 +21,6 @@ class $className$Controller @Inject()(
                                        override val withMovement: MovementAction,
                                        override val getData: DataRetrievalAction,
                                        override val requireData: DataRequiredAction,
-                                       override val userAllowList: UserAllowListAction,
                                        formProvider: $className$FormProvider,
                                        val controllerComponents: MessagesControllerComponents,
                                        view: $className$View
