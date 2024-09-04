@@ -40,7 +40,6 @@ class ChooseShortageExcessItemController @Inject()(override val messagesApi: Mes
                                                    override val withMovement: MovementAction,
                                                    override val getData: DataRetrievalAction,
                                                    override val requireData: DataRequiredAction,
-                                                   override val userAllowList: UserAllowListAction,
                                                    formProvider: ChooseShortageExcessItemFormProvider,
                                                    referenceDataService: ReferenceDataService,
                                                    val controllerComponents: MessagesControllerComponents,

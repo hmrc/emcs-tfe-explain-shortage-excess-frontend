@@ -38,7 +38,6 @@ class RemoveItemController @Inject()(
                                        override val withMovement: MovementAction,
                                        override val getData: DataRetrievalAction,
                                        override val requireData: DataRequiredAction,
-                                       override val userAllowList: UserAllowListAction,
                                        formProvider: RemoveItemFormProvider,
                                        val controllerComponents: MessagesControllerComponents,
                                        view: RemoveItemView

@@ -38,7 +38,6 @@ class GiveInformationItemController @Inject()(override val messagesApi: Messages
                                               override val withMovement: MovementAction,
                                               override val getData: DataRetrievalAction,
                                               override val requireData: DataRequiredAction,
-                                              override val userAllowList: UserAllowListAction,
                                               formProvider: CharacterCounterFormProvider,
                                               referenceDataService: ReferenceDataService,
                                               val controllerComponents: MessagesControllerComponents,

@@ -98,12 +98,6 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
   def betaBannerFeedbackUrl(implicit request: RequestHeader): String =
     s"$contactHost/contact/beta-feedback?service=$deskproName&backUrl=${SafeRedirectUrl(host + request.uri).encodedUrl}"
 
-  def internalAuthToken: String = configuration.get[String]("internal-auth.token")
-
-  private def userAllowListService: String = servicesConfig.baseUrl("user-allow-list")
-
-  def userAllowListBaseUrl: String = s"$userAllowListService/user-allow-list"
-
   private def referenceDataService: String = servicesConfig.baseUrl("emcs-tfe-reference-data")
 
   def referenceDataBaseUrl: String = s"$referenceDataService/emcs-tfe-reference-data"

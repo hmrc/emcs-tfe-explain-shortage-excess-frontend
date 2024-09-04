@@ -39,7 +39,6 @@ class WhenReceiveShortageExcessController @Inject()(
                                        override val withMovement: MovementAction,
                                        override val getData: DataRetrievalAction,
                                        override val requireData: DataRequiredAction,
-                                       override val userAllowList: UserAllowListAction,
                                        formProvider: WhenReceiveShortageExcessFormProvider,
                                        val controllerComponents: MessagesControllerComponents,
                                        view: WhenReceiveShortageExcessView

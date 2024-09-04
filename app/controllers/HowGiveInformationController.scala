@@ -39,7 +39,6 @@ class HowGiveInformationController @Inject()(
                                        override val withMovement: MovementAction,
                                        override val getData: DataRetrievalAction,
                                        override val requireData: DataRequiredAction,
-                                       override val userAllowList: UserAllowListAction,
                                        formProvider: HowGiveInformationFormProvider,
                                        val controllerComponents: MessagesControllerComponents,
                                        view: HowGiveInformationView
