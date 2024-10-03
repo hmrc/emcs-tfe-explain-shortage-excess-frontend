@@ -53,13 +53,13 @@ class ViewUtilsSpec extends ViewSpecBase with ViewBehaviours {
 
     implicit val msgs: Messages = messages(app)
 
-    ViewUtils.title(userForm, "TITLE") mustBe " TITLE - Excise Movement and Control System - GOV.UK"
+    ViewUtils.title(userForm, "TITLE") mustBe " TITLE - Create and manage excise goods movements with EMCS - GOV.UK"
   }
 
   ".titleNoForm" in {
 
     implicit val msgs: Messages = messages(app)
-    ViewUtils.titleNoForm("TITLE") mustBe "TITLE - Excise Movement and Control System - GOV.UK"
+    ViewUtils.titleNoForm("TITLE") mustBe "TITLE - Create and manage excise goods movements with EMCS - GOV.UK"
   }
 
   ".maybeShowActiveTrader" - {
