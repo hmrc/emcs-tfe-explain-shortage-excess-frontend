@@ -29,7 +29,7 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
 
   override lazy val config: AppConfig = this
 
-  private lazy val host: String = configuration.get[String]("host")
+  lazy val host: String = configuration.get[String]("host")
 
   lazy val appName: String = configuration.get[String]("appName")
 
