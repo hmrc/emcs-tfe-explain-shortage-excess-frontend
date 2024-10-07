@@ -8,9 +8,7 @@ GET         /refresh-session                                                    
 
 GET         /assets/*file                                                             controllers.Assets.versioned(path = "/public", file: Asset)
 
-GET         /account/sign-out-survey                                                  controllers.auth.AuthController.signOut()
-GET         /account/sign-out                                                         controllers.auth.AuthController.signOutNoSurvey()
-GET         /account/signed-out                                                       controllers.auth.SignedOutController.onPageLoad()
+GET         /account/sign-out                                                         controllers.auth.AuthController.signOut(becauseOfTimeout: Boolean ?= false)
 GET         /account/timeout                                                          controllers.TimeoutController.onPageLoad()
 
 GET         /trader/:ern/movement/:arc/not-permitted                                  controllers.NotPermittedController.onPageLoad(ern, arc)
