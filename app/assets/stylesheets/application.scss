@@ -26,4 +26,8 @@ $hmrc-assets-path: "/emcs/explain-shortage-or-excess/assets/lib/hmrc-frontend/hm
   }
 }
 
+.hmrc-header__service-name {
+  width: 80%;
+}
+
 @import "active-trader-info";
