@@ -30,6 +30,7 @@ trait BaseFixtures {
   val testCredId: String = "credId"
   val testInternalId: String = "internalId"
   val testErn: String = "ern"
+  val testDutyPaidErn = "XIPA"
   val testArc: String = "arc"
   val testDateOfWhenReceiveShortageOrExcess: LocalDate = LocalDate.now()
   val testIdx: Int = 1

@@ -37,41 +37,79 @@ class ConfirmationViewSpec extends ViewSpecBase with ViewBehaviours with DateUti
 
       s"when being rendered in lang code of '${messagesForLanguage.lang.code}'" - {
 
-        val userAnswers = emptyUserAnswers
+        "for duty suspended" - {
 
-        implicit val msgs: Messages = messages(app, messagesForLanguage.lang)
-        implicit val request: DataRequest[AnyContentAsEmpty.type] = dataRequest(FakeRequest(), userAnswers)
+          val userAnswers = emptyUserAnswers
 
-        val view = app.injector.instanceOf[ConfirmationView]
+          implicit val msgs: Messages = messages(app, messagesForLanguage.lang)
+          implicit val request: DataRequest[AnyContentAsEmpty.type] = dataRequest(FakeRequest(), userAnswers)
 
-        implicit val doc: Document = Jsoup.parse(view(testConfirmationDetails).toString())
+          val view = app.injector.instanceOf[ConfirmationView]
 
-        behave like pageWithExpectedElementsAndMessages(Seq(
-          Selectors.title -> messagesForLanguage.title,
-          Selectors.h1 -> messagesForLanguage.heading,
-          Selectors.h2(1) -> messagesForLanguage.movementInfoH2,
-          Selectors.summaryRowKey(1) -> messagesForLanguage.movementInfoArc,
-          Selectors.summaryRowValue(1) -> testArc,
-          Selectors.summaryRowKey(2) -> messagesForLanguage.movementInfoDate,
-          Selectors.summaryRowValue(2) -> testConfirmationDetails.dateOfSubmission.formatDateForUIOutput(),
-          Selectors.p(1) -> messagesForLanguage.print,
-          Selectors.h2(2) -> messagesForLanguage.whatNextH2,
-          Selectors.p(2) -> messagesForLanguage.whatNextP1,
-          Selectors.h2(3) -> messagesForLanguage.whatMayNeedDoH2,
-          Selectors.p(3) -> messagesForLanguage.whatMayNeedDoP1,
-          Selectors.h3(1) -> messagesForLanguage.shortageH3,
-          Selectors.p(4) -> messagesForLanguage.shortageP1,
-          Selectors.h3(2) -> messagesForLanguage.excessH3,
-          Selectors.p(5) -> messagesForLanguage.excessP1,
-          Selectors.bullet(1) -> messagesForLanguage.excessSameGoodsBullet1,
-          Selectors.bullet(2) -> messagesForLanguage.excessSameGoodsBullet2,
-          Selectors.p(6) -> messagesForLanguage.excessP2,
-          Selectors.bullet(1, 2) -> messagesForLanguage.excessDifferentGoodsBullet1,
-          Selectors.bullet(2, 2) -> messagesForLanguage.excessDifferentGoodsBullet2,
-          Selectors.p(7) -> messagesForLanguage.returnToMovementLink,
-          Selectors.p(8) -> messagesForLanguage.returnToAccountHomeLink,
-          Selectors.p(9) -> messagesForLanguage.feedback
-        ))
+          implicit val doc: Document = Jsoup.parse(view(testConfirmationDetails).toString())
+
+          behave like pageWithExpectedElementsAndMessages(Seq(
+            Selectors.title -> messagesForLanguage.title,
+            Selectors.h1 -> messagesForLanguage.heading,
+            Selectors.h2(1) -> messagesForLanguage.movementInfoH2,
+            Selectors.summaryRowKey(1) -> messagesForLanguage.movementInfoArc,
+            Selectors.summaryRowValue(1) -> testArc,
+            Selectors.summaryRowKey(2) -> messagesForLanguage.movementInfoDate,
+            Selectors.summaryRowValue(2) -> testConfirmationDetails.dateOfSubmission.formatDateForUIOutput(),
+            Selectors.p(1) -> messagesForLanguage.print,
+            Selectors.h2(2) -> messagesForLanguage.whatNextH2,
+            Selectors.p(2) -> messagesForLanguage.whatNextP1,
+            Selectors.h2(3) -> messagesForLanguage.whatMayNeedDoH2,
+            Selectors.p(3) -> messagesForLanguage.whatMayNeedDoP1,
+            Selectors.h3(1) -> messagesForLanguage.shortageH3,
+            Selectors.p(4) -> messagesForLanguage.shortageP1,
+            Selectors.h3(2) -> messagesForLanguage.excessH3,
+            Selectors.p(5) -> messagesForLanguage.excessP1,
+            Selectors.bullet(1) -> messagesForLanguage.excessSameGoodsBullet1,
+            Selectors.bullet(2) -> messagesForLanguage.excessSameGoodsBullet2,
+            Selectors.p(6) -> messagesForLanguage.excessP2,
+            Selectors.bullet(1, 2) -> messagesForLanguage.excessDifferentGoodsBullet1,
+            Selectors.bullet(2, 2) -> messagesForLanguage.excessDifferentGoodsBullet2,
+            Selectors.p(7) -> messagesForLanguage.returnToMovementLink,
+            Selectors.p(8) -> messagesForLanguage.returnToAccountHomeLink,
+            Selectors.p(9) -> messagesForLanguage.feedback
+          ))
+        }
+
+        "for duty paid" - {
+          val userAnswers = emptyUserAnswers
+
+          implicit val msgs: Messages = messages(app, messagesForLanguage.lang)
+          implicit val request: DataRequest[AnyContentAsEmpty.type] = dataRequest(FakeRequest(), userAnswers, ern = testDutyPaidErn)
+
+          val view = app.injector.instanceOf[ConfirmationView]
+
+          implicit val doc: Document = Jsoup.parse(view(testConfirmationDetails).toString())
+
+          behave like pageWithExpectedElementsAndMessages(Seq(
+            Selectors.title -> messagesForLanguage.title,
+            Selectors.h1 -> messagesForLanguage.heading,
+            Selectors.h2(1) -> messagesForLanguage.movementInfoH2,
+            Selectors.summaryRowKey(1) -> messagesForLanguage.movementInfoArc,
+            Selectors.summaryRowValue(1) -> testArc,
+            Selectors.summaryRowKey(2) -> messagesForLanguage.movementInfoDate,
+            Selectors.summaryRowValue(2) -> testConfirmationDetails.dateOfSubmission.formatDateForUIOutput(),
+            Selectors.p(1) -> messagesForLanguage.print,
+            Selectors.h2(2) -> messagesForLanguage.whatNextH2,
+            Selectors.p(2) -> messagesForLanguage.whatNextP1,
+            Selectors.h2(3) -> messagesForLanguage.whatMayNeedDoH2,
+            Selectors.p(3) -> messagesForLanguage.whatMayNeedDoP1DutyPaid,
+            Selectors.h3(1) -> messagesForLanguage.shortageH3,
+            Selectors.p(4) -> messagesForLanguage.shortageP1DutyPaid,
+            Selectors.p(5) -> messagesForLanguage.shortageP2DutyPaid,
+            Selectors.h3(2) -> messagesForLanguage.excessH3,
+            Selectors.p(6) -> messagesForLanguage.excessP1DutyPaid,
+            Selectors.p(7) -> messagesForLanguage.excessP2DutyPaid,
+            Selectors.p(8) -> messagesForLanguage.returnToMovementLink,
+            Selectors.p(9) -> messagesForLanguage.returnToAccountHomeLink,
+            Selectors.p(10) -> messagesForLanguage.feedback
+          ))
+        }
       }
     }
   }

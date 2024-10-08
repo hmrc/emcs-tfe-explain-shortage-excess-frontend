@@ -46,4 +46,5 @@ case class DataRequest[A](request: MovementRequest[A],
 
   override val navBar: Option[Html] = request.navBar
 
+  val isDutyPaid: Boolean = Seq("XIPA", "XIPB", "XIPC", "XIPD").contains(ern.take(4))
 }
