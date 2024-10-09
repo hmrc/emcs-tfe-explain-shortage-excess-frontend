@@ -71,15 +71,16 @@ trait SpecBase
         bind[MovementAction].toInstance(new FakeMovementAction(getMovementResponseModel))
       )
 
-  def userRequest[A](request: Request[A], navBar: Option[Html] = None): UserRequest[A] =
-    UserRequest(request, testErn, testInternalId, testCredId, false, navBar)
+  def userRequest[A](request: Request[A], navBar: Option[Html] = None, ern: String = testErn): UserRequest[A] =
+    UserRequest(request, ern, testInternalId, testCredId, false, navBar)
 
-  def movementRequest[A](request: Request[A], navBar: Option[Html] = None): MovementRequest[A] =
-    MovementRequest(userRequest(request, navBar), testArc, getMovementResponseModel)
+  def movementRequest[A](request: Request[A], navBar: Option[Html] = None, ern: String = testErn): MovementRequest[A] =
+    MovementRequest(userRequest(request, navBar, ern), testArc, getMovementResponseModel)
 
   def dataRequest[A](request: Request[A],
                      answers: UserAnswers = emptyUserAnswers,
                      traderKnownFacts: Option[TraderKnownFacts] = Some(testMinTraderKnownFacts),
-                     navBar: Option[Html] = None): DataRequest[A] =
-    DataRequest(movementRequest(request, navBar), answers, traderKnownFacts)
+                     navBar: Option[Html] = None,
+                     ern: String = testErn): DataRequest[A] =
+    DataRequest(movementRequest(request, navBar, ern), answers, traderKnownFacts)
 }

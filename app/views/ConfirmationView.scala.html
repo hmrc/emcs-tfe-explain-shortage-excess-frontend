@@ -64,30 +64,48 @@
     }
 
     @h2("confirmation.mayNeedToDo.h2")
-    @p() {
-        @messages("confirmation.mayNeedToDo.p1")
+    @if(request.isDutyPaid) {
+        @p() { @messages("confirmation.mayNeedToDo.p1.dutypaid") }
+    } else {
+        @p() { @messages("confirmation.mayNeedToDo.p1.dutysuspended") }
     }
 
     @h3("confirmation.mayNeedToDo.shortage.h3")
-    @p() {
-        @messages("confirmation.mayNeedToDo.shortage.p1")
+    @if(request.isDutyPaid) {
+        @p() { @messages("confirmation.mayNeedToDo.shortage.p1.dutypaid") }
+        @p() {
+            @messages("confirmation.mayNeedToDo.shortage.p2.dutypaid")
+            @link(
+                link = appConfig.shortagesOnReceiptUrl,
+                messageKey = "confirmation.mayNeedToDo.shortage.p2.dutypaid.urltext"
+            )
+        }
+    } else {
+        @p() { @messages("confirmation.mayNeedToDo.shortage.p1.dutysuspended") }
     }
 
     @h3("confirmation.mayNeedToDo.excess.h3")
-    @p() {
-        @messages("confirmation.mayNeedToDo.excess.p1")
+    @if(request.isDutyPaid) {
+        @p() { @messages("confirmation.mayNeedToDo.excess.p1.dutypaid") }
+        @p() {
+            @messages("confirmation.mayNeedToDo.excess.p2.dutypaid")
+            @link(
+                link = appConfig.excessesOnReceiptUrl,
+                messageKey = "confirmation.mayNeedToDo.excess.p2.dutypaid.urltext"
+            )
+        }
+    } else {
+        @p() { @messages("confirmation.mayNeedToDo.excess.p1.dutysuspended") }
+        @bullets(Seq(
+            Html(messages("confirmation.mayNeedToDo.excess.bullet1.dutysuspended")),
+            Html(messages("confirmation.mayNeedToDo.excess.bullet2.dutysuspended"))
+        ))
+        @p() { @messages("confirmation.mayNeedToDo.excess.p2.dutysuspended") }
+        @bullets(Seq(
+            Html(messages("confirmation.mayNeedToDo.excess.bullet3.dutysuspended")),
+            Html(messages("confirmation.mayNeedToDo.excess.bullet4.dutysuspended"))
+        ))
     }
-    @bullets(Seq(
-        Html(messages("confirmation.mayNeedToDo.excess.bullet1")),
-        Html(messages("confirmation.mayNeedToDo.excess.bullet2"))
-    ))
-    @p() {
-        @messages("confirmation.mayNeedToDo.excess.p2")
-    }
-    @bullets(Seq(
-        Html(messages("confirmation.mayNeedToDo.excess.bullet3")),
-        Html(messages("confirmation.mayNeedToDo.excess.bullet4"))
-    ))
 
     @p(classes = "govuk-body no-print govuk-!-margin-top-8") {
         @link(

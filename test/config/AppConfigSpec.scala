@@ -58,5 +58,16 @@ class AppConfigSpec extends SpecBase with FeatureSwitching {
       config.traderKnownFactsBaseUrl mustBe s"http://localhost:8311/emcs-tfe/trader-known-facts"
     }
 
+    ".shortagesOnReceiptUrl" - {
+      "must return to the correct URL" in {
+        config.shortagesOnReceiptUrl mustBe s"https://www.gov.uk/government/publications/excise-notice-204b-commercial-importers-and-tax-representatives-eu-trade-in-duty-paid-excise-goods/fe0f3b5f-1343-4bec-9f8b-b7f269cc41a6#irregularities:~:text=6.5%C2%A0If%20you%20discover%20shortages%20on%20receipt"
+      }
+    }
+
+    ".excessesOnReceiptUrl" - {
+      "must return to the correct URL" in {
+        config.excessesOnReceiptUrl mustBe s"https://www.gov.uk/government/publications/excise-notice-204b-commercial-importers-and-tax-representatives-eu-trade-in-duty-paid-excise-goods/fe0f3b5f-1343-4bec-9f8b-b7f269cc41a6#irregularities:~:text=6.6%C2%A0If%20you%20discover%20excesses%20on%20receipt"
+      }
+    }
   }
 }

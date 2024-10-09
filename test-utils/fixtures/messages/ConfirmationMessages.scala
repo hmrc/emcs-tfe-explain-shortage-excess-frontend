@@ -29,15 +29,20 @@ object ConfirmationMessages {
     val print: String
     val whatMayNeedDoH2: String
     val whatMayNeedDoP1: String
+    val whatMayNeedDoP1DutyPaid: String
     val whatNextH2: String
     val whatNextP1: String
     val shortageH3: String
     val shortageP1: String
+    val shortageP1DutyPaid: String
+    val shortageP2DutyPaid: String
     val excessH3: String
     val excessP1: String
+    val excessP1DutyPaid: String
     val excessSameGoodsBullet1: String
     val excessSameGoodsBullet2: String
     val excessP2: String
+    val excessP2DutyPaid: String
     val excessDifferentGoodsBullet1: String
     val excessDifferentGoodsBullet2: String
     val feedback: String
@@ -55,14 +60,19 @@ object ConfirmationMessages {
     override val whatNextH2 = "What happens next"
     override val whatNextP1 = "The movement will be updated to show you have successfully submitted an explanation for shortage or excess. This may not be happen straight away."
     override val whatMayNeedDoH2 = "What you may need to do"
-    override val whatMayNeedDoP1 = "This explanation for a shortage or excess has been submitted to HMRC only. If you are a Northern Ireland warehousekeeper receiving goods from an EU member state, this information will also be visible to the state of dispatch."
+    override val whatMayNeedDoP1 = "This explanation for a shortage or excess has been submitted to HMRC only. If you are a Northern Ireland warehousekeeper receiving goods from an EU member state, the information will also be visible to the authorities in the state of dispatch."
+    override val whatMayNeedDoP1DutyPaid = "This explanation for a shortage or excess has been submitted to HMRC only. If you are a Northern Ireland certified or temporary certified consignee receiving goods from an EU member state, this information will also be visible to the authorities in the state of dispatch."
     override val shortageH3 = "If you recorded a shortage"
     override val shortageP1 = "A duty point may be created for any goods in this movement that are short. This means HMRC will require duty to be paid on those goods by the person or organisation that is holding them."
+    override val shortageP1DutyPaid = "You may be able to reclaim overpaid duty on the goods in this movement that are short."
+    override val shortageP2DutyPaid = "For information on what to do next if you discover shortages, see Section 6.5 of Excise Notice 204b."
     override val excessH3 = "If you recorded an excess"
     override val excessP1 = "When the excess goods match what’s on the electronic administrative document (eAD) you must:"
+    override val excessP1DutyPaid = "You must account for the UK duty on all excesses. Notify the duty-paid movements team immediately and they’ll give you advice on how to proceed."
     override val excessSameGoodsBullet1 = "keep a full audit trail of the onward movement of goods you do not keep"
     override val excessSameGoodsBullet2 = "accept the duty liability for any goods you keep"
     override val excessP2 = "When the excess goods do not match what’s on the eAD:"
+    override val excessP2DutyPaid = "For information on what to do next if you discover excesses, see Section 6.6 of Excise Notice 204b."
     override val excessDifferentGoodsBullet1 = "a duty point will be created for those goods"
     override val excessDifferentGoodsBullet2 = "the person or organisation holding the goods must immediately pay the duty on them"
     override val feedback = "What did you think of this service? (opens in new tab) (takes 30 seconds)"

@@ -63,6 +63,10 @@ class AppConfig @Inject()(servicesConfig: ServicesConfig, configuration: Configu
 
   lazy val emcsGeneralEnquiriesUrl: String = configuration.get[String]("urls.emcsGeneralEnquiries")
 
+  lazy val shortagesOnReceiptUrl: String = configuration.get[String]("urls.shortagesOnReceipt")
+
+  lazy val excessesOnReceiptUrl: String = configuration.get[String]("urls.excessesOnReceipt")
+
   private lazy val tradeTariffCommoditiesUrl: String = configuration.get[String]("urls.tradeTariffCommodities")
 
   def getUrlForCommodityCode(code: String): String = s"$tradeTariffCommoditiesUrl/${code}00"
