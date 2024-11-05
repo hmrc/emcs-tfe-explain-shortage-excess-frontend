@@ -107,11 +107,11 @@ class CheckYourAnswersController @Inject()(override val messagesApi: MessagesApi
           deleteDraftAndSetConfirmationFlow(response).map { userAnswers =>
             Redirect(navigator.nextPage(CheckAnswersPage, NormalMode, userAnswers))
           }
-      } recover {
+      } recoverWith {
         case _: MissingMandatoryPage =>
-          BadRequest(errorHandler.badRequestTemplate)
+          errorHandler.badRequestTemplate.map(BadRequest(_))
         case _ =>
-          InternalServerError(errorHandler.internalServerErrorTemplate)
+          errorHandler.internalServerErrorTemplate.map(InternalServerError(_))
       }
     }
 
