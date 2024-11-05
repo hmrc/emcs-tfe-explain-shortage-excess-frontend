@@ -21,7 +21,6 @@ import fixtures.i18n
 object ItemDetailsMessages {
 
   sealed trait ViewMessages { _: i18n =>
-    val heading: Int => String
     val title: Int => String
     val h1: Int => String
     val h2: String => String
@@ -63,8 +62,7 @@ object ItemDetailsMessages {
   }
 
   object English extends ViewMessages with BaseEnglish {
-    override val heading: Int => String = i => s"Item details $i"
-    override val title: Int => String = i => titleHelper(heading(i))
+    override val title: Int => String = i => titleHelper(s"Item $i details")
     override val h1: Int => String = i => s"Item $i"
     override val h2: String => String = s => s"Explanation for a shortage or excess for $s"
     override val itemDetailsCardHeading = "Item details"
