@@ -229,7 +229,7 @@ detailsSelectItem.key.packaging = Packaging
 detailsSelectItem.value.packaging = {0} {1}
 detailsSelectItem.viewAllDetails = View all details for item {0}
 
-itemDetails.title = Item details {0}
+itemDetails.title = Item {0} details
 itemDetails.heading = Item {0}
 itemDetails.itemDetailsCardTitle = Item details
 itemDetails.packagingTypeCardTitle = Packaging type {0}
