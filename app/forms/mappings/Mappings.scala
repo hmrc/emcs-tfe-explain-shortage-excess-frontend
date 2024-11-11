@@ -47,12 +47,14 @@ trait Mappings extends Formatters with Constraints {
     of(enumerableFormatter[A](requiredKey, invalidKey, args))
 
   protected def localDate(
-                           invalidKey: String,
                            allRequiredKey: String,
+                           oneRequiredKey: String,
                            twoRequiredKey: String,
-                           requiredKey: String,
+                           oneInvalidKey: String,
+                           twoInvalidKey: String,
+                           notARealDateKey: String,
                            args: Seq[String] = Seq.empty): FieldMapping[LocalDate] =
-    of(new LocalDateFormatter(invalidKey, allRequiredKey, twoRequiredKey, requiredKey, args))
+    of(new LocalDateFormatter(allRequiredKey, oneRequiredKey, twoRequiredKey, oneInvalidKey, twoInvalidKey, notARealDateKey, args))
 
   protected def greaterThanValue[A](value: A, errorKey: String, args: Any*)(implicit ev: Ordering[A]): Constraint[A] =
     Constraint { input =>
