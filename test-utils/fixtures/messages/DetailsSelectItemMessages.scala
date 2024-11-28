@@ -22,8 +22,8 @@ object DetailsSelectItemMessages {
 
 
   sealed trait ViewMessages { _: i18n =>
-    val heading: String
-    val title: String
+    val heading: Int => String
+    val title: Int => String
     val h1: Int => String
     val tableProductCategoryKey: String
     val tableCNCodeKey: String
@@ -43,8 +43,8 @@ object DetailsSelectItemMessages {
   }
 
   object English extends ViewMessages with BaseEnglish {
-    override val heading = "Do you want to give information about this item?"
-    override val title: String = titleHelper(heading)
+    override val heading: Int => String = i => s"Item $i"
+    override val title: Int => String = i => titleHelper(s"Item $i")
     override val h1: Int => String = i => s"Item $i"
     override val tableProductCategoryKey = "Product category"
     override val tableCNCodeKey = "CN code"

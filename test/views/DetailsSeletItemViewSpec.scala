@@ -50,7 +50,7 @@ class DetailsSeletItemViewSpec extends ViewSpecBase with ViewBehaviours {
 
         // scalastyle:off magic.number
         behave like pageWithExpectedElementsAndMessages(Seq(
-          Selectors.title -> messagesForLanguage.title,
+          Selectors.title -> messagesForLanguage.title(item1.itemUniqueReference),
           Selectors.h1 -> messagesForLanguage.h1(item1.itemUniqueReference),
           Selectors.summaryRowKey(1) -> messagesForLanguage.tableProductCategoryKey,
           Selectors.summaryRowValue(1) -> cnCodeInformation.exciseProductCodeDescription,

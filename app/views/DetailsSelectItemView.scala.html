@@ -35,7 +35,7 @@
 
 @(form: Form[_], call: Call, item: MovementItem, cnCodeInformation: CnCodeInformation)(implicit request: DataRequest[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("detailsSelectItem.title")), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
+@layout(pageTitle = title(form, messages("detailsSelectItem.itemDetails.heading", item.itemUniqueReference)), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
     @formHelper(action = call, 'autoComplete -> "off") {
 
