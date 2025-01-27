@@ -30,10 +30,12 @@ class WhenReceiveShortageExcessFormProvider @Inject()(timeMachine: TimeMachine) 
   def apply(dateOfDispatch: LocalDate)(implicit messages: Messages): Form[LocalDate] =
     Form(
       "value" -> localDate(
-        invalidKey     = "whenReceiveShortageExcess.error.invalid",
+        notARealDateKey = "whenReceiveShortageExcess.error.invalid",
         allRequiredKey = "whenReceiveShortageExcess.error.required.all",
         twoRequiredKey = "whenReceiveShortageExcess.error.required.two",
-        requiredKey    = "whenReceiveShortageExcess.error.required"
+        oneRequiredKey = "whenReceiveShortageExcess.error.required",
+        oneInvalidKey = "whenReceiveShortageExcess.error.invalid.one",
+        twoInvalidKey = "whenReceiveShortageExcess.error.invalid.two"
       )
         .verifying(notInFuture("whenReceiveShortageExcess.error.notInFuture"))
         .verifying(notBeforeDateOfDispatch(dateOfDispatch, "whenReceiveShortageExcess.error.notBeforeDateOfDispatch"))
