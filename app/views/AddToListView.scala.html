@@ -31,7 +31,7 @@
 
 @layout(pageTitle = titleNoForm(messages(pluralSingular("addToList.title", itemList.size))), maybeShowActiveTrader = maybeShowActiveTrader(request)) {
 
-    @formHelper(action, 'autoComplete -> "off") {
+    @formHelper(action, (Symbol("autoComplete") -> "off")) {
 
         @form.map { form =>
             @if(form.errors.nonEmpty) {

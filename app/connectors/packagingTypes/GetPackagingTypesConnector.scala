@@ -21,12 +21,13 @@ import models.{ErrorResponse, JsonValidationError, UnexpectedDownstreamResponseE
 import models.requests.PackagingTypesRequest
 import models.response.referenceData.PackagingTypesResponse
 import play.api.libs.json.JsResultException
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+import uk.gov.hmrc.http.client.HttpClientV2
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class GetPackagingTypesConnector @Inject()(val http: HttpClient,
+class GetPackagingTypesConnector @Inject()(val http: HttpClientV2,
                                            config: AppConfig) extends PackagingTypesHttpParser {
 
   lazy val baseUrl: String = config.referenceDataBaseUrl
@@ -34,7 +35,7 @@ class GetPackagingTypesConnector @Inject()(val http: HttpClient,
   def getPackagingTypes(request: PackagingTypesRequest)
                           (implicit headerCarrier: HeaderCarrier,
                            executionContext: ExecutionContext): Future[Either[ErrorResponse, PackagingTypesResponse]] = {
-    post(baseUrl + "/oracle/packaging-types", request)
+    post(url"$baseUrl/oracle/packaging-types", request)
       .recover {
         case JsResultException(errors) =>
           logger.warn(s"[getPackagingTypes] Bad JSON response from emcs-tfe-reference-data: " + errors)

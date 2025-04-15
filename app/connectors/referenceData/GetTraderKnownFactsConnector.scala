@@ -20,13 +20,14 @@ import config.AppConfig
 import models.{ErrorResponse, JsonValidationError, UnexpectedDownstreamResponseError}
 import models.response.referenceData.TraderKnownFacts
 import play.api.libs.json.JsResultException
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+import uk.gov.hmrc.http.client.HttpClientV2
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class GetTraderKnownFactsConnector @Inject()(val http: HttpClient,
+class GetTraderKnownFactsConnector @Inject()(val http: HttpClientV2,
                                              config: AppConfig) extends GetTraderKnownFactsHttpParser {
 
   def baseUrl: String = config.traderKnownFactsBaseUrl
@@ -34,7 +35,7 @@ class GetTraderKnownFactsConnector @Inject()(val http: HttpClient,
   def getTraderKnownFacts(ern: String)
                          (implicit headerCarrier: HeaderCarrier,
                           executionContext: ExecutionContext): Future[Either[ErrorResponse, Option[TraderKnownFacts]]] =
-    get(baseUrl, ern)
+    get(url"$baseUrl", ern)
       .recover {
         case JsResultException(errors) =>
           logger.warn(s"[getTraderKnownFacts] Bad JSON response from emcs-tfe: " + errors)

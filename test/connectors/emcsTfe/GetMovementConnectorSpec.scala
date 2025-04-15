@@ -21,19 +21,20 @@ import config.AppConfig
 import fixtures.GetMovementResponseFixtures
 import mocks.MockHttpClient
 import models.JsonValidationError
+import play.api.Application
 import play.api.http.{HeaderNames, MimeTypes, Status}
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class GetMovementConnectorSpec extends SpecBase
   with Status with MimeTypes with HeaderNames with MockHttpClient with GetMovementResponseFixtures {
 
-  lazy val app = applicationBuilder(userAnswers = None).build()
+  lazy val app: Application = applicationBuilder(userAnswers = None).build()
 
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
   implicit lazy val ec: ExecutionContext = app.injector.instanceOf[ExecutionContext]
-  lazy val appConfig = app.injector.instanceOf[AppConfig]
+  lazy val appConfig: AppConfig = app.injector.instanceOf[AppConfig]
 
   lazy val connector = new GetMovementConnector(mockHttpClient, appConfig)
 
@@ -43,7 +44,7 @@ class GetMovementConnectorSpec extends SpecBase
 
       "when downstream call is successful" in {
 
-        MockHttpClient.get(s"${appConfig.emcsTfeBaseUrl}/movement/ern/arc?forceFetchNew=true").returns(Future.successful(Right(getMovementResponseModel)))
+        MockHttpClient.get(url"${appConfig.emcsTfeBaseUrl}/movement/ern/arc?forceFetchNew=true").returns(Future.successful(Right(getMovementResponseModel)))
 
         connector.getMovement(exciseRegistrationNumber = "ern", arc = "arc", forceFetchNew = true).futureValue mustBe Right(getMovementResponseModel)
       }
@@ -53,7 +54,7 @@ class GetMovementConnectorSpec extends SpecBase
 
       "when downstream call fails" in {
 
-        MockHttpClient.get(s"${appConfig.emcsTfeBaseUrl}/movement/ern/arc?forceFetchNew=false").returns(Future.successful(Left(JsonValidationError)))
+        MockHttpClient.get(url"${appConfig.emcsTfeBaseUrl}/movement/ern/arc?forceFetchNew=false").returns(Future.successful(Left(JsonValidationError)))
 
         connector.getMovement(exciseRegistrationNumber = "ern", arc = "arc", forceFetchNew = false).futureValue mustBe Left(JsonValidationError)
       }

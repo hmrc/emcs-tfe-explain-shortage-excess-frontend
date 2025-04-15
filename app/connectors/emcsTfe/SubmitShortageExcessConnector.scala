@@ -21,13 +21,14 @@ import models.ErrorResponse
 import models.submitShortageExcess.SubmitShortageExcessModel
 import models.response.emcsTfe.SubmitShortageExcessResponse
 import play.api.libs.json.Reads
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+import uk.gov.hmrc.http.client.HttpClientV2
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class SubmitShortageExcessConnector @Inject()(val http: HttpClient,
+class SubmitShortageExcessConnector @Inject()(val http: HttpClientV2,
                                               config: AppConfig) extends EmcsTfeHttpParser[SubmitShortageExcessResponse] {
 
   override implicit val reads: Reads[SubmitShortageExcessResponse] = SubmitShortageExcessResponse.reads
@@ -35,6 +36,6 @@ class SubmitShortageExcessConnector @Inject()(val http: HttpClient,
   lazy val baseUrl: String = config.emcsTfeBaseUrl
   def submit(exciseRegistrationNumber: String, submitShortageOrExcessModel: SubmitShortageExcessModel)
             (implicit headerCarrier: HeaderCarrier, executionContext: ExecutionContext): Future[Either[ErrorResponse, SubmitShortageExcessResponse]] =
-    post(s"$baseUrl/explain-shortage-excess/$exciseRegistrationNumber/${submitShortageOrExcessModel.arc}", submitShortageOrExcessModel)
+    post(url"$baseUrl/explain-shortage-excess/$exciseRegistrationNumber/${submitShortageOrExcessModel.arc}", submitShortageOrExcessModel)
 
 }
