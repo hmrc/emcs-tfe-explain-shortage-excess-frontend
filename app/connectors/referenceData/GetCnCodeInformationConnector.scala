@@ -21,13 +21,14 @@ import models.{ErrorResponse, JsonValidationError, UnexpectedDownstreamResponseE
 import models.requests.CnCodeInformationRequest
 import models.response.referenceData.CnCodeInformationResponse
 import play.api.libs.json.JsResultException
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+import uk.gov.hmrc.http.client.HttpClientV2
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class GetCnCodeInformationConnector @Inject()(val http: HttpClient,
+class GetCnCodeInformationConnector @Inject()(val http: HttpClientV2,
                                               config: AppConfig) extends ReferenceDataHttpParser {
 
   lazy val baseUrl: String = config.referenceDataBaseUrl
@@ -35,7 +36,7 @@ class GetCnCodeInformationConnector @Inject()(val http: HttpClient,
   def getCnCodeInformation(request: CnCodeInformationRequest)
                           (implicit headerCarrier: HeaderCarrier,
                            executionContext: ExecutionContext): Future[Either[ErrorResponse, CnCodeInformationResponse]] = {
-    post(baseUrl + "/oracle/cn-code-information", request)
+    post(url"$baseUrl/oracle/cn-code-information", request)
       .recover {
         case JsResultException(errors) =>
           logger.warn(s"[getCnCodeInformation] Bad JSON response from emcs-tfe-reference-data: " + errors)

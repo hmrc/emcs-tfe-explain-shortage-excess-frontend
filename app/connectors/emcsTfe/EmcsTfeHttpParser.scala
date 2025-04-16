@@ -19,16 +19,18 @@ package connectors.emcsTfe
 import connectors.BaseConnectorUtils
 import models.{ErrorResponse, JsonValidationError, UnexpectedDownstreamResponseError}
 import play.api.http.Status.OK
-import play.api.libs.json.Writes
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpReads, HttpResponse}
+import play.api.libs.json.{Json, Writes}
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
 
+import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 
 trait EmcsTfeHttpParser[A] extends BaseConnectorUtils[A] {
 
   type Response = Either[ErrorResponse, A]
 
-  def http: HttpClient
+  def http: HttpClientV2
 
   implicit object EmcsTfeReads extends HttpReads[Response] {
     override def read(method: String, url: String, response: HttpResponse): Response = {
@@ -46,14 +48,17 @@ trait EmcsTfeHttpParser[A] extends BaseConnectorUtils[A] {
     }
   }
 
-  def get(url: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Response] =
+  def get(url: URL)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Response] =
     withExceptionRecovery("get") {
-      http.GET[Response](url)(EmcsTfeReads, hc, ec)
+      http
+        .get(url).execute[Response]
     }
 
-  def post[I](url: String, body: I)(implicit hc: HeaderCarrier, ec: ExecutionContext, writes: Writes[I]): Future[Response] =
+  def post[I](url: URL, body: I)(implicit hc: HeaderCarrier, ec: ExecutionContext, writes: Writes[I]): Future[Response] =
     withExceptionRecovery("post") {
-      http.POST[I, Response](url, body)(writes, EmcsTfeReads, hc, ec)
+      http
+        .post(url).withBody(Json.toJson(body))
+        .execute[Response]
     }
 
   private def withExceptionRecovery(method: String)(f: => Future[Response])(implicit ec: ExecutionContext): Future[Response] = f recover {

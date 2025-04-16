@@ -30,6 +30,7 @@ import play.api.test.Helpers.LOCATION
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.language.reflectiveCalls
 
 class DataRequiredActionSpec extends SpecBase with MockitoSugar with MockUserAnswersService {
 

@@ -21,13 +21,14 @@ import mocks.MockHttpClient
 import models.{BadRequestError, JsonValidationError, UnexpectedDownstreamResponseError, UserAnswers}
 import play.api.http.{HeaderNames, MimeTypes, Status}
 import play.api.libs.json.{Json, Reads}
-import uk.gov.hmrc.http.{HttpClient, HttpResponse}
+import uk.gov.hmrc.http.HttpResponse
+import uk.gov.hmrc.http.client.HttpClientV2
 
 class UserAnswersHttpParsersSpec extends SpecBase with Status with MimeTypes with HeaderNames with MockHttpClient {
 
   lazy val httpParser = new UserAnswersHttpParsers {
     override implicit val reads: Reads[UserAnswers] = UserAnswers.format
-    override def http: HttpClient = mockHttpClient
+    override def http: HttpClientV2 = mockHttpClient
   }
 
   "GetUserAnswersReads.read(method: String, url: String, response: HttpResponse)" - {

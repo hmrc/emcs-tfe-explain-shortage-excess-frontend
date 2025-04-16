@@ -57,11 +57,11 @@ object DetailsSelectItemMessages {
     override val tableDensityKey = "Density"
     override val densityValue: BigDecimal => String = value => s"${value}kg/m<sup>3</sup> (temperature of 15&deg;C)"
     override val alcoholStrength: Option[BigDecimal] => String = {
-      case Some(strength) => strength + "%"
+      case Some(strength) => strength.toString + "%"
       case None => "N/A"
     }
     override val density: Option[BigDecimal] => String = {
-      case Some(density) => density + "kg/m3 kilograms"
+      case Some(density) => density.toString + "kg/m3 kilograms"
       case None => "N/A"
     }
     override val tablePackaging: String = "Packaging"

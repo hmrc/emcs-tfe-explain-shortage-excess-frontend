@@ -59,7 +59,7 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
         ActionItemViewModel(
           "site.change",
           routes.ChooseShortageExcessItemController.onPageLoad(request.ern, request.arc, idx, mode).url,
-          id = ChooseShortageExcessItemPage(idx) + additionalLinkIdSignifier
+          id = ChooseShortageExcessItemPage(idx).toString + additionalLinkIdSignifier
         ).withVisuallyHiddenText(messages(s"${ChooseShortageExcessItemPage(idx)}.checkYourAnswers.change.hidden"))
       )
     ))
@@ -83,7 +83,7 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
             ActionItemViewModel(
               "site.change",
               routes.ItemAmountController.onPageLoad(request.userAnswers.ern, request.userAnswers.arc, idx, mode).url,
-              id = ItemAmountPage(idx) + additionalLinkIdSignifier
+              id = ItemAmountPage(idx).toString + additionalLinkIdSignifier
             ).withVisuallyHiddenText(messages(s"${ItemAmountPage(idx)}.checkYourAnswers.change.hidden"))
           )
         ))
@@ -93,7 +93,7 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
           value = ValueViewModel(HtmlContent(link(
             link = routes.ItemAmountController.onPageLoad(request.userAnswers.ern, request.userAnswers.arc, idx, mode).url,
             messageKey = s"${ItemAmountPage(idx)}.checkYourAnswers.addMoreInformation",
-            id = Some(ItemAmountPage(idx) + additionalLinkIdSignifier)
+            id = Some(ItemAmountPage(idx).toString + additionalLinkIdSignifier)
           ))),
           actions = Seq()
         ))
@@ -112,7 +112,7 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
             ActionItemViewModel(
               "site.change",
               routes.GiveInformationItemController.onPageLoad(request.ern, request.arc, idx, mode).url,
-              id = GiveInformationItemPage(idx) + additionalLinkIdSignifier
+              id = GiveInformationItemPage(idx).toString + additionalLinkIdSignifier
             ).withVisuallyHiddenText(messages(s"${GiveInformationItemPage(idx)}.checkYourAnswers.$shortageOrExcess.change.hidden"))
           )
         )
@@ -122,7 +122,7 @@ class AddToListHelper @Inject()(link: link) extends JsonOptionFormatter {
           value = ValueViewModel(HtmlContent(link(
             link = routes.GiveInformationItemController.onPageLoad(request.ern, request.arc, idx, mode).url,
             messageKey = s"${GiveInformationItemPage(idx)}.checkYourAnswers.$shortageOrExcess.addMoreInformation",
-            id = Some(GiveInformationItemPage(idx) + additionalLinkIdSignifier)
+            id = Some(GiveInformationItemPage(idx).toString + additionalLinkIdSignifier)
           ))),
           actions = Seq()
         )

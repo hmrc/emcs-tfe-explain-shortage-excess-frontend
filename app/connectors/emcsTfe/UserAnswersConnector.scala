@@ -18,14 +18,15 @@ package connectors.emcsTfe
 
 import config.AppConfig
 import models.{ErrorResponse, UserAnswers}
-import play.api.libs.json.Reads
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
+import play.api.libs.json.{Json, Reads}
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+import uk.gov.hmrc.http.client.HttpClientV2
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class UserAnswersConnector @Inject()(val http: HttpClient,
+class UserAnswersConnector @Inject()(val http: HttpClientV2,
                                      config: AppConfig) extends UserAnswersHttpParsers {
 
   override implicit val reads: Reads[UserAnswers] = UserAnswers.format
@@ -33,22 +34,25 @@ class UserAnswersConnector @Inject()(val http: HttpClient,
   lazy val baseUrl: String = config.emcsTfeBaseUrl
 
   def get(ern: String, arc: String)
-         (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[ErrorResponse, Option[UserAnswers]]] =
-    http.GET[Either[ErrorResponse, Option[UserAnswers]]](
-      url = s"$baseUrl/user-answers/explain-shortage-or-excess/$ern/$arc"
-    )(GetUserAnswersReads, hc, ec)
+         (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[ErrorResponse, Option[UserAnswers]]] = {
+    http
+      .get(url"$baseUrl/user-answers/explain-shortage-or-excess/$ern/$arc")
+      .execute[Either[ErrorResponse, Option[UserAnswers]]](GetUserAnswersReads, ec)
+  }
 
   def put(userAnswers: UserAnswers)
-         (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[ErrorResponse, UserAnswers]] =
-    http.PUT[UserAnswers, Either[ErrorResponse, UserAnswers]](
-      url = s"$baseUrl/user-answers/explain-shortage-or-excess/${userAnswers.ern}/${userAnswers.arc}",
-      body = userAnswers
-    )(UserAnswers.writes, PutUserAnswersReads, hc, ec)
+         (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[ErrorResponse, UserAnswers]] = {
+    http
+      .put(url"$baseUrl/user-answers/explain-shortage-or-excess/${userAnswers.ern}/${userAnswers.arc}")
+      .withBody(Json.toJson(userAnswers))
+      .execute[Either[ErrorResponse, UserAnswers]](PutUserAnswersReads, ec)
+  }
 
   def delete(ern: String, arc: String)
-            (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[ErrorResponse, Boolean]] =
-    http.DELETE[Either[ErrorResponse, Boolean]](
-      url = s"$baseUrl/user-answers/explain-shortage-or-excess/$ern/$arc"
-    )(DeleteUserAnswersReads, hc, ec)
+            (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Either[ErrorResponse, Boolean]] = {
+    http
+      .delete(url"$baseUrl/user-answers/explain-shortage-or-excess/$ern/$arc")
+      .execute[Either[ErrorResponse, Boolean]](DeleteUserAnswersReads, ec)
+  }
 
 }
