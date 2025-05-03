@@ -24,12 +24,14 @@ object UnitOfMeasure extends Enumerable.Implicits {
   case object Litres15 extends WithName("litres15") with UnitOfMeasure
   case object Litres20 extends WithName("litres20") with UnitOfMeasure
   case object Thousands extends WithName("thousands") with UnitOfMeasure
+  case object UnknownUnit extends WithName("unknownUnit") with UnitOfMeasure // we use this when a CN code has been deleted from reference-data
 
   val values: Seq[UnitOfMeasure] = Seq(
     Kilograms,
     Litres15,
     Litres20,
-    Thousands
+    Thousands,
+    UnknownUnit,
   )
 
   implicit val enumerable: Enumerable[UnitOfMeasure] =

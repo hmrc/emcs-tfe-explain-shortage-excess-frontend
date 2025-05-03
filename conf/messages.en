@@ -23,6 +23,8 @@ unitOfMeasure.litres20.short = litres
 unitOfMeasure.litres20.long = litres (temperature of 20°C)
 unitOfMeasure.thousands.short = x1000
 unitOfMeasure.thousands.long = x1000 items
+unitOfMeasure.unknownUnit.short = (unit unknown)
+unitOfMeasure.unknownUnit.long = (unit unknown)
 
 wineProductCategory.wineWithoutPDOPGI = Wine without PDO/PGI
 wineProductCategory.varietalWineWithoutPDOPGI = Varietal wine without PDO/PGI
@@ -64,6 +66,8 @@ detailsSelectItem.value.density = {0}kg/m<sup>3</sup> {1}
 detailsSelectItem.value.density.kilograms = kilograms
 detailsSelectItem.value.density.litres15 = (temperature of 15&deg;C)
 detailsSelectItem.value.density.litres20 = (temperature of 20&deg;C)
+detailsSelectItem.value.density.thousands = x1000 items
+detailsSelectItem.value.density.unknownUnit = (unit unknown)
 detailsSelectItem.key.packaging = Packaging
 detailsSelectItem.value.packaging = {0} {1}
 detailsSelectItem.viewAllDetails = View all details for item {0}
