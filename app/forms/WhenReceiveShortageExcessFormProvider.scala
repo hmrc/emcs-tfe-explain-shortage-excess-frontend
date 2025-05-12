@@ -34,8 +34,7 @@ class WhenReceiveShortageExcessFormProvider @Inject()(timeMachine: TimeMachine) 
         allRequiredKey = "whenReceiveShortageExcess.error.required.all",
         twoRequiredKey = "whenReceiveShortageExcess.error.required.two",
         oneRequiredKey = "whenReceiveShortageExcess.error.required",
-        oneInvalidKey = "whenReceiveShortageExcess.error.invalid.one",
-        twoInvalidKey = "whenReceiveShortageExcess.error.invalid.two"
+        oneInvalidKey = "whenReceiveShortageExcess.error.invalid.one"
       )
         .verifying(notInFuture("whenReceiveShortageExcess.error.notInFuture"))
         .verifying(notBeforeDateOfDispatch(dateOfDispatch, "whenReceiveShortageExcess.error.notBeforeDateOfDispatch"))
