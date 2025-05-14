@@ -51,7 +51,6 @@ date.month.12 = December
 detailsSelectItem.itemDetails.heading = Item {0}
 detailsSelectItem.title = Do you want to give information about this item?
 detailsSelectItem.heading = Do you want to give information about this item?
-detailsSelectItem.checkYourAnswersLabel = detailsSelectItem
 detailsSelectItem.error.required = Select if you want to give information about this item
 detailsSelectItem.key.productCategory = Product category
 detailsSelectItem.key.commodityCode = CN code
