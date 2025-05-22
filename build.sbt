@@ -58,6 +58,12 @@ lazy val root = (project in file("."))
     uglify / includeFilter  := GlobFilter("application.js")
   )
   .settings(CodeCoverageSettings.settings *)
+  .settings(
+    scalacOptions ++= Seq(
+      "-deprecation",
+      "-feature",
+    )
+  )
 
 lazy val testSettings: Seq[Def.Setting[?]] = Seq(
   fork := true,

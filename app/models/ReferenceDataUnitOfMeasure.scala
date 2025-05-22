@@ -35,12 +35,16 @@ object ReferenceDataUnitOfMeasure extends Enumerable.Implicits {
   case object `4` extends WithName("4") with ReferenceDataUnitOfMeasure {
     override def toUnitOfMeasure: UnitOfMeasure = UnitOfMeasure.Thousands
   }
+  case object UnknownUnit extends WithName("unknownUnit") with ReferenceDataUnitOfMeasure {
+    override def toUnitOfMeasure: UnitOfMeasure = UnitOfMeasure.UnknownUnit
+  }
 
   val values: Seq[ReferenceDataUnitOfMeasure] = Seq(
     `1`,
     `2`,
     `3`,
-    `4`
+    `4`,
+    UnknownUnit,
   )
 
   implicit val enumerable: Enumerable[ReferenceDataUnitOfMeasure] =

@@ -18,6 +18,7 @@ package services
 
 import base.SpecBase
 import mocks.connectors.MockGetCnCodeInformationConnector
+import models.ReferenceDataUnitOfMeasure.{UnknownUnit, `1`}
 import models.requests.{CnCodeInformationItem, CnCodeInformationRequest}
 import models.response.emcsTfe.MovementItem
 import models.response.referenceData.{CnCodeInformation, CnCodeInformationResponse}
@@ -56,20 +57,8 @@ class GetCnCodeInformationServiceSpec extends SpecBase with MockGetCnCodeInforma
           unitOfMeasureCode = ReferenceDataUnitOfMeasure.`1`
         )))
       }
-    }
 
-    "should return Failure response" - {
-
-      "when Connector returns failure from downstream" in {
-
-        MockGetCnCodeInformationConnector.getCnCodeInformation(request).returns(Future.successful(Left(UnexpectedDownstreamResponseError)))
-
-        val result = intercept[ReferenceDataException](await(testService.getCnCodeInformationWithMovementItems(movementItems)(hc)))
-
-        result.getMessage must include(s"Failed to retrieve CN Code information")
-      }
-
-      "when not all items match something from the Connector" in {
+      "when not all items match something from the Connector, so default values provided" in {
         val request = CnCodeInformationRequest(
           items = Seq(
             CnCodeInformationItem(productCode = "T400", cnCode = "24029000"),
@@ -82,7 +71,6 @@ class GetCnCodeInformationServiceSpec extends SpecBase with MockGetCnCodeInforma
           MovementItem(1, "T401", "24029001", 1, 1, 1, None, None, None, None, None, None, None, None, None, Seq(), None),
           MovementItem(1, "T402", "24029002", 1, 1, 1, None, None, None, None, None, None, None, None, None, Seq(), None)
         )
-
 
         MockGetCnCodeInformationConnector.getCnCodeInformation(request).returns(Future.successful(Right(CnCodeInformationResponse(data = Map(
           "24029000" -> CnCodeInformation(
@@ -97,9 +85,34 @@ class GetCnCodeInformationServiceSpec extends SpecBase with MockGetCnCodeInforma
           )
         )))))
 
-        val result = intercept[ReferenceDataException](await(testService.getCnCodeInformationWithMovementItems(items)(hc)))
+        testService.getCnCodeInformationWithMovementItems(items)(hc).futureValue mustBe Seq(
+          (items.head, CnCodeInformation(
+            cnCodeDescription = "Cigars, cheroots, cigarillos and cigarettes not containing tobacco",
+            exciseProductCodeDescription = "Fine-cut tobacco for the rolling of cigarettes",
+            unitOfMeasureCode = `1`,
+          )),
+          (items(1), CnCodeInformation(
+            cnCodeDescription = "Cigars, cheroots, cigarillos and cigarettes not containing tobacco",
+            exciseProductCodeDescription = "Fine-cut tobacco for the rolling of cigarettes",
+            unitOfMeasureCode = `1`,
+          )),
+          (items(2), CnCodeInformation(
+            cnCodeDescription = "Unknown CN Code: 24029002 - Verify in UK Integrated Online Tariff",
+            exciseProductCodeDescription = "Unknown Product Code: T402 - Verify in UK Integrated Online Tariff",
+            unitOfMeasureCode = UnknownUnit,
+          )),
+        )
+      }
+    }
 
-        result.getMessage must include(s"Failed to match item with CN Code information")
+    "should return Failure response" - {
+
+      "when Connector returns failure from downstream" in {
+        MockGetCnCodeInformationConnector.getCnCodeInformation(request).returns(Future.successful(Left(UnexpectedDownstreamResponseError)))
+
+        val result = intercept[ReferenceDataException](await(testService.getCnCodeInformationWithMovementItems(movementItems)(hc)))
+
+        result.getMessage must include(s"Failed to retrieve CN Code information")
       }
     }
   }
