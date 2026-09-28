@@ -21,7 +21,7 @@ import models.response.emcsTfe.{GetMovementResponse, MovementItem}
 import models.response.referenceData.TraderKnownFacts
 import pages.individualItems.SelectItemPage
 import play.api.mvc.WrappedRequest
-import play.twirl.api.Html
+import uk.gov.hmrc.govukfrontend.views.viewmodels.servicenavigation.ServiceNavigationItem
 
 case class DataRequest[A](request: MovementRequest[A],
                           userAnswers: UserAnswers,
@@ -44,7 +44,7 @@ case class DataRequest[A](request: MovementRequest[A],
         request.movementDetails.item(itemModel.itemUniqueReference)
     }
 
-  override val navBar: Option[Html] = request.navBar
+  override val navBarItems: Option[Seq[ServiceNavigationItem]] = request.navBarItems
 
   val isDutyPaid: Boolean = Seq("XIPA", "XIPB", "XIPC", "XIPD").contains(ern.take(4))
 }

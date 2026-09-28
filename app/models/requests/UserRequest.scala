@@ -18,10 +18,11 @@ package models.requests
 
 import play.api.mvc.{Request, WrappedRequest}
 import play.twirl.api.Html
+import uk.gov.hmrc.govukfrontend.views.viewmodels.servicenavigation.ServiceNavigationItem
 
 case class UserRequest[A](request: Request[A],
                           ern: String,
                           internalId: String,
                           credId: String,
                           hasMultipleErns: Boolean,
-                          override val navBar: Option[Html] = None) extends WrappedRequest[A](request) with NavBarRequest
+                          override val navBarItems: Option[Seq[ServiceNavigationItem]] = None) extends WrappedRequest[A](request) with NavBarRequest

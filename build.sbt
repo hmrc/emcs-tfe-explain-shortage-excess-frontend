@@ -4,7 +4,7 @@ import uk.gov.hmrc.DefaultBuildSettings
 
 lazy val appName: String = "emcs-tfe-explain-shortage-excess-frontend"
 
-ThisBuild / scalaVersion := "2.13.16"
+ThisBuild / scalaVersion := "2.13.18"
 ThisBuild / majorVersion := 1
 
 lazy val root = (project in file("."))
