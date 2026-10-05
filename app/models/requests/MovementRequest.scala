@@ -18,7 +18,7 @@ package models.requests
 
 import models.response.emcsTfe.GetMovementResponse
 import play.api.mvc.WrappedRequest
-import play.twirl.api.Html
+import uk.gov.hmrc.govukfrontend.views.viewmodels.servicenavigation.ServiceNavigationItem
 
 case class MovementRequest[A](request: UserRequest[A],
                               arc: String,
@@ -27,5 +27,5 @@ case class MovementRequest[A](request: UserRequest[A],
   val internalId = request.internalId
   val ern = request.ern
 
-  override val navBar: Option[Html] = request.navBar
+  override val navBarItems: Option[Seq[ServiceNavigationItem]] = request.navBarItems
 }

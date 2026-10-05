@@ -26,7 +26,6 @@ import play.api.i18n.MessagesApi
 import play.api.mvc.{Action, AnyContent, AnyContentAsEmpty, BodyParsers, Results}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.Html
 import uk.gov.hmrc.auth.core.AffinityGroup.{Agent, Organisation}
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.authorise.Predicate
@@ -202,7 +201,7 @@ class AuthActionSpec extends SpecBase with BaseFixtures with BeforeAndAfterAll w
 
                   "allow the User through, returning a 200 (OK)" in new Harness {
 
-                    MockNavBarPartialConnector.getNavBar(testErn).returns(Future.successful(Some(Html("<nav>NavBar</nav>"))))
+                    MockNavBarPartialConnector.getNavBarItems(testErn).returns(Future.successful(someNavItems))
                     override val authConnector = new FakeSuccessAuthConnector(authResponse(enrolments = Enrolments(Set(
                       Enrolment(
                         key = EnrolmentKeys.EMCS_ENROLMENT,
@@ -219,7 +218,7 @@ class AuthActionSpec extends SpecBase with BaseFixtures with BeforeAndAfterAll w
 
                   "allow the User through, returning a 200 (OK)" in new Harness {
 
-                    MockNavBarPartialConnector.getNavBar(testErn).returns(Future.successful(None))
+                    MockNavBarPartialConnector.getNavBarItems(testErn).returns(Future.successful(None))
                     override val authConnector = new FakeSuccessAuthConnector(authResponse(enrolments = Enrolments(Set(
                       Enrolment(
                         key = EnrolmentKeys.EMCS_ENROLMENT,
